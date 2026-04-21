@@ -1,0 +1,361 @@
+:root {
+  --bg: #d6cec2;
+  --bg-soft: #e0d9ce;
+  --ink: #3a332b;
+  --ink-soft: #6b6155;
+  --accent: #8a7a68;
+  --rule: rgba(58, 51, 43, 0.18);
+  --serif: "Cormorant Garamond", "Times New Roman", serif;
+  --sans: "Jost", "Helvetica Neue", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(1200px 700px at 50% -10%, rgba(255, 250, 244, 0.55), transparent 60%),
+    radial-gradient(900px 600px at 50% 110%, rgba(99, 84, 66, 0.18), transparent 55%),
+    var(--bg);
+  background-attachment: fixed;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.page {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 28px clamp(20px, 5vw, 56px);
+}
+
+.top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mark {
+  font-family: var(--sans);
+  font-weight: 400;
+  letter-spacing: 0.42em;
+  font-size: 11px;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: clamp(24px, 6vh, 56px) 0;
+  gap: 14px;
+}
+
+.hero-visual {
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: clamp(8px, 2vh, 20px) 0;
+}
+
+.logo {
+  width: min(88%, 500px);
+  height: auto;
+  display: block;
+}
+
+.lockup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.lockup-main {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(16px, 1.9vw, 22px);
+  letter-spacing: 0.42em;
+  color: var(--ink);
+  padding-left: 0.42em;
+}
+
+.lockup-sub {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 10.5px;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding-left: 0.38em;
+}
+
+.eyebrow {
+  margin: 2px 0 0;
+  font-family: var(--sans);
+  font-weight: 300;
+  letter-spacing: 0.32em;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  opacity: 0;
+  animation: fade 0.9s ease-out 0.5s forwards;
+}
+
+.headline {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(44px, 7vw, 88px);
+  line-height: 1;
+  letter-spacing: 0.005em;
+  color: var(--ink);
+  opacity: 0;
+  animation: fade 1s ease-out 0.7s forwards;
+}
+
+.lede {
+  max-width: 42ch;
+  margin: 6px auto 10px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(15px, 1.5vw, 18px);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  opacity: 0;
+  animation: fade 1s ease-out 0.9s forwards;
+}
+
+.countdown {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(8px, 1.6vw, 18px);
+  padding: 18px 26px;
+  margin: 6px 0 22px;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  opacity: 0;
+  animation: fade 1s ease-out 1.05s forwards;
+}
+
+.unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 56px;
+}
+
+.num {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(26px, 3.2vw, 36px);
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.lbl {
+  margin-top: 6px;
+  font-size: 9.5px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.sep {
+  color: var(--accent);
+  font-family: var(--serif);
+  font-size: 22px;
+  line-height: 1;
+  transform: translateY(-4px);
+}
+
+.signup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  width: min(520px, 100%);
+  opacity: 0;
+  animation: fade 1s ease-out 1.2s forwards;
+}
+
+.signup input[type="email"] {
+  flex: 1 1 260px;
+  min-width: 0;
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 0;
+  padding: 14px 16px;
+  font-family: var(--sans);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.signup input[type="email"]::placeholder {
+  color: var(--ink-soft);
+  opacity: 0.8;
+}
+
+.signup input[type="email"]:focus {
+  border-color: var(--ink);
+}
+
+.signup button {
+  appearance: none;
+  background: var(--ink);
+  color: var(--bg-soft);
+  border: 1px solid var(--ink);
+  padding: 14px 26px;
+  font-family: var(--sans);
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.signup button:hover {
+  background: transparent;
+  color: var(--ink);
+}
+
+.signup button:active {
+  transform: translateY(1px);
+}
+
+.form-msg {
+  width: 100%;
+  margin: 4px 0 0;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  min-height: 1em;
+}
+
+.form-msg.ok {
+  color: var(--ink);
+}
+
+.form-msg.err {
+  color: #8a3a2a;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding-top: 18px;
+}
+
+.social {
+  display: flex;
+  gap: 18px;
+}
+
+.ico {
+  color: var(--ink-soft);
+  display: inline-flex;
+  padding: 8px;
+  border-radius: 999px;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.ico:hover {
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.copy {
+  margin: 0;
+  font-size: 10.5px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+@keyframes rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 520px) {
+  .countdown {
+    padding: 14px 10px;
+    gap: 6px;
+  }
+  .unit {
+    min-width: 44px;
+  }
+  .sep {
+    font-size: 18px;
+  }
+  .lbl {
+    font-size: 8.5px;
+    letter-spacing: 0.22em;
+  }
+  .mark {
+    letter-spacing: 0.34em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo,
+  .lockup,
+  .eyebrow,
+  .headline,
+  .lede,
+  .countdown,
+  .signup {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+}
