@@ -23,6 +23,11 @@
           <p>Curated by Malika. Designed to extend the results of your session between visits.</p>
         </div>
 
+        <div class="store-status">
+          <span class="store-status__pill store-status__pill--live">1 product available</span>
+          <span class="store-status__pill store-status__pill--soon">New release coming soon</span>
+        </div>
+
         <div class="tabs" id="catTabs"></div>
         <div class="grid grid--4" id="productGrid"></div>
       </section>
@@ -47,29 +52,47 @@
       tabsEl.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => { active = b.dataset.cat; renderTabs(); renderGrid(); }));
     }
 
+    const COLOMBIAN_FLAG = `<span class="co-flag" title="Sourced from Colombia" aria-label="Sourced from Colombia"><span class="co-flag__y"></span><span class="co-flag__b"></span><span class="co-flag__r"></span></span>`;
+
     function renderGrid() {
       const list = active === "All" ? PRODUCTS : PRODUCTS.filter(p => p.category === active);
-      gridEl.innerHTML = list.map(p => `
-        <article class="product-card" id="${p.id}">
-          <div class="img-wrap"><img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'"/></div>
+      gridEl.innerHTML = list.map(p => {
+        const stockVariants = Array.isArray(p.stock) ? p.stock.filter(s => s.qty > 0) : null;
+        const variants = p.variants || (stockVariants ? stockVariants.map(s => ({ id: s.size.toLowerCase(), label: s.size })) : null);
+        return `
+        <article class="product-card ${p.comingSoon ? "is-coming-soon" : ""}" id="${p.id}">
+          <div class="img-wrap">
+            ${p.colombian ? COLOMBIAN_FLAG : ""}
+            ${p.comingSoon ? `<span class="coming-soon-badge">Coming Soon</span>` : ""}
+            <img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'"/>
+          </div>
           <div class="body">
-            <span class="cat">${p.category}</span>
+            <span class="cat">${p.category}${p.brand ? ` · ${p.brand}` : ""}</span>
             <span class="name">${p.name}</span>
             <span class="tag">${p.tagline}</span>
             ${p.description ? `<p class="muted" style="font-size:13px;">${p.description}</p>` : ""}
-            ${p.variants ? `
+            ${p.finalRelease ? `<span class="release-flag release-flag--final">Final release stock</span>` : ""}
+            ${stockVariants ? `
+              <ul class="stock-list" aria-label="Available stock by size">
+                ${stockVariants.map(s => `<li><span class="stock-list__qty">x${s.qty}</span><span class="stock-list__size">${s.size}</span></li>`).join("")}
+              </ul>
+            ` : ""}
+            ${variants ? `
               <label style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-soft); margin-top: 8px;">Size</label>
-              <select data-variant="${p.id}" style="padding: 8px 10px; border: 1px solid var(--rule); background: transparent; font: inherit; color: var(--ink);">
-                ${p.variants.map(v => `<option value="${v.id}">${v.label}</option>`).join("")}
+              <select data-variant="${p.id}" ${p.comingSoon ? "disabled" : ""} style="padding: 8px 10px; border: 1px solid var(--rule); background: transparent; font: inherit; color: var(--ink);">
+                ${variants.map(v => `<option value="${v.id}">${v.label}</option>`).join("")}
               </select>
             ` : ""}
             <div class="foot">
-              <span class="price">${currency(p.price)}</span>
-              <button class="btn btn--sm" data-add="${p.id}">Add to Bag</button>
+              <span class="price">${p.price != null ? currency(p.price) : "—"}</span>
+              ${p.comingSoon
+                ? `<button class="btn btn--sm" disabled aria-disabled="true">Coming Soon</button>`
+                : `<button class="btn btn--sm" data-add="${p.id}">Add to Bag</button>`}
             </div>
           </div>
         </article>
-      `).join("");
+      `;
+      }).join("");
       gridEl.querySelectorAll("[data-add]").forEach(b => b.addEventListener("click", () => {
         const id = b.dataset.add;
         const p = PRODUCTS.find(x => x.id === id);
