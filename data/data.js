@@ -28,7 +28,7 @@ export const THERAPISTS = [
     bio: "Over 7 years of hands-on practice and teaching experience. Malika integrates clinical precision with holistic body understanding — advanced face and body anatomy + physiology, lymphatic circulation, gut health, hormonal balance, inflammation, metabolic function and long-term wellbeing. Her signature The Élevé Method® combines bespoke mapping, drainage sequences and tailored sculpting protocols for natural, visible results.",
     specialties: ["Body Sculpting", "Fat Dissolving", "Post-Op Recovery", "Anti-Wrinkle", "Lip & Profile"],
     eligibleFor: "all",
-    avatar: "assets/therapist-malika.svg",
+    avatar: "assets/therapist-malika.png",
   },
   {
     id: "amina",
@@ -39,6 +39,7 @@ export const THERAPISTS = [
     specialties: ["Lymphatic Drainage", "Post-Op Recovery", "SculptWood®", "Cellulite Therapy", "Body Contouring"],
     eligibleFor: ["body", "lymph", "postop", "sculptwood", "rf", "cellulite", "consultation"],
     avatar: "assets/therapist-amina.svg",
+    hidden: true,
   },
   {
     id: "noor",
@@ -49,6 +50,27 @@ export const THERAPISTS = [
     specialties: ["RF Skin Lift®", "SculptWood®", "Facial Sculpting", "Firm & Tighten®"],
     eligibleFor: ["face", "rf", "sculptwood", "lymph", "consultation"],
     avatar: "assets/therapist-noor.svg",
+    hidden: true,
+  },
+  {
+    id: "isabel",
+    name: "Isabel",
+    title: "Injectables & Aesthetics Practitioner",
+    short: "Anti-wrinkle, lip, profile & fat dissolving",
+    bio: "Isabel leads our injectable diary, mentored under Malika at Élevé Academy. Her practice centres on natural, proportion-led results — anti-wrinkle toxin, lip and profile refinement, non-surgical rhinoplasty finishing and targeted fat dissolving for stubborn facial and body pockets. Calm chair-side manner, meticulous mapping, premium brands only.",
+    specialties: ["Anti-Wrinkle", "Lip & Profile", "Fat Dissolving", "Line Softening"],
+    eligibleFor: ["face", "antiwrinkle", "fat", "consultation"],
+    avatar: "assets/therapist-isabel.png",
+  },
+  {
+    id: "yasmin",
+    name: "Yasmin",
+    title: "Skin Health & Ritual Practitioner",
+    short: "Aftercare ritual, oil drainage & skin protocols",
+    bio: "Yasmin holds the aftercare and skin-health side of Élevé — guiding clients through the post-session ritual that carries results beyond the treatment room. Trained under Malika, her practice combines daily drainage technique, Signature Body Oil protocols, at-home sculpting rituals and skin-barrier care. Clients leave with a routine built for their anatomy, not a shelf of products.",
+    specialties: ["Lymphatic Drainage", "Signature Oil Ritual", "At-Home Protocol", "Skin Barrier Care"],
+    eligibleFor: ["lymph", "sculptwood", "consultation"],
+    avatar: "assets/therapist-yasmin.png",
   },
 ];
 

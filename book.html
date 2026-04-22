@@ -93,7 +93,7 @@
         <h3 style="margin-bottom: 14px;">Choose your practitioner</h3>
         <div class="grid grid--2" id="therapistGrid"></div>
       `;
-      document.getElementById("therapistGrid").innerHTML = THERAPISTS.map(t => `
+      document.getElementById("therapistGrid").innerHTML = THERAPISTS.filter(t => !t.hidden).map(t => `
         <div class="therapist-card ${t.id === state.therapistId ? "is-active" : ""}" data-id="${t.id}">
           <div class="avatar">${t.name[0]}</div>
           <div style="flex: 1;">

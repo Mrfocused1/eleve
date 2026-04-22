@@ -34,7 +34,7 @@
           <h2>Meet your practitioners</h2>
           <p>Two dedicated diaries. Both trained under Malika's method, both accountable to the same standard of care.</p>
         </div>
-        <div class="grid grid--3" id="teamCards"></div>
+        <div class="grid grid--5" id="teamCards"></div>
       </section>
 
       <section class="section wrap">
@@ -174,10 +174,16 @@
       `;
       }).join("");
 
-      document.getElementById("teamCards").innerHTML = THERAPISTS.map(t => `
-        <article class="therapist-card" style="cursor: default;">
-          <div class="avatar">${t.name[0]}</div>
-          <div>
+      const hasPhoto = (src) => typeof src === "string" && /\.(png|jpe?g|webp)$/i.test(src);
+      const visibleTherapists = THERAPISTS.filter(t => !t.hidden);
+      document.getElementById("teamCards").innerHTML = visibleTherapists.map(t => `
+        <article class="team-portrait">
+          <div class="team-portrait__visual">
+            ${hasPhoto(t.avatar)
+              ? `<img class="team-portrait__photo" src="${t.avatar}" alt="${t.name}" loading="lazy" onerror="this.remove()"/>`
+              : `<span class="team-portrait__initial" aria-hidden="true">${t.name[0]}</span>`}
+          </div>
+          <div class="team-portrait__body">
             <h4>${t.name}</h4>
             <div class="role">${t.title}</div>
             <p>${t.short}</p>

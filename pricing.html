@@ -45,14 +45,15 @@
     init();
 
     const services = await loadServices();
-    let active = THERAPISTS[0].id;
+    const visibleTherapists = THERAPISTS.filter(t => !t.hidden);
+    let active = visibleTherapists[0].id;
 
     const picker = document.getElementById("therapistPicker");
     const bio = document.getElementById("activeBio");
     const list = document.getElementById("priceList");
 
     function renderPicker() {
-      picker.innerHTML = THERAPISTS.map(t => `<button class="tab ${t.id === active ? "is-active" : ""}" data-id="${t.id}">${t.name} — ${t.title}</button>`).join("");
+      picker.innerHTML = visibleTherapists.map(t => `<button class="tab ${t.id === active ? "is-active" : ""}" data-id="${t.id}">${t.name} — ${t.title}</button>`).join("");
       picker.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => { active = b.dataset.id; renderAll(); }));
     }
     function renderBio() {

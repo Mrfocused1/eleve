@@ -63,7 +63,7 @@
     import { init } from "./js/app.js";
     import { THERAPISTS } from "./data/data.js";
     init();
-    document.getElementById("teamGrid").innerHTML = THERAPISTS.map(t => `
+    document.getElementById("teamGrid").innerHTML = THERAPISTS.filter(t => !t.hidden).map(t => `
       <article class="therapist-card" style="cursor: default;">
         <div class="avatar">${t.name[0]}</div>
         <div style="flex:1;">
