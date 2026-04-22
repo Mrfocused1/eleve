@@ -57,6 +57,12 @@
       });
     }
 
+    const SCULPT_DETOX_PKGS = [
+      { slug: "eleve-sculpt-detox-6-sessions",  label: "6 Define" },
+      { slug: "eleve-sculpt-detox-12-sessions", label: "12 Refine" },
+      { slug: "eleve-sculpt-detox-24-sessions", label: "24 Transform" },
+    ];
+
     function renderList() {
       const visible = CATEGORIES.filter(c => active === "all" || c.id === active);
       listEl.innerHTML = visible.map(cat => {
@@ -67,19 +73,28 @@
             <h3>${cat.label}</h3>
             <p class="blurb">${cat.blurb}</p>
             <div>
-              ${items.map(s => `
+              ${items.map(s => {
+                const isSculptDetoxSingle = s.slug === "eleve-sculpt-detox";
+                return `
                 <article class="service-row" id="${s.slug}">
                   <div>
                     <div class="name">${s.name} ${s.isPackage ? '<span class="badge badge--pkg" style="margin-left:10px;vertical-align:middle;">Package</span>' : ''}</div>
                     <div class="meta"><span>${s.durationLabel || ""}</span>${s.deposit && Number(s.deposit) > 0 ? `<span>Deposit £${Number(s.deposit).toFixed(0)}</span>` : ""}</div>
                     <div class="desc">${(s.description || "").trim()}</div>
+                    ${isSculptDetoxSingle ? `
+                      <div class="pkg-picker">
+                        <span class="pkg-picker__label">Package options:</span>
+                        ${SCULPT_DETOX_PKGS.map(p => `<a class="pkg-picker__link" href="book.html?svc=${encodeURIComponent(p.slug)}&therapist=malika">${p.label}</a>`).join("")}
+                      </div>
+                    ` : ""}
                   </div>
                   <div class="side">
                     <div class="price">${s.priceLabel}</div>
-                    <a class="btn btn--sm" href="book.html?svc=${encodeURIComponent(s.slug)}">Book</a>
+                    <a class="btn btn--sm" href="book.html?svc=${encodeURIComponent(s.slug)}&therapist=malika">Book</a>
                   </div>
                 </article>
-              `).join("")}
+              `;
+              }).join("")}
             </div>
           </section>
         `;

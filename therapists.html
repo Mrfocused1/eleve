@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Find your ÉLBM Therapist — Élevé London by Malika</title>
+  <meta name="description" content="Find your ÉLBM Therapist. Trained under Malika's method, each practitioner holds their own diary and service area. View pricing and book." />
+  <link rel="icon" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="site">
+    <header class="site-header" id="site-header"></header>
+
+    <main>
+      <section class="section wrap">
+        <div class="section-head">
+          <span class="eyebrow">Find your ÉLBM Therapist</span>
+          <h1>Two dedicated diaries.</h1>
+          <p>Both trained under Malika's method, both accountable to the same standard of care.</p>
+        </div>
+
+        <div class="team-list" id="therapistList"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+  </div>
+
+  <script type="module">
+    import { init } from "./js/app.js";
+    import { THERAPISTS, CATEGORIES, loadServices } from "./data/data.js";
+    import { therapistEligible } from "./js/booking.js";
+    init();
+
+    const services = await loadServices();
+    const hasPhoto = (src) => typeof src === "string" && /\.(png|jpe?g|webp)$/i.test(src);
+
+    // Everyone except Malika — she lives on the Services page
+    const picks = THERAPISTS.filter(t => !t.hidden && t.id !== "malika");
+
+    function priceListFor(t) {
+      const eligible = services.filter(s => therapistEligible(t, s));
+      const groups = CATEGORIES.map(cat => ({
+        cat,
+        items: eligible.filter(s => s.category === cat.id),
+      })).filter(g => g.items.length);
+      if (!groups.length) return "";
+      return `
+        <details class="therapist-prices">
+          <summary>View ${t.name}'s pricing</summary>
+          <div class="therapist-prices__body">
+            ${groups.map(g => `
+              <section class="pricing-group">
+                <h3>${g.cat.label}</h3>
+                <p class="blurb">${g.cat.blurb}</p>
+                ${g.items.map(s => `
+                  <div class="service-row">
+                    <div>
+                      <div class="name">${s.name} ${s.isPackage ? '<span class="badge badge--pkg">Package</span>' : ''}</div>
+                      <div class="meta"><span>${s.durationLabel}</span>${s.deposit && Number(s.deposit) > 0 ? `<span>Deposit £${Number(s.deposit).toFixed(0)}</span>` : ""}</div>
+                    </div>
+                    <div class="side">
+                      <div class="price">£${Number(s.cost).toFixed(0)}</div>
+                      <a class="btn btn--sm" href="book.html?svc=${encodeURIComponent(s.slug)}&therapist=${encodeURIComponent(t.id)}">Book</a>
+                    </div>
+                  </div>
+                `).join("")}
+              </section>
+            `).join("")}
+          </div>
+        </details>
+      `;
+    }
+
+    document.getElementById("therapistList").innerHTML = picks.map((t, i) => `
+      <article class="about-practitioner ${i % 2 === 1 ? "about-practitioner--flip" : ""}">
+        <div class="about-practitioner__visual">
+          ${hasPhoto(t.avatar)
+            ? `<img class="about-practitioner__photo" src="${t.avatar}" alt="${t.name}" loading="lazy" onerror="this.remove()"/>`
+            : `<span class="about-practitioner__initial" aria-hidden="true">${t.name[0]}</span>`}
+        </div>
+        <div class="about-practitioner__body">
+          <h4>${t.name}</h4>
+          <div class="role">${t.title}</div>
+          ${t.location ? `<div class="therapist-loc"><strong>${t.location}</strong>${t.serviceArea ? `<br/><span>${t.serviceArea}</span>` : ""}</div>` : ""}
+          <p>${t.bio}</p>
+          <div class="specialties">
+            ${t.specialties.map(s => `<span class="pill">${s}</span>`).join("")}
+          </div>
+          <div style="margin-top: 18px;" class="hstack">
+            <a class="btn btn--sm" href="book.html?therapist=${encodeURIComponent(t.id)}">Book with ${t.name}</a>
+          </div>
+          ${priceListFor(t)}
+        </div>
+      </article>
+    `).join("");
+  </script>
+</body>
+</html>

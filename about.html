@@ -46,14 +46,6 @@
         </div>
       </section>
 
-      <section class="section wrap">
-        <div class="section-head">
-          <span class="eyebrow">The Team</span>
-          <h2>Practitioners</h2>
-          <p>Each practitioner keeps their own diary and maintains their own scope of practice. Specialist treatments remain with Malika.</p>
-        </div>
-        <div class="team-list" id="teamGrid"></div>
-      </section>
     </main>
 
     <footer class="site-footer" id="site-footer"></footer>
@@ -61,29 +53,7 @@
 
   <script type="module">
     import { init } from "./js/app.js";
-    import { THERAPISTS } from "./data/data.js";
     init();
-    const hasPhoto = (src) => typeof src === "string" && /\.(png|jpe?g|webp)$/i.test(src);
-    document.getElementById("teamGrid").innerHTML = THERAPISTS.filter(t => !t.hidden).map((t, i) => `
-      <article class="about-practitioner ${i % 2 === 1 ? "about-practitioner--flip" : ""}">
-        <div class="about-practitioner__visual">
-          ${hasPhoto(t.avatar)
-            ? `<img class="about-practitioner__photo" src="${t.avatar}" alt="${t.name}" loading="lazy" onerror="this.remove()"/>`
-            : `<span class="about-practitioner__initial" aria-hidden="true">${t.name[0]}</span>`}
-        </div>
-        <div class="about-practitioner__body">
-          <h4>${t.name}</h4>
-          <div class="role">${t.title}</div>
-          <p>${t.bio}</p>
-          <div class="specialties">
-            ${t.specialties.map(s => `<span class="pill">${s}</span>`).join("")}
-          </div>
-          <div style="margin-top: 18px;">
-            <a class="btn btn--sm" href="book.html">Book with ${t.name}</a>
-          </div>
-        </div>
-      </article>
-    `).join("");
   </script>
 </body>
 </html>

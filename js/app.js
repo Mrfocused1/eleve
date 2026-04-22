@@ -5,15 +5,16 @@ import { BUSINESS, NEWSLETTER } from "../data/data.js";
 import { cartCount } from "./cart.js";
 
 const NAV = [
-  { href: "index.html",    label: "Home" },
-  { href: "services.html", label: "Services" },
-  { href: "training.html", label: "Academy" },
-  { href: "shop.html",     label: "Shop" },
-  { href: "book.html",     label: "Book" },
-  { href: "pricing.html",  label: "Pricing" },
-  { href: "about.html",    label: "About" },
-  { href: "faqs.html",     label: "FAQs" },
-  { href: "contact.html",  label: "Contact" },
+  { href: "index.html",     label: "Home" },
+  { href: "services.html",  label: "Services" },
+  { href: "training.html",  label: "Academy" },
+  { href: "shop.html",      label: "Shop" },
+  { href: "book.html",      label: "Book" },
+  { href: "pricing.html",   label: "Pricing" },
+  { href: "therapists.html", label: "Find Your Therapist" },
+  { href: "about.html",     label: "About" },
+  { href: "faqs.html",      label: "FAQs" },
+  { href: "contact.html",   label: "Contact" },
 ];
 
 function currentPath() {
@@ -97,6 +98,7 @@ export function renderFooter(mountId = "site-footer") {
             <li><a href="shop.html">Élevé Store</a></li>
             <li><a href="book.html">Book a Session</a></li>
             <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="therapists.html">Find Your Therapist</a></li>
           </ul>
         </div>
         <div class="footer-col">

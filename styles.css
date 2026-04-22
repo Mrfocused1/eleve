@@ -612,6 +612,31 @@ main { flex: 1; }
 .service-row .side { text-align: right; display: flex; flex-direction: column; gap: 10px; align-items: flex-end; min-width: 130px; }
 .service-row .price { font-family: var(--serif); font-size: clamp(22px, 2.2vw, 28px); color: var(--ink); }
 
+.pkg-picker {
+  margin-top: 14px;
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 10px 14px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+.pkg-picker__label {
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 11px;
+  color: var(--ink-faint);
+}
+.pkg-picker__link {
+  font-family: var(--serif);
+  font-size: 14px;
+  letter-spacing: 0;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 1px;
+  transition: opacity 0.2s ease;
+}
+.pkg-picker__link:hover { opacity: 0.65; }
+
 @media (max-width: 560px) {
   .service-row { grid-template-columns: 1fr; }
   .service-row .side { align-items: flex-start; text-align: left; }
@@ -882,6 +907,59 @@ main { flex: 1; }
   display: flex; flex-wrap: wrap; gap: 6px;
   margin-top: 8px;
 }
+
+/* Therapist location block for Find-your-ÉLBM-Therapist page */
+.therapist-loc {
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+  margin: 6px 0 2px;
+}
+.therapist-loc strong {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--ink);
+  letter-spacing: 0;
+}
+.therapist-loc span {
+  display: inline-block;
+  margin-top: 2px;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+}
+
+/* Per-therapist price disclosure */
+.therapist-prices {
+  margin-top: 22px;
+  border-top: 1px solid var(--rule);
+  padding-top: 14px;
+}
+.therapist-prices > summary {
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 6px 0;
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.therapist-prices > summary::-webkit-details-marker { display: none; }
+.therapist-prices > summary::after {
+  content: "+";
+  font-size: 16px;
+  letter-spacing: 0;
+  color: var(--ink-faint);
+}
+.therapist-prices[open] > summary::after { content: "−"; }
+.therapist-prices__body { margin-top: 12px; }
 
 @media (max-width: 900px) {
   .about-practitioner,

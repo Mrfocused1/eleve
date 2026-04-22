@@ -462,8 +462,8 @@
   },
   {
     "slug": "eleve-sculpt-detox-12-sessions",
-    "name": "Élevé Sculpt Detox® (12 Sessions)",
-    "description": "DEFINE PROGRAMME — Designed for Second phase stage deeper lymphatic improvement, gut support + sculpting change.",
+    "name": "Élevé Sculpt Detox® — Refine (12 Sessions)",
+    "description": "REFINE PROGRAMME — Designed for deeper lymphatic improvement, gut support + sculpting change.",
     "duration": "PT2H",
     "cost": "1445.0",
     "deposit": "0.0",
@@ -474,8 +474,8 @@
   },
   {
     "slug": "eleve-sculpt-detox-24-sessions",
-    "name": "Élevé Sculpt Detox® (24 Sessions)",
-    "description": "TRANSFORM PROGRAMME — Designed for Third phase detoxification, providing a \nstable solution for chronic bloating, slow digestion + wellness rebalancing",
+    "name": "Élevé Sculpt Detox® — Transform (24 Sessions)",
+    "description": "TRANSFORM PROGRAMME — Designed for full-phase detoxification, providing a \nstable solution for chronic bloating, slow digestion + wellness rebalancing.",
     "duration": "PT2H",
     "cost": "2500.0",
     "deposit": "0.0",
@@ -486,8 +486,8 @@
   },
   {
     "slug": "eleve-sculpt-detox-6-sessions",
-    "name": "Élevé Sculpt Detox® (6 Sessions)",
-    "description": "REST PROGRAMME — Designed for first phase detox + visible refinement.",
+    "name": "Élevé Sculpt Detox® — Define (6 Sessions)",
+    "description": "DEFINE PROGRAMME — Designed for first phase detox + visible refinement.",
     "duration": "PT2H",
     "cost": "780.0",
     "deposit": "0.0",

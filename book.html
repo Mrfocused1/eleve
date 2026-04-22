@@ -53,10 +53,16 @@
     const state = { step: 1, therapistId: null, serviceSlug: null, date: null, time: null, customer: {} };
     const services = await loadServices();
 
-    const prefill = new URLSearchParams(location.search).get("svc");
+    const qs = new URLSearchParams(location.search);
+    const prefill = qs.get("svc");
+    const therapistPrefill = qs.get("therapist");
     if (prefill && services.find(s => s.slug === prefill)) {
       state.serviceSlug = prefill;
       state.step = 1;
+    }
+    if (therapistPrefill && THERAPISTS.find(t => t.id === therapistPrefill && !t.hidden)) {
+      state.therapistId = therapistPrefill;
+      state.step = state.serviceSlug ? 3 : 2;
     }
 
     const stepper = document.getElementById("stepper");
