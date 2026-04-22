@@ -11,7 +11,7 @@ const NAV = [
   { href: "shop.html",      label: "Shop" },
   { href: "book.html",      label: "Book" },
   { href: "pricing.html",   label: "Pricing" },
-  { href: "therapists.html", label: "Find Your Therapist" },
+  { href: "therapists.html", label: "Therapists" },
   { href: "about.html",     label: "About" },
   { href: "faqs.html",      label: "FAQs" },
   { href: "contact.html",   label: "Contact" },
@@ -98,7 +98,7 @@ export function renderFooter(mountId = "site-footer") {
             <li><a href="shop.html">Élevé Store</a></li>
             <li><a href="book.html">Book a Session</a></li>
             <li><a href="pricing.html">Pricing</a></li>
-            <li><a href="therapists.html">Find Your Therapist</a></li>
+            <li><a href="therapists.html">Therapists</a></li>
           </ul>
         </div>
         <div class="footer-col">
