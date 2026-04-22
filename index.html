@@ -20,7 +20,7 @@
       <section class="hero-home wrap">
         <img class="logo" src="assets/logo.png" alt="Élevé" />
         <h1>Refined results,<br/>delivered with intention.</h1>
-        <p>A bespoke, results-driven clinical body &amp; face suite, led by Malika. Every protocol is mapped to your anatomy using <em>The Élevé Method®</em> — lymphatic, sculpting, RF, fat dissolving and post-operative recovery.</p>
+        <p>A bespoke, results-driven clinical body &amp; face suite, led by Malika. Every protocol is mapped to your anatomy using <em>The Élevé Method®</em> — lymphatic wellness, body sculpting, skin rejuvenation, advanced aesthetics and post-operative recovery.</p>
         <div class="hero-ctas">
           <a href="book.html" class="btn">Book a Session</a>
           <a href="services.html" class="btn btn--ghost">Treatment Menu</a>
@@ -189,17 +189,22 @@
         </article>
       `).join("");
 
+      const COLOMBIAN_FLAG = `<span class="co-flag" title="Sourced from Colombia" aria-label="Sourced from Colombia"><span class="co-flag__y"></span><span class="co-flag__b"></span><span class="co-flag__r"></span></span>`;
       const pFeat = PRODUCTS.slice(0, 4);
       document.getElementById("featuredProducts").innerHTML = pFeat.map(p => `
-        <article class="product-card">
-          <a class="img-wrap" href="shop.html#${p.id}"><img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'"/></a>
+        <article class="product-card ${p.comingSoon ? "is-coming-soon" : ""}">
+          <a class="img-wrap" href="shop.html#${p.id}">
+            ${p.colombian ? COLOMBIAN_FLAG : ""}
+            ${p.comingSoon ? `<span class="coming-soon-badge">Coming Soon</span>` : ""}
+            <img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'"/>
+          </a>
           <div class="body">
-            <span class="cat">${p.category}</span>
+            <span class="cat">${p.category}${p.brand ? ` · ${p.brand}` : ""}</span>
             <span class="name">${p.name}</span>
             <span class="tag">${p.tagline}</span>
             <div class="foot">
-              <span class="price">£${p.price}</span>
-              <a class="btn btn--sm" href="shop.html#${p.id}">View</a>
+              <span class="price">${p.price != null ? `£${p.price}` : "—"}</span>
+              <a class="btn btn--sm" href="shop.html#${p.id}">${p.comingSoon ? "Notify" : "View"}</a>
             </div>
           </div>
         </article>
