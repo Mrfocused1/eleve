@@ -52,7 +52,7 @@
           <h2>Practitioners</h2>
           <p>Each practitioner keeps their own diary and maintains their own scope of practice. Specialist treatments remain with Malika.</p>
         </div>
-        <div class="grid grid--3" id="teamGrid"></div>
+        <div class="team-list" id="teamGrid"></div>
       </section>
     </main>
 
@@ -63,17 +63,22 @@
     import { init } from "./js/app.js";
     import { THERAPISTS } from "./data/data.js";
     init();
-    document.getElementById("teamGrid").innerHTML = THERAPISTS.filter(t => !t.hidden).map(t => `
-      <article class="therapist-card" style="cursor: default;">
-        <div class="avatar">${t.name[0]}</div>
-        <div style="flex:1;">
+    const hasPhoto = (src) => typeof src === "string" && /\.(png|jpe?g|webp)$/i.test(src);
+    document.getElementById("teamGrid").innerHTML = THERAPISTS.filter(t => !t.hidden).map((t, i) => `
+      <article class="about-practitioner ${i % 2 === 1 ? "about-practitioner--flip" : ""}">
+        <div class="about-practitioner__visual">
+          ${hasPhoto(t.avatar)
+            ? `<img class="about-practitioner__photo" src="${t.avatar}" alt="${t.name}" loading="lazy" onerror="this.remove()"/>`
+            : `<span class="about-practitioner__initial" aria-hidden="true">${t.name[0]}</span>`}
+        </div>
+        <div class="about-practitioner__body">
           <h4>${t.name}</h4>
           <div class="role">${t.title}</div>
           <p>${t.bio}</p>
-          <div style="margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap;">
+          <div class="specialties">
             ${t.specialties.map(s => `<span class="pill">${s}</span>`).join("")}
           </div>
-          <div style="margin-top: 14px;">
+          <div style="margin-top: 18px;">
             <a class="btn btn--sm" href="book.html">Book with ${t.name}</a>
           </div>
         </div>

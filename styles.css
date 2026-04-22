@@ -169,12 +169,35 @@ h4 { font-size: 16px; letter-spacing: 0.04em; text-transform: none; }
   .nav-actions .cart-link { padding-right: 6px; }
   .menu-btn { display: inline-flex; align-items: center; gap: 8px; }
   .nav-drawer.open .nav-links {
-    display: flex; flex-direction: column; gap: 18px;
-    position: fixed; inset: 64px 0 0 0; padding: 40px 32px;
-    background: var(--bg-cream); z-index: 40;
-    font-size: 15px; letter-spacing: 0.18em;
+    display: flex; flex-direction: column; gap: 22px;
+    position: fixed;
+    top: 64px; left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    height: calc(100dvh - 64px);
+    height: calc(100vh - 64px);
+    padding: 56px 32px 40px;
+    background: var(--bg-cream);
+    z-index: 40;
+    font-family: var(--serif);
+    font-size: 28px;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .nav-drawer.open .nav-links a {
+    color: var(--ink);
+    font-weight: 400;
+    padding: 4px 0;
+  }
+  .nav-drawer.open .nav-links a.is-active {
+    font-style: italic;
+    color: var(--accent-ink);
   }
   .nav-drawer.open .nav-links a.is-active::after { display: none; }
+  body:has(.nav-drawer.open) { overflow: hidden; }
 }
 
 /* ====== Buttons ====== */
@@ -267,15 +290,14 @@ main { flex: 1; }
     display: flex;
     grid-template-columns: none;
     overflow-x: auto;
-    overflow-y: visible;
+    overflow-y: hidden;
     scroll-snap-type: x proximity;
     scroll-padding-left: var(--gutter);
     gap: 22px;
     padding: 4px var(--gutter) 12px;
     margin: 0 calc(var(--gutter) * -1);
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
-    overscroll-behavior-x: contain;
+    overscroll-behavior-inline: contain;
     scrollbar-width: none;
   }
   #featuredServices::-webkit-scrollbar { display: none; }
@@ -768,6 +790,111 @@ main { flex: 1; }
   margin: 4px 0 0;
 }
 
+/* About-page practitioner rows — editorial 2-up with fade photo */
+.team-list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(48px, 7vw, 88px);
+}
+.about-practitioner {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+}
+.about-practitioner--flip { grid-template-columns: 7fr 5fr; }
+.about-practitioner--flip .about-practitioner__visual { order: 2; }
+.about-practitioner--flip .about-practitioner__body { order: 1; }
+
+.about-practitioner__visual {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 20% 20%, rgba(232, 220, 203, 0.9) 0%, transparent 60%),
+    radial-gradient(100% 80% at 85% 30%, rgba(214, 200, 179, 0.85) 0%, transparent 55%),
+    linear-gradient(135deg, #dccfba 0%, #c4b39b 100%);
+  background-size: 200% 200%, 200% 200%, 100% 100%;
+  animation: meshShift 18s ease-in-out infinite alternate;
+}
+.about-practitioner__visual::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom,
+    var(--bg) 0%,
+    rgba(214, 206, 194, 0.35) 14%,
+    transparent 34%,
+    transparent 66%,
+    rgba(214, 206, 194, 0.35) 86%,
+    var(--bg) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+.about-practitioner__photo {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  z-index: 0;
+}
+.about-practitioner__visual:has(.about-practitioner__photo) { animation: none; }
+.about-practitioner__initial {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(96px, 14vw, 160px);
+  color: rgba(58, 51, 43, 0.22);
+  z-index: 0;
+}
+
+.about-practitioner__body {
+  display: flex; flex-direction: column;
+  gap: 8px;
+}
+.about-practitioner__body h4 {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(28px, 3.4vw, 42px);
+  line-height: 1.1;
+  color: var(--ink);
+  margin: 0;
+}
+.about-practitioner__body .role {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 4px;
+}
+.about-practitioner__body p {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(15px, 1.4vw, 17px);
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin: 0;
+  max-width: 54ch;
+}
+.about-practitioner__body .specialties {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-top: 8px;
+}
+
+@media (max-width: 900px) {
+  .about-practitioner,
+  .about-practitioner--flip {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin: 0 auto;
+    gap: 20px;
+  }
+  .about-practitioner--flip .about-practitioner__visual { order: 1; }
+  .about-practitioner--flip .about-practitioner__body { order: 2; }
+}
+
 @media (max-width: 900px) {
   /* Team portraits become a horizontal snap scroller on mobile */
   #teamCards {
@@ -775,15 +902,14 @@ main { flex: 1; }
     grid-template-columns: none;
     justify-content: flex-start;
     overflow-x: auto;
-    overflow-y: visible;
+    overflow-y: hidden;
     scroll-snap-type: x proximity;
     scroll-padding-left: var(--gutter);
     gap: 22px;
     padding: 4px var(--gutter) 12px;
     margin: 0 calc(var(--gutter) * -1);
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
-    overscroll-behavior-x: contain;
+    overscroll-behavior-inline: contain;
     scrollbar-width: none;
   }
   #teamCards::-webkit-scrollbar { display: none; }
