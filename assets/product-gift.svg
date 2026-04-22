@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
-  <rect x="30" y="60" width="160" height="120" fill="#efe8dc" stroke="#c9bfae" stroke-width="1.5" rx="4"/>
-  <rect x="30" y="110" width="160" height="20" fill="#8a7a68"/>
-  <rect x="100" y="60" width="20" height="120" fill="#8a7a68"/>
-  <path d="M100 60 Q90 40 80 50 Q90 60 100 60z" fill="#c28495"/>
-  <path d="M120 60 Q130 40 140 50 Q130 60 120 60z" fill="#c28495"/>
-  <text x="110" y="172" text-anchor="middle" font-family="Jost,sans-serif" font-size="8" letter-spacing="3" fill="#6b6155">GIFT CARD</text>
-</svg>

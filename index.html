@@ -30,6 +30,15 @@
 
       <section class="section wrap">
         <div class="section-head">
+          <span class="eyebrow">Our Team</span>
+          <h2>Meet your practitioners</h2>
+          <p>Two dedicated diaries. Both trained under Malika's method, both accountable to the same standard of care.</p>
+        </div>
+        <div class="grid grid--3" id="teamCards"></div>
+      </section>
+
+      <section class="section wrap">
+        <div class="section-head">
           <span class="eyebrow">The Élevé Experience</span>
           <h2>Signature treatments</h2>
           <p>Each session is tailored to your natural curves and goals. Single sessions are reserved for trial/intro assessments — sculpting results require programmed plans.</p>
@@ -49,15 +58,6 @@
             <span class="cite">— The Élevé Method®</span>
           </div>
         </div>
-      </section>
-
-      <section class="section wrap">
-        <div class="section-head">
-          <span class="eyebrow">Our Team</span>
-          <h2>Meet your practitioners</h2>
-          <p>Two dedicated diaries. Both trained under Malika's method, both accountable to the same standard of care.</p>
-        </div>
-        <div class="grid grid--3" id="teamCards"></div>
       </section>
 
       <section class="section section--full">
@@ -156,10 +156,13 @@
           <div class="feature-card__visual">
             ${photo ? `<img class="feature-card__photo" src="${photo}" alt="" loading="lazy" onerror="this.remove()"/>` : ""}
             <span class="feature-card__blob" aria-hidden="true"></span>
-            <span class="feature-card__tag"><span class="pulse" aria-hidden="true"></span> ${s.durationLabel}</span>
-            <span class="feature-card__price-chip">From <strong>${s.priceLabel}</strong></span>
           </div>
           <div class="feature-card__body">
+            <div class="feature-card__meta">
+              <span>${s.durationLabel}</span>
+              <span class="sep" aria-hidden="true"></span>
+              <span class="price">From ${s.priceLabel}</span>
+            </div>
             <h3 class="feature-card__title">${s.name}</h3>
             <p class="feature-card__desc">${(s.description || "").split("\n")[0]}</p>
             <div class="feature-card__actions">
