@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Book an Appointment — Élevé London</title>
+  <meta name="description" content="Book directly with Malika or our trained senior therapists. Choose your treatment, select a date and time from the therapist's live diary, confirm with your details." />
+  <link rel="icon" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="site">
+    <header class="site-header" id="site-header"></header>
+
+    <main>
+      <section class="section wrap">
+        <div class="section-head" style="text-align: left; margin-bottom: 24px;">
+          <span class="eyebrow">Book an Appointment</span>
+          <h1 style="margin-top: 6px;">Reserve your session.</h1>
+          <p style="margin-left: 0;">New clients begin with a consultation. Packages deliver the most transformative results.</p>
+        </div>
+
+        <div class="stepper" id="stepper">
+          <span class="step" data-step="1"><span class="n">1</span> Therapist</span>
+          <span class="step" data-step="2"><span class="n">2</span> Treatment</span>
+          <span class="step" data-step="3"><span class="n">3</span> Date &amp; Time</span>
+          <span class="step" data-step="4"><span class="n">4</span> Confirm</span>
+        </div>
+
+        <div class="booking">
+          <div id="stepHost"></div>
+
+          <aside class="summary" id="summary">
+            <h4>Your booking</h4>
+            <div id="summaryBody"><p class="muted" style="font-size: 13px;">Start by choosing a practitioner.</p></div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+  </div>
+
+  <script type="module">
+    import { init, toast } from "./js/app.js";
+    import { THERAPISTS, CATEGORIES, loadServices } from "./data/data.js";
+    import { DiaryStore, ymd, fromYMD, isBookable, buildSlots, therapistEligible } from "./js/booking.js";
+    init();
+
+    const state = { step: 1, therapistId: null, serviceSlug: null, date: null, time: null, customer: {} };
+    const services = await loadServices();
+
+    const prefill = new URLSearchParams(location.search).get("svc");
+    if (prefill && services.find(s => s.slug === prefill)) {
+      state.serviceSlug = prefill;
+      state.step = 1;
+    }
+
+    const stepper = document.getElementById("stepper");
+    const host = document.getElementById("stepHost");
+
+    function updateStepper() {
+      stepper.querySelectorAll(".step").forEach(s => {
+        const n = parseInt(s.dataset.step);
+        s.classList.toggle("is-active", n === state.step);
+        s.classList.toggle("is-done", n < state.step);
+      });
+    }
+
+    function updateSummary() {
+      const t = THERAPISTS.find(x => x.id === state.therapistId);
+      const svc = services.find(x => x.slug === state.serviceSlug);
+      const body = [];
+      if (t) body.push(`<div class="row"><span>Practitioner</span><span>${t.name}</span></div>`);
+      if (svc) body.push(`<div class="row"><span>Treatment</span><span>${svc.name}</span></div>`);
+      if (svc) body.push(`<div class="row"><span>Duration</span><span>${svc.durationLabel}</span></div>`);
+      if (state.date) body.push(`<div class="row"><span>Date</span><span>${new Date(state.date).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", year: "numeric" })}</span></div>`);
+      if (state.time) body.push(`<div class="row"><span>Time</span><span>${state.time}</span></div>`);
+      if (svc) {
+        const deposit = Number(svc.deposit || 0);
+        const price = Number(svc.cost || 0);
+        body.push(`<div class="row total"><span>Price</span><span>£${price.toFixed(0)}</span></div>`);
+        if (deposit > 0) body.push(`<div class="row"><span>Deposit due today</span><span>£${deposit.toFixed(0)}</span></div>`);
+      }
+      document.getElementById("summaryBody").innerHTML = body.join("") || `<p class="muted" style="font-size:13px;">Start by choosing a practitioner.</p>`;
+    }
+
+    function renderStep1() {
+      host.innerHTML = `
+        <h3 style="margin-bottom: 14px;">Choose your practitioner</h3>
+        <div class="grid grid--2" id="therapistGrid"></div>
+      `;
+      document.getElementById("therapistGrid").innerHTML = THERAPISTS.map(t => `
+        <div class="therapist-card ${t.id === state.therapistId ? "is-active" : ""}" data-id="${t.id}">
+          <div class="avatar">${t.name[0]}</div>
+          <div style="flex: 1;">
+            <h4>${t.name}</h4>
+            <div class="role">${t.title}</div>
+            <p>${t.short}</p>
+            <div style="margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap;">
+              ${t.specialties.map(s => `<span class="pill">${s}</span>`).join("")}
+            </div>
+          </div>
+        </div>
+      `).join("");
+      document.querySelectorAll(".therapist-card").forEach(c => c.addEventListener("click", () => {
+        state.therapistId = c.dataset.id;
+        state.step = 2;
+        render();
+      }));
+    }
+
+    function renderStep2() {
+      const t = THERAPISTS.find(x => x.id === state.therapistId);
+      const eligible = services.filter(s => therapistEligible(t, s));
+      const grouped = CATEGORIES.map(c => ({ cat: c, items: eligible.filter(s => s.category === c.id) })).filter(g => g.items.length);
+
+      host.innerHTML = `
+        <div class="hstack" style="justify-content: space-between; margin-bottom: 14px;">
+          <h3>Choose a treatment</h3>
+          <button class="btn btn--sm btn--ghost" id="backBtn">← Change practitioner</button>
+        </div>
+        <p class="muted" style="font-size: 13px; margin-bottom: 20px;">Services available with ${t.name}. Packages redirect to checkout; single sessions proceed to date &amp; time.</p>
+        <div id="serviceChooser"></div>
+      `;
+      document.getElementById("backBtn").addEventListener("click", () => { state.step = 1; render(); });
+      document.getElementById("serviceChooser").innerHTML = grouped.map(g => `
+        <section class="pricing-group">
+          <h4 style="font-family: var(--serif); font-size: 20px; margin-bottom: 12px;">${g.cat.label}</h4>
+          <div>
+            ${g.items.map(s => `
+              <article class="service-row" style="padding: 16px 0;">
+                <div>
+                  <div class="name">${s.name}</div>
+                  <div class="meta"><span>${s.durationLabel}</span>${s.isPackage ? '<span>Package</span>' : ''}</div>
+                  <div class="desc">${(s.description || "").split("\n")[0]}</div>
+                </div>
+                <div class="side">
+                  <div class="price">£${Number(s.cost).toFixed(0)}</div>
+                  <button class="btn btn--sm" data-pick="${s.slug}">Select</button>
+                </div>
+              </article>
+            `).join("")}
+          </div>
+        </section>
+      `).join("");
+      host.querySelectorAll("[data-pick]").forEach(b => b.addEventListener("click", () => {
+        state.serviceSlug = b.dataset.pick;
+        state.step = 3;
+        state.date = null; state.time = null;
+        render();
+      }));
+    }
+
+    let calAnchor = new Date();
+    function renderStep3() {
+      const t = THERAPISTS.find(x => x.id === state.therapistId);
+      const svc = services.find(x => x.slug === state.serviceSlug);
+      host.innerHTML = `
+        <div class="hstack" style="justify-content: space-between; margin-bottom: 14px;">
+          <h3>Pick a date &amp; time</h3>
+          <button class="btn btn--sm btn--ghost" id="backBtn">← Change treatment</button>
+        </div>
+        <p class="muted" style="font-size: 13px; margin-bottom: 20px;">
+          Showing <strong>${t.name}'s</strong> diary.
+          ${svc.isPackage ? "Package plans are scheduled with your practitioner after checkout — book your first session here." : ""}
+        </p>
+        <div class="cal" id="calHost"></div>
+        <div id="slotsHost"></div>
+        <div class="hstack" style="justify-content: flex-end; margin-top: 20px;">
+          <button class="btn" id="nextBtn" disabled>Continue</button>
+        </div>
+      `;
+      document.getElementById("backBtn").addEventListener("click", () => { state.step = 2; render(); });
+      document.getElementById("nextBtn").addEventListener("click", () => {
+        if (state.date && state.time) { state.step = 4; render(); }
+      });
+      renderCalendar();
+    }
+
+    function renderCalendar() {
+      const first = new Date(calAnchor.getFullYear(), calAnchor.getMonth(), 1);
+      const last = new Date(calAnchor.getFullYear(), calAnchor.getMonth() + 1, 0);
+      const startPad = first.getDay();
+      const days = [];
+      for (let i = 0; i < startPad; i++) days.push(null);
+      for (let d = 1; d <= last.getDate(); d++) days.push(new Date(calAnchor.getFullYear(), calAnchor.getMonth(), d));
+
+      const monthLabel = calAnchor.toLocaleDateString("en-GB", { month: "long", year: "numeric" });
+      document.getElementById("calHost").innerHTML = `
+        <div class="cal-head">
+          <button id="prevMonth" aria-label="Previous month">←</button>
+          <h4>${monthLabel}</h4>
+          <button id="nextMonth" aria-label="Next month">→</button>
+        </div>
+        <div class="cal-grid">
+          ${["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(d => `<span class="day-label">${d}</span>`).join("")}
+          ${days.map(d => {
+            if (!d) return `<span class="cal-day is-other"></span>`;
+            const bookable = isBookable(d);
+            const isSelected = state.date === ymd(d);
+            return `<button class="cal-day ${isSelected ? "is-selected" : ""}" ${bookable ? "" : "disabled"} data-d="${ymd(d)}">${d.getDate()}</button>`;
+          }).join("")}
+        </div>
+      `;
+      document.getElementById("prevMonth").onclick = () => {
+        const prev = new Date(calAnchor.getFullYear(), calAnchor.getMonth() - 1, 1);
+        const now = new Date();
+        if (prev.getFullYear() < now.getFullYear() || (prev.getFullYear() === now.getFullYear() && prev.getMonth() < now.getMonth())) return;
+        calAnchor = prev; renderCalendar();
+      };
+      document.getElementById("nextMonth").onclick = () => { calAnchor = new Date(calAnchor.getFullYear(), calAnchor.getMonth() + 1, 1); renderCalendar(); };
+
+      document.querySelectorAll(".cal-day[data-d]").forEach(b => b.addEventListener("click", () => {
+        state.date = b.dataset.d; state.time = null; renderCalendar(); renderSlots(); updateSummary();
+      }));
+      renderSlots();
+    }
+
+    function renderSlots() {
+      const slotsHost = document.getElementById("slotsHost");
+      if (!state.date) { slotsHost.innerHTML = `<p class="muted" style="margin-top: 14px; font-size: 13px;">Select a date to view available times.</p>`; return; }
+      const svc = services.find(x => x.slug === state.serviceSlug);
+      const existing = DiaryStore.forTherapistOnDate(state.therapistId, state.date);
+      const slots = buildSlots(fromYMD(state.date), svc.duration_min, existing);
+      if (slots.length === 0) { slotsHost.innerHTML = `<p class="muted" style="margin-top: 14px; font-size: 13px;">No times available for this date — please choose another.</p>`; return; }
+      slotsHost.innerHTML = `
+        <h4 style="font-family: var(--serif); font-size: 18px; margin: 20px 0 10px;">Available times</h4>
+        <div class="slots">
+          ${slots.map(s => `<button class="slot ${state.time === s.time ? "is-selected" : ""}" ${s.available ? "" : "disabled"} data-t="${s.time}">${s.time}</button>`).join("")}
+        </div>
+      `;
+      slotsHost.querySelectorAll("[data-t]").forEach(b => b.addEventListener("click", () => {
+        state.time = b.dataset.t;
+        slotsHost.querySelectorAll(".slot").forEach(x => x.classList.remove("is-selected"));
+        b.classList.add("is-selected");
+        document.getElementById("nextBtn").disabled = false;
+        updateSummary();
+      }));
+    }
+
+    function renderStep4() {
+      const svc = services.find(x => x.slug === state.serviceSlug);
+      const deposit = Number(svc.deposit || 0);
+      host.innerHTML = `
+        <div class="hstack" style="justify-content: space-between; margin-bottom: 14px;">
+          <h3>Confirm &amp; secure</h3>
+          <button class="btn btn--sm btn--ghost" id="backBtn">← Change time</button>
+        </div>
+        <form id="confirmForm" novalidate>
+          <div class="fields-row">
+            <div class="field"><label for="fname">First name</label><input id="fname" name="fname" required/></div>
+            <div class="field"><label for="lname">Last name</label><input id="lname" name="lname" required/></div>
+          </div>
+          <div class="fields-row">
+            <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required/></div>
+            <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" required/></div>
+          </div>
+          <div class="field"><label for="notes">Anything your therapist should know?</label><textarea id="notes" name="notes" rows="3" placeholder="Past surgeries, medical history, goals, allergies..."></textarea></div>
+
+          <div class="card" style="background: var(--bg-cream); margin-top: 10px;">
+            <h4 style="font-family: var(--serif); font-size: 18px;">Payment</h4>
+            <p class="muted" style="font-size: 13px; margin: 0;">
+              ${deposit > 0 ? `A non-refundable deposit of <strong>£${deposit.toFixed(0)}</strong> is taken to secure your booking. Balance of £${(svc.cost - deposit).toFixed(0)} due at your appointment.` : "Full payment taken at your appointment — no deposit required."}
+              Klarna, Clearpay and PayLater available on arrival.
+            </p>
+          </div>
+
+          <div class="hstack" style="justify-content: flex-end; margin-top: 20px;">
+            <button class="btn" type="submit">${deposit > 0 ? `Pay £${deposit.toFixed(0)} Deposit & Confirm` : "Confirm Booking"}</button>
+          </div>
+          <p class="form-msg" id="confMsg" role="status" aria-live="polite"></p>
+        </form>
+      `;
+      document.getElementById("backBtn").addEventListener("click", () => { state.step = 3; render(); });
+      document.getElementById("confirmForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(e.target).entries());
+        if (!data.fname || !data.email) { document.getElementById("confMsg").textContent = "Please complete all required fields."; document.getElementById("confMsg").className = "form-msg err"; return; }
+        state.customer = data;
+        const svc = services.find(x => x.slug === state.serviceSlug);
+        const t = THERAPISTS.find(x => x.id === state.therapistId);
+        const booking = {
+          id: "BKG-" + Date.now().toString(36).toUpperCase(),
+          createdAt: new Date().toISOString(),
+          therapistId: t.id, therapistName: t.name,
+          serviceSlug: svc.slug, serviceName: svc.name,
+          date: state.date, time: state.time,
+          durationMin: svc.duration_min,
+          price: Number(svc.cost), deposit: Number(svc.deposit || 0),
+          customer: data,
+        };
+        DiaryStore.add(booking);
+        localStorage.setItem("eleve.lastBooking", JSON.stringify(booking));
+        toast("Booking confirmed");
+        setTimeout(() => { location.href = "booking-confirmed.html?id=" + encodeURIComponent(booking.id); }, 600);
+      });
+    }
+
+    function render() {
+      updateStepper(); updateSummary();
+      if (state.step === 1) renderStep1();
+      else if (state.step === 2) renderStep2();
+      else if (state.step === 3) renderStep3();
+      else if (state.step === 4) renderStep4();
+    }
+    render();
+  </script>
+</body>
+</html>

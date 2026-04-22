@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About Malika — Élevé London</title>
+  <meta name="description" content="Meet Malika, founder of Élevé London (formerly Sass London Aesthetic) and creator of The Élevé Method® — over 7 years of hands-on practice and teaching." />
+  <link rel="icon" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="site">
+    <header class="site-header" id="site-header"></header>
+
+    <main>
+      <section class="section wrap">
+        <div class="section-head">
+          <span class="eyebrow">About</span>
+          <h1>Anatomy, restraint, intention.</h1>
+          <p>Formerly Sass London Aesthetic. Reimagined as Élevé London by Malika — a clinical atelier for body sculpting, lymphatic wellness and post-operative recovery in Wembley Park.</p>
+        </div>
+
+        <div class="grid grid--2" style="max-width: 1040px; margin: 0 auto;">
+          <div>
+            <h2>The Élevé Method®</h2>
+            <p class="muted" style="font-family: var(--serif); font-size: 17px; line-height: 1.6; margin-top: 12px;">
+              Over 7 years of hands-on practice and teaching experience. Malika's approach integrates clinical precision with holistic body understanding — advanced face and body anatomy + physiology, lymphatic circulation, gut health and digestion, hormonal balance, inflammation, metabolic function and long-term wellbeing.
+            </p>
+            <p class="muted" style="font-family: var(--serif); font-size: 17px; line-height: 1.6; margin-top: 12px;">
+              The Élevé Method® combines bespoke mapping, drainage sequences and tailored sculpting protocols for natural, visible results. Services span body contouring, lymphatic drainage, skin tightening, fat reduction, facial rejuvenation and post-operative support — all personalised to individual goals and needs.
+            </p>
+          </div>
+          <div>
+            <h2>Academy</h2>
+            <p class="muted" style="font-family: var(--serif); font-size: 17px; line-height: 1.6; margin-top: 12px;">
+              Élevé Academy offers accredited training programmes that merge technique, wellness integration and business mentoring — aiming to empower practitioners with safe, ethical and effective care that supports transformation from the inside out.
+            </p>
+            <div class="hstack" style="margin-top: 16px;">
+              <a class="btn btn--sm" href="training.html">View Courses</a>
+              <a class="btn btn--sm btn--ghost" href="contact.html">Request Brochure</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section wrap">
+        <div class="section-head">
+          <span class="eyebrow">The Team</span>
+          <h2>Practitioners</h2>
+          <p>Each practitioner keeps their own diary and maintains their own scope of practice. Specialist treatments remain with Malika.</p>
+        </div>
+        <div class="grid grid--3" id="teamGrid"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+  </div>
+
+  <script type="module">
+    import { init } from "./js/app.js";
+    import { THERAPISTS } from "./data/data.js";
+    init();
+    document.getElementById("teamGrid").innerHTML = THERAPISTS.map(t => `
+      <article class="therapist-card" style="cursor: default;">
+        <div class="avatar">${t.name[0]}</div>
+        <div style="flex:1;">
+          <h4>${t.name}</h4>
+          <div class="role">${t.title}</div>
+          <p>${t.bio}</p>
+          <div style="margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap;">
+            ${t.specialties.map(s => `<span class="pill">${s}</span>`).join("")}
+          </div>
+          <div style="margin-top: 14px;">
+            <a class="btn btn--sm" href="book.html">Book with ${t.name}</a>
+          </div>
+        </div>
+      </article>
+    `).join("");
+  </script>
+</body>
+</html>

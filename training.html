@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Élevé Academy — Training &amp; Masterclasses</title>
+  <meta name="description" content="Accredited, results-driven training programmes by Malika. Foundation and Masterclass tracks covering body sculpting, lymphatic drainage, Élevé Recovery® post-op, SculptWood®, cavitation + RF and non-surgical butt enhancement." />
+  <link rel="icon" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="site">
+    <header class="site-header" id="site-header"></header>
+
+    <main>
+      <section class="section wrap">
+        <div class="section-head">
+          <span class="eyebrow">Élevé Academy</span>
+          <h1>Where practitioners evolve.</h1>
+          <p>Accredited, results-driven training programmes designed to help practitioners build lasting, successful careers in confidence. Each programme is anchored in The Élevé Method® — the mapping, drainage and sculpting system Malika has refined over seven years.</p>
+          <div class="hero-ctas" style="margin-top: 20px;">
+            <a class="btn" href="#foundation">Foundation Courses</a>
+            <a class="btn btn--ghost" href="#masterclass">Masterclasses</a>
+          </div>
+        </div>
+
+        <div class="pricing-group" id="foundation">
+          <h2>Foundation</h2>
+          <p class="blurb">Entry-level programmes for beginners and early-career practitioners. Kit options available on most courses.</p>
+          <div class="grid grid--2" id="foundationGrid"></div>
+        </div>
+
+        <div class="pricing-group" id="masterclass">
+          <h2>Masterclass</h2>
+          <p class="blurb">Advanced practitioner training by Malika — featuring The Élevé Method® mapping + sculpting systems.</p>
+          <div class="grid grid--2" id="masterGrid"></div>
+        </div>
+
+        <div class="card" style="margin-top: 40px; text-align: center; background: var(--bg-cream);">
+          <h3>Request the brochure</h3>
+          <p>To explore the full course curriculum, fees and upcoming dates, contact our team to request the Élevé Academy Training Brochure.</p>
+          <div class="hstack" style="justify-content: center;">
+            <a class="btn" href="contact.html">Request Brochure</a>
+            <a class="btn btn--ghost" href="mailto:Info@elevelondonbymalika.co.uk?subject=Élevé Academy Enquiry">Email Us</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+  </div>
+
+  <script type="module">
+    import { init } from "./js/app.js";
+    import { COURSES } from "./data/data.js";
+    init();
+
+    function render(track, mountId) {
+      const items = COURSES.filter(c => c.track === track);
+      document.getElementById(mountId).innerHTML = items.map(c => `
+        <article class="card">
+          <div class="meta">
+            <span>${c.duration}</span>
+            <span>${c.level}</span>
+            ${c.kit ? `<span>${c.kit}</span>` : ""}
+          </div>
+          <h3>${c.name}</h3>
+          <p>${c.description}</p>
+          <div class="card-actions">
+            <span class="price">${c.price === "POA" ? "Price on application" : `£${c.price}`}</span>
+            <a class="btn btn--sm btn--ghost" href="contact.html?enquiry=academy&course=${encodeURIComponent(c.id)}">Enquire</a>
+          </div>
+        </article>
+      `).join("");
+    }
+    render("Foundation", "foundationGrid");
+    render("Masterclass", "masterGrid");
+  </script>
+</body>
+</html>

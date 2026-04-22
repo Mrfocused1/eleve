@@ -1,0 +1,716 @@
+[
+  {
+    "slug": "additional-areas",
+    "name": "Additional areas:",
+    "description": "Lip Flip\nSoftly elevates and curls the upper lip for a fuller appearance without filler.\n\nGummy Smile Correction\nReduces excessive gum show by relaxing the upper lip muscles.\n\nBrow Lift\nLifts and opens the eye area for a more awake, youthful look.\n\nBunny Lines\nSmooths fine lines on the sides of the nose that appear when smiling or scrunching.\n\nDownturned Smile Correction\nSoftens muscles that pull the mouth corners downward, creating a more relaxed expression.\n\nNostril Slimming\nRefines and narrows the nasal appearance for improved balance and symmetry.\n\n45min — £180",
+    "duration": "PT45M",
+    "cost": "180.0",
+    "deposit": "90.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 45
+  },
+  {
+    "slug": "anti-wrinkle-1",
+    "name": "Anti-wrinkle",
+    "description": "2 Areas\nAny combination of two zones for a balanced, harmonised refresh\n\n45min — £230",
+    "duration": "PT45M",
+    "cost": "230.0",
+    "deposit": "115.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 45
+  },
+  {
+    "slug": "anti-wrinkle-2",
+    "name": "Anti-wrinkle",
+    "description": "3 Areas\nAll three primary expression areas: Forehead • Frown • Crow’s Feet\n\n45min — £260",
+    "duration": "PT45M",
+    "cost": "260.0",
+    "deposit": "130.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 45
+  },
+  {
+    "slug": "anti-wrinkle",
+    "name": "Anti-wrinkle",
+    "description": "1 Area\nChoose one treatment zone\n&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;Forehead Lines\n&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;Frown Lines (Glabella)\n&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;Crow’s Feet\n\n45min — £180",
+    "duration": "PT45M",
+    "cost": "180.0",
+    "deposit": "90.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 45
+  },
+  {
+    "slug": "cheek-lift",
+    "name": "Cheek Lift",
+    "description": "Soft lift + restored dimension\n\nThis treatment enhances mid-face height, restores gentle volume and creates natural light reflection for a refreshed, youthful appearance.\nFrom £160 — 1hr",
+    "duration": "PT1H",
+    "cost": "160.0",
+    "deposit": "80.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "chin-contour",
+    "name": "Chin Contour",
+    "description": "Enhance structure + profile\n\nCarefully placed filler is used to define the chin, enhance proportions and support a more sculpted lower-face contour.\nFrom £160",
+    "duration": "PT1H",
+    "cost": "160.0",
+    "deposit": "80.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "eleve-360-body-sculpt-24-sessions",
+    "name": "Élevé 360 Body Sculpt® (24 Sessions)",
+    "description": "TRANSFORM PROGRAMME — Designed for full phase body change, long-term results, lifestyle maintenance.",
+    "duration": "PT3H",
+    "cost": "5680.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 180
+  },
+  {
+    "slug": "eleve-360-body-sculpt-360-body-sculpt-12-sessions",
+    "name": "Élevé 360 Body Sculpt® (12 Sessions)",
+    "description": "DEFINE PROGRAMME — Designed for second phase sculpting depth, definition + shape enhancement.",
+    "duration": "PT3H",
+    "cost": "3100.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 180
+  },
+  {
+    "slug": "eleve-360-body-sculpt-360-body-sculpt-6-sessions",
+    "name": "Élevé 360 Body Sculpt® (6 Sessions)",
+    "description": "REST PROGRAMME — Designed for first phase sculpting, fat reduction + visible waist + body refinement.",
+    "duration": "PT3H",
+    "cost": "1780.0",
+    "deposit": null,
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 180
+  },
+  {
+    "slug": "eleve-360-body-sculpt",
+    "name": "Élevé 360 Body Sculpt®",
+    "description": "360 contouring for complete silhouette refinement\n\nThe Élevé 360 Body Sculpt uses the full system behind The Élevé Method ® & Fat dissolving injections to contour the abdomen, waistline, back and sides simultaneously.\nThis advanced treatment reduces fat deposits, improves congestion, rejuvenates skin quality and creates a harmonised 360° silhouette with refined definition.\n\nCovers: Abdomen • Waistline • Love Handles • Back\n\n| PLEASE NOTE: Single sessions are reserved for trial/intro assessments only. \nSculpting results require programmed plans.",
+    "duration": "PT2H45M",
+    "cost": "480.0",
+    "deposit": "240.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 165
+  },
+  {
+    "slug": "eleve-body-sculpt-24-sessions",
+    "name": "Élevé Body Sculpt® (24 Sessions)",
+    "description": "TRANSFORM PROGRAMME — Designed for full phase body change, long-term results, lifestyle maintenance.",
+    "duration": "PT2H",
+    "cost": "4980.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 120
+  },
+  {
+    "slug": "eleve-body-sculpt-body-sculpt-12-sessions",
+    "name": "Élevé Body Sculpt® (12 Sessions)",
+    "description": "DEFINE PROGRAMME — Designed for second phase sculpting depth, definition + shape enhancement.",
+    "duration": "PT2H",
+    "cost": "2850.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 120
+  },
+  {
+    "slug": "eleve-body-sculpt-body-sculpt-6-sessions",
+    "name": "Élevé Body Sculpt® (6 Sessions)",
+    "description": "REST PROGRAMME — Designed for first phase sculpting, fat reduction, visible waist + body refinement",
+    "duration": "PT2H",
+    "cost": "1600.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 120
+  },
+  {
+    "slug": "eleve-body-sculpt",
+    "name": "Élevé Body Sculpt®",
+    "description": "Targeted refinement for the waistline + abdomen\n\nThe Élevé Body Sculpt integrates The Élevé Method ® + Fat Dissolving injections to address stubborn fat, skin laxity, bloating and fluid retention.\n\nEach session is tailored to your natural curves, promoting definition, balance and a smoother, more sculpted waistline.\n\nCovers: Abdomen • Waistline • Love Handles\n\n| PLEASE NOTE: Single sessions are reserved for trial/intro assessments only. \nSculpting results require programmed plans.",
+    "duration": "PT2H",
+    "cost": "380.0",
+    "deposit": "200.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 120
+  },
+  {
+    "slug": "eleve-cellulite-therapy-8-sessions",
+    "name": "Élevé Cellulite Therapy (8 Sessions)",
+    "description": "REST PROGRAMME — Designed for first stage skin renewal + visible refinement.",
+    "duration": "PT1H",
+    "cost": "980.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "eleve-cellulite-therapy",
+    "name": "Élevé Cellulite Therapy®",
+    "description": "A multi-method cellulite treatment combining The Élevé Method® to smooth dimpling, enhance circulation and refine uneven texture.\nSupports lymph flow, detoxification and visibly smoother skin.\n\n| PLEASE NOTE: Single sessions are reserved for trial/intro assessments only. \nOptimal results require programmed plans.",
+    "duration": "PT1H",
+    "cost": "160.0",
+    "deposit": "80.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "eleve-contour-24-sessions",
+    "name": "Élevé Contour (24 Sessions)",
+    "description": "TRANSFORM PROGRAMME — Designed for Third stage detoxification, providing a \nstable solution for chronic bloating, slow digestion + wellness rebalancing",
+    "duration": "PT1H45M",
+    "cost": "2775.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 105
+  },
+  {
+    "slug": "eleve-contour-dual-2-areas-12-sessions",
+    "name": "Élevé Contour (12 Sessions)",
+    "description": "DEFINE PROGRAMME — Designed for Second stage deeper lymphatic improvement, gut support + sculpting change.",
+    "duration": "PT1H45M",
+    "cost": "1630.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 105
+  },
+  {
+    "slug": "eleve-contour-dual-2-areas-6-sessions",
+    "name": "Élevé Contour (6 Sessions)",
+    "description": "REST PROGRAMME — Designed for first phase detox + visible refinement.",
+    "duration": "PT1H45M",
+    "cost": "850.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 105
+  },
+  {
+    "slug": "eleve-contour-session-dual",
+    "name": "Élevé Contour Session",
+    "description": "A combined sculpting session that treats two areas simultaneously for enhanced balance, contour and visible refinement.\nIdeal for clients seeking cohesive results without committing to a package.\n\nCovers TWO (2) areas:\nAbdomen • Waistline + Love Handles • Back • Arms • Legs\n| PLEASE NOTE: Single sessions are reserved for trial/intro assessments only. \nSculpting results require programmed plans.",
+    "duration": "PT1H30M",
+    "cost": "280.0",
+    "deposit": "125.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 90
+  },
+  {
+    "slug": "eleve-firm-tighten-firm-tighten-8-sessions",
+    "name": "Élevé Firm & Tighten ( 8 Sessions)",
+    "description": "REST PROGRAMME — Designed for first phase skin renewal + visible refinement.",
+    "duration": "PT1H",
+    "cost": "960.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "eleve-firm-tighten",
+    "name": "Élevé Firm & Tighten®",
+    "description": "A restorative skin tightening treatment using Radio Frequency, G5 therapy and Malika’s sculpting techniques to improve elasticity, firmness and overall skin quality.\nPerfect for post-weight-loss, postpartum or areas with mild to moderate laxity.\n\nCovers ONE (1) area:\nAbdomen • Back • Arms • Legs\n1h — From £160",
+    "duration": "PT1H",
+    "cost": "160.0",
+    "deposit": "80.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "eleve-luxe-butt-lift",
+    "name": "Élevé Luxe Butt Lift®",
+    "description": "An elevated sculpting ritual for shape, lift and refinement\n\nThe Élevé Luxe Butt Lift® combines Vacuum Therapy with The Élevé Method® to sculpt, smooth and elevate the lower-body silhouette.\nThis treatment reduces fluid retention, enhances shape and refines areas for a naturally lifted, contoured finish.\n\nPrice reflects : 2 SESSIONS \nCovers: Buttocks • Thighs • Love Handles\n\n| PLEASE NOTE: Single sessions are reserved for trial/intro assessments only. \nSculpting results require programmed plans.",
+    "duration": "PT1H30M",
+    "cost": "250.0",
+    "deposit": "125.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 90
+  },
+  {
+    "slug": "eleve-lymp-reset-massage",
+    "name": "Élevé Lymph Reset®",
+    "description": "A rhythmic lymphatic massage designed to reduce fluid retention, alleviate bloating and support full body systems reset and overall wellbeing.\nPerfect for clients experiencing sluggish circulation or inflammation.\n\n| PLEASE NOTE: Single sessions are reserved for trial/intro assessments only. \nSculpting results require programmed plans.",
+    "duration": "PT1H45M",
+    "cost": "150.0",
+    "deposit": "70.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 105
+  },
+  {
+    "slug": "eleve-lymph-reset-12-sessions",
+    "name": "Élevé Lymph Reset® (12 Sessions)",
+    "description": "DEFINE PROGRAMME — Designed for second phase Deeper lymphatic improvement, gut support and refinement.",
+    "duration": "PT1H45M",
+    "cost": "970.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 105
+  },
+  {
+    "slug": "eleve-lymph-reset-6-sessions",
+    "name": "Élevé Lymph Reset® (6 Sessions)",
+    "description": "REST PROGRAMME — Designed for first phase detox + visible refinement.",
+    "duration": "PT1H45M",
+    "cost": "520.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 105
+  },
+  {
+    "slug": "eleve-recovery-advanced-360-15-sessions",
+    "name": "Élevé Recovery® Advanced 360 (15 sessions)",
+    "description": "Enhanced post-operative care for contouring + complication management\n\nThe Advanced 360 protocol combines Manual Lymphatic Drainage with curated elements of The Élevé Method® such as Ultrasound Therapy, Radio Frequency and Wood Therapy (from 8 weeks) to soften fibrosis, release trapped fluid and refine the healing contour.",
+    "duration": "PT1H",
+    "cost": "2380.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "eleve-recovery-advanced-360-24-sessions",
+    "name": "Élevé Recovery® Advanced 360 (24 sessions)",
+    "description": "Enhanced post-operative care for contouring + complication management\n\nThe Advanced 360 protocol combines Manual Lymphatic Drainage with curated elements of The Élevé Method® such as Ultrasound Therapy, Radio Frequency and Wood Therapy (from 8 weeks) to soften fibrosis, release trapped fluid and refine the healing contour.",
+    "duration": "PT1H",
+    "cost": "3750.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "eleve-recovery-advanced-360",
+    "name": "Élevé Recovery® Advanced 360 (10 sessions)",
+    "description": "Enhanced post-operative care for contouring + complication management\n\nThe Advanced 360 protocol combines Manual Lymphatic Drainage with curated elements of The Élevé Method® such as Ultrasound Therapy, Radio Frequency and Wood Therapy (from 8 weeks) to soften fibrosis, release trapped fluid and refine the healing contour.",
+    "duration": "PT1H",
+    "cost": "1700.0",
+    "deposit": null,
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "eleve-recovery-advanced-full-body-15-sessions",
+    "name": "Élevé Recovery® Advanced (Full Body) 15 sessions",
+    "description": "Enhanced post-operative care for contouring + complication management\n\nThe Élevé Recovery Advanced treatment combines Manual Lymphatic Drainage with curated elements of The Élevé Method® such as Ultrasound Therapy, Radio Frequency and Wood Therapy (from 8 weeks) to support deeper healing and enhanced contour.\nHelps manage fibrosis, irregularities, trapped fluid and post-surgical inflammation.",
+    "duration": "PT2H",
+    "cost": "3250.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 120
+  },
+  {
+    "slug": "eleve-recovery-advanced-full-body-20-sessions",
+    "name": "Élevé Recovery® Advanced (Full Body) 24 sessions",
+    "description": "Enhanced post-operative care for contouring + complication management\n\nThe Élevé Recovery Advanced treatment combines Manual Lymphatic Drainage with curated elements of The Élevé Method® such as Ultrasound Therapy, Radio Frequency and Wood Therapy (from 8 weeks) to support deeper healing and enhanced contour.\nHelps manage fibrosis, irregularities, trapped fluid and post-surgical inflammation.",
+    "duration": "PT2H",
+    "cost": "5380.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 120
+  },
+  {
+    "slug": "eleve-recovery-advanced-full-body",
+    "name": "Élevé Recovery® Advanced (Full Body) 10 sessions",
+    "description": "Enhanced post-operative care for contouring + complication management\n\nThe Élevé Recovery Advanced treatment combines Manual Lymphatic Drainage with curated elements of The Élevé Method® such as Ultrasound Therapy, Radio Frequency and Wood Therapy (from 8 weeks) to support deeper healing and enhanced contour.\nHelps manage fibrosis, irregularities, trapped fluid and post-surgical inflammation.",
+    "duration": "PT2H",
+    "cost": "2380.0",
+    "deposit": "1.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 120
+  },
+  {
+    "slug": "eleve-recovery-standard-360-15-sessions",
+    "name": "Élevé Recovery® Standard 360 (15 sessions)",
+    "description": "A gentle restorative treatment for early-stage recovery\n\nThis Standard 360 protocol includes malika’s signature gentle MLD and Red Light Therapy to reduce swelling and support circulation around the abdominal, back and waist.",
+    "duration": "PT1H",
+    "cost": "1380.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "eleve-recovery-standard-360-24-sessions",
+    "name": "Élevé Recovery® Standard 360 (24 sessions)",
+    "description": "A gentle restorative treatment for early-stage recovery\n\nThis Standard 360 protocol includes malika’s signature gentle MLD and Red Light Therapy to reduce swelling and support circulation around the abdominal, back and waist.",
+    "duration": "PT1H",
+    "cost": "2200.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "eleve-recovery-standard-360",
+    "name": "Élevé Recovery® Standard 360 (10 sessions)",
+    "description": "A gentle restorative treatment for early-stage recovery\n\nThis Standard 360 protocol includes malika’s signature gentle MLD and Red Light Therapy to reduce swelling and support circulation around the abdominal, back and waist.",
+    "duration": "PT1H",
+    "cost": "890.0",
+    "deposit": "50.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "eleve-rf-skin-lift-rf-skin-lift-8-sessions",
+    "name": "Élevé RF Skin Lift® (8 Sessions)",
+    "description": "REST PROGRAMME — Designed for enhanced skin renewal, visible refinement + facial sculpting",
+    "duration": "PT1H",
+    "cost": "890.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "eleve-rf-skin-lift",
+    "name": "Élevé RF Skin Lift®",
+    "description": "A sculpting + restorative facial treatment\n\nThe Élevé RF Skin Lift® blends Radio Frequency, Facial Wood Therapy and The Élevé Lymph Reset to lift, contour and energise the facial structure.\nThis treatment enhances collagen, reduces puffiness and restores natural definition through gentle, rhythmic sculpting movements.\nSkin appears firmer, brighter and visibly refined.\n\nCovers: Full Face • Chin • Jawline • Décolleté\n\n| PLEASE NOTE: Single sessions are reserved for trial/intro assessments only. \nSculpting results require programmed plans.",
+    "duration": "PT1H30M",
+    "cost": "200.0",
+    "deposit": "100.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 90
+  },
+  {
+    "slug": "eleve-sculpt-detox-12-sessions",
+    "name": "Élevé Sculpt Detox® (12 Sessions)",
+    "description": "DEFINE PROGRAMME — Designed for Second phase stage deeper lymphatic improvement, gut support + sculpting change.",
+    "duration": "PT2H",
+    "cost": "1445.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 120
+  },
+  {
+    "slug": "eleve-sculpt-detox-24-sessions",
+    "name": "Élevé Sculpt Detox® (24 Sessions)",
+    "description": "TRANSFORM PROGRAMME — Designed for Third phase detoxification, providing a \nstable solution for chronic bloating, slow digestion + wellness rebalancing",
+    "duration": "PT2H",
+    "cost": "2500.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 120
+  },
+  {
+    "slug": "eleve-sculpt-detox-6-sessions",
+    "name": "Élevé Sculpt Detox® (6 Sessions)",
+    "description": "REST PROGRAMME — Designed for first phase detox + visible refinement.",
+    "duration": "PT2H",
+    "cost": "780.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 120
+  },
+  {
+    "slug": "eleve-sculpt-detox",
+    "name": "Èlevé Sculpt Detox®",
+    "description": "A transformative treatment powered by Malika’s exclusive lymphatic sculpting method to relieve congestion, stimulate drainage, supports full body reset and refinement. \n\nThis treatment improves circulation, reduces puffiness and refines the body.\n\n| PLEASE NOTE: Single sessions are reserved for trial/intro assessments only. \nSculpting results require programmed plans.",
+    "duration": "PT1H45M",
+    "cost": "190.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 105
+  },
+  {
+    "slug": "eleve-sculptwood-massage-6-sessions",
+    "name": "Élevé SculptWood® (6 sessions)",
+    "description": "REST PROGRAMME — Designed for early circulation boost, cellulite smoothing + tone improvement.",
+    "duration": "PT1H",
+    "cost": "580.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "eleve-sculptwood-massage",
+    "name": "Élevé SculptWood Massage®",
+    "description": "A holistic contouring treatment using Malika’s signature sculpting method with specialised Colombian wooden tools to stimulate circulation, refine curves and support fluid movement.\nIdeal for clients seeking natural, manual sculpting.\n\nCovers ONE (1) area:\nAbdomen • Waistline + Love Handles • Back • Arms • Legs\n| PLEASE NOTE: Single sessions are reserved for trial/intro assessments only. \nSculpting results require programmed plans.",
+    "duration": "PT1H",
+    "cost": "150.0",
+    "deposit": "80.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "eleve-sculptwood-sculptwood-12-sessions",
+    "name": "Élevé SculptWood® (12 Sessions)",
+    "description": "DEFINE PROGRAMME — Designed for deeper sculpting, texture refinement + visible shape change.",
+    "duration": "PT1H",
+    "cost": "1160.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "fat-dissolving-1",
+    "name": "Fat Dissolving MEDIUM",
+    "description": "A targeted injectable treatment designed to reduce stubborn pockets of fat through safe, controlled fat-cell breakdown. Ideal for small, medium and large facial or body areas.\n\nMedium Areas — £210\n•Upper Arms\n•Under Bra (Bra Bulge)\n•Love Handles\n•Lower Abdomen\n•Upper Abdomen",
+    "duration": "PT1H",
+    "cost": "210.0",
+    "deposit": "105.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "fat-dissolving-2",
+    "name": "Fat Dissolving LARGE",
+    "description": "A targeted injectable treatment designed to reduce stubborn pockets of fat through safe, controlled fat-cell breakdown. Ideal for small, medium and large facial or body areas.\n\nLarge Areas — £260\n\n•&nbsp;&nbsp;&nbsp;&nbsp;Full Abdomen\n•&nbsp;&nbsp;&nbsp;&nbsp;Full Back\n•&nbsp;&nbsp;&nbsp;&nbsp;Full Thighs (front or back)\n•&nbsp;&nbsp;&nbsp;&nbsp;Buttocks Lift (Upper thigh)",
+    "duration": "PT1H",
+    "cost": "260.0",
+    "deposit": "130.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "fat-dissolving-3",
+    "name": "Fat Dissolving 360",
+    "description": "A targeted injectable treatment designed to reduce stubborn pockets of fat through safe, controlled fat-cell breakdown. Ideal for small, medium and large facial or body areas.\n\n360 Area — £360",
+    "duration": "PT1H",
+    "cost": "360.0",
+    "deposit": "180.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "fat-dissolving",
+    "name": "Fat Dissolving SMALL",
+    "description": "A targeted injectable treatment designed to reduce stubborn pockets of fat through safe, controlled fat-cell breakdown. Ideal for small, medium and large facial or body areas.\nSmall Areas — £150\n•Double Chin\n•Jawline\n•Cheeks\n•Underarm Pouch (Bra Bulge mini)",
+    "duration": "PT1H",
+    "cost": "150.0",
+    "deposit": "75.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "in-person-consultation",
+    "name": "In-Person Consultation",
+    "description": "A comprehensive, face to face assessment where we evaluate your concerns, goals, lifestyle and overall wellness to design your bespoke treatment plan using The Élevé Method®.\nThis session allows us to take a deeper look at your body profile and outline the most effective treatment pathway.\n\nINCLUDED IN ALL TRIAL / ASSESSMENT ONLY APPOINTMENTS.\n\n(Fee credited towards your treatment when booked within 14 days)",
+    "duration": "PT30M",
+    "cost": "60.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 30
+  },
+  {
+    "slug": "line-refinement",
+    "name": "Line Refinement",
+    "description": "Nasolabial Folds / Marionette Lines\nSmooth creases while keeping natural expression\n\nDesigned to soften deep lines around the mouth by replenishing lost volume without altering facial movement or expression.\nFrom £160 — 1hr",
+    "duration": "PT1H",
+    "cost": "160.0",
+    "deposit": "80.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "lip-define",
+    "name": "Lip Define",
+    "description": "Enhance, refine, restore softness\n\nUsing premium hyaluronic-acid fillers, this treatment defines the lip borders, adds soft volume and enhances natural symmetry for a balanced, elegant finish.\nFrom £150",
+    "duration": "PT1H",
+    "cost": "150.0",
+    "deposit": "67.5",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "lip-restore",
+    "name": "Lip Restore",
+    "description": "(Dissolve & Refill)\nCorrect, refine and rebalance\n\nA tailored approach to safely dissolve unwanted filler before restoring natural harmony with fresh, expertly placed hyaluronic-acid filler. Ideal for overfilled lips or uneven texture.\nFrom £250",
+    "duration": "PT1H",
+    "cost": "250.0",
+    "deposit": "125.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "pixie-lift",
+    "name": "Pixie Lift",
+    "description": "Nose Tip Lift\nSubtle elevation with elegant precision\n\nA non-surgical nasal tip lift using refined filler placement to subtly raise, enhance and smooth the profile without altering your natural features.\nFrom £160 — 45min",
+    "duration": "PT45M",
+    "cost": "160.0",
+    "deposit": "80.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 45
+  },
+  {
+    "slug": "profile-contouring",
+    "name": "Profile Contouring (Nose)",
+    "description": "Non-surgical rhinoplasty\nRefined balance + profile harmony\n\nUsing advanced filler techniques, this treatment smooths bumps, corrects asymmetry and shapes a refined, symmetrical side profile. Includes a complimentary 4-week review.",
+    "duration": "PT1H",
+    "cost": "380.0",
+    "deposit": "190.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "profile-harmony-packages",
+    "name": "Profile Harmony Packages",
+    "description": "Advanced full-face refinement using multi-area volumisation. \n\nIdeal for restoring structure, lift and youthful proportions using harmonised product placement.\n\n2.2ml / 3.3ml / 4.4ml / 5.5ml +\nFrom £300 — 1h",
+    "duration": "PT1H",
+    "cost": "300.0",
+    "deposit": "150.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "signature-duo",
+    "name": "Signature Duo",
+    "description": "Balanced combinations for refined harmony\n\nChoose from 2 combinations designed to sculpt, enhance and rebalance the face while keeping results natural.\n\nLips x Chin \nLips x Cheeks\nLips x Pixie Lift \nLips x Jawline \nFrom £270 — 1h",
+    "duration": "PT1H",
+    "cost": "270.0",
+    "deposit": "135.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 60
+  },
+  {
+    "slug": "virtual-consultation",
+    "name": "Virtual Consultation",
+    "description": "Guidance from the comfort of home\n\nA short, focused video or telephone call to discuss your concerns, review suitability and explore treatment options before booking.\nIdeal for clients wanting clarity or direction prior to committing.\n\nMONDAY & WEDNESDAYS ONLY \n| PLEASE SCHEDULE BETWEEN 7-8PM ONLY",
+    "duration": "PT15M",
+    "cost": "0.0",
+    "deposit": "0.0",
+    "resources": [
+      "Primary",
+      "Malika"
+    ],
+    "duration_min": 15
+  }
+]

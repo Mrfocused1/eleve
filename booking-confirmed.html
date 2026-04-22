@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Booking Confirmed — Élevé London</title>
+  <link rel="icon" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="site">
+    <header class="site-header" id="site-header"></header>
+    <main>
+      <section class="section wrap">
+        <div class="section-head">
+          <span class="eyebrow">Appointment Confirmed</span>
+          <h1>See you soon.</h1>
+          <p>A confirmation has been sent to your email. Please arrive 10 minutes early for your first visit.</p>
+        </div>
+        <div id="detail" style="max-width: 640px; margin: 0 auto;"></div>
+        <div class="center" style="margin-top: 40px;">
+          <a class="btn" href="index.html">Back to home</a>
+          <a class="btn btn--ghost" href="book.html">Book another</a>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer" id="site-footer"></footer>
+  </div>
+  <script type="module">
+    import { init } from "./js/app.js";
+    init();
+    const last = JSON.parse(localStorage.getItem("eleve.lastBooking") || "null");
+    const id = new URLSearchParams(location.search).get("id");
+    if (last && last.id === id) {
+      const dateTxt = new Date(last.date + "T" + last.time).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+      document.getElementById("detail").innerHTML = `
+        <div class="summary" style="position: static;">
+          <h4>${last.id}</h4>
+          <div class="row"><span>Practitioner</span><span>${last.therapistName}</span></div>
+          <div class="row"><span>Treatment</span><span>${last.serviceName}</span></div>
+          <div class="row"><span>Date</span><span>${dateTxt}</span></div>
+          <div class="row"><span>Time</span><span>${last.time}</span></div>
+          <div class="row total"><span>Price</span><span>£${last.price.toFixed(0)}</span></div>
+          ${last.deposit > 0 ? `<div class="row"><span>Deposit paid</span><span>£${last.deposit.toFixed(0)}</span></div><div class="row"><span>Balance at appointment</span><span>£${(last.price - last.deposit).toFixed(0)}</span></div>` : ""}
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

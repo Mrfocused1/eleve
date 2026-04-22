@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Checkout — Élevé London</title>
+  <link rel="icon" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="site">
+    <header class="site-header" id="site-header"></header>
+
+    <main>
+      <section class="section wrap">
+        <div class="section-head" style="text-align:left; margin-bottom: 30px;">
+          <span class="eyebrow">Checkout</span>
+          <h1 style="margin-top: 6px;">Your details</h1>
+        </div>
+
+        <div class="booking">
+          <div>
+            <form id="checkoutForm" novalidate>
+              <h3 style="margin-bottom: 12px;">Contact</h3>
+              <div class="fields-row">
+                <div class="field"><label for="fname">First name</label><input id="fname" name="fname" required/></div>
+                <div class="field"><label for="lname">Last name</label><input id="lname" name="lname" required/></div>
+              </div>
+              <div class="fields-row">
+                <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required/></div>
+                <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" required/></div>
+              </div>
+
+              <h3 style="margin: 24px 0 12px;">Shipping</h3>
+              <div class="field"><label for="addr1">Address</label><input id="addr1" name="addr1" required/></div>
+              <div class="fields-row">
+                <div class="field"><label for="city">City</label><input id="city" name="city" required/></div>
+                <div class="field"><label for="postcode">Postcode</label><input id="postcode" name="postcode" required/></div>
+              </div>
+              <div class="field"><label for="country">Country</label>
+                <select id="country" name="country" required>
+                  <option value="GB" selected>United Kingdom</option>
+                  <option value="IE">Ireland</option>
+                  <option value="FR">France</option>
+                  <option value="DE">Germany</option>
+                  <option value="ES">Spain</option>
+                  <option value="IT">Italy</option>
+                  <option value="NL">Netherlands</option>
+                  <option value="US">United States</option>
+                  <option value="AE">United Arab Emirates</option>
+                </select>
+              </div>
+
+              <h3 style="margin: 24px 0 12px;">Payment</h3>
+              <p class="muted" id="payNote">Demo mode — clicking "Place Order" records your order locally and shows a confirmation. Connect a Stripe Payment Link or checkout endpoint in <code>data/data.js</code> to go live.</p>
+
+              <div class="hstack" style="justify-content: flex-end; margin-top: 20px;">
+                <a class="btn btn--ghost" href="cart.html">Back to bag</a>
+                <button class="btn" type="submit" id="submitBtn">Place Order</button>
+              </div>
+              <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+
+          <aside class="summary">
+            <h4>Order summary</h4>
+            <div id="summaryLines"></div>
+            <div id="summaryTotals"></div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+  </div>
+
+  <script type="module">
+    import { init } from "./js/app.js";
+    import { getCart, cartSubtotal, currency, clearCart } from "./js/cart.js";
+    import { PAYMENT } from "./data/data.js";
+    init();
+
+    const items = getCart();
+    if (items.length === 0) {
+      location.href = "cart.html";
+    }
+
+    function renderSummary() {
+      document.getElementById("summaryLines").innerHTML = items.map(it => `
+        <div class="row"><span>${it.name}${it.variant ? ` (${String(it.variant).toUpperCase()})` : ""} × ${it.qty}</span><span>${currency(it.price * it.qty)}</span></div>
+      `).join("");
+      const sub = cartSubtotal();
+      const shipping = items.some(x => x.kind === "product" && !/^gift-/.test(x.id)) ? 5.95 : 0;
+      const total = sub + shipping;
+      document.getElementById("summaryTotals").innerHTML = `
+        <div class="row"><span>Subtotal</span><span>${currency(sub)}</span></div>
+        <div class="row"><span>Shipping</span><span>${shipping === 0 ? "Free" : currency(shipping)}</span></div>
+        <div class="row total"><span>Total</span><span>${currency(total)}</span></div>
+      `;
+    }
+    renderSummary();
+
+    const form = document.getElementById("checkoutForm");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById("formMsg");
+      const btn = document.getElementById("submitBtn");
+
+      const data = Object.fromEntries(new FormData(form).entries());
+      if (!data.fname || !data.email || !data.addr1) {
+        msg.textContent = "Please complete all required fields."; msg.className = "form-msg err"; return;
+      }
+      btn.disabled = true; msg.textContent = "Processing…"; msg.className = "form-msg";
+
+      const order = {
+        id: "ELV-" + Date.now().toString(36).toUpperCase(),
+        createdAt: new Date().toISOString(),
+        customer: data,
+        items,
+        subtotal: cartSubtotal(),
+        currency: PAYMENT.currency,
+      };
+
+      try {
+        if (PAYMENT.mode === "server" && PAYMENT.serverEndpoint) {
+          const r = await fetch(PAYMENT.serverEndpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(order) });
+          if (!r.ok) throw new Error("server");
+          const { url } = await r.json();
+          location.href = url;
+          return;
+        }
+        if (PAYMENT.mode === "stripe_payment_link" && PAYMENT.stripePaymentLinkBase) {
+          const url = `${PAYMENT.stripePaymentLinkBase}?prefilled_email=${encodeURIComponent(data.email)}&client_reference_id=${order.id}`;
+          location.href = url; return;
+        }
+        // demo mode — persist locally
+        const orders = JSON.parse(localStorage.getItem("eleve.orders") || "[]");
+        orders.push(order);
+        localStorage.setItem("eleve.orders", JSON.stringify(orders));
+        clearCart();
+        localStorage.setItem("eleve.lastOrder", JSON.stringify(order));
+        location.href = "thanks.html?id=" + encodeURIComponent(order.id);
+      } catch {
+        msg.textContent = "Something went wrong. Please try again."; msg.className = "form-msg err";
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

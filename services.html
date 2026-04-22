@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Treatment Menu — Élevé London by Malika</title>
+  <meta name="description" content="The full Élevé London treatment menu: signature body sculpting, Élevé Recovery® post-op, lymphatic drainage, RF skin lift, fat dissolving, facial aesthetics and anti-wrinkle." />
+  <link rel="icon" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="site">
+    <header class="site-header" id="site-header"></header>
+
+    <main>
+      <section class="section wrap">
+        <div class="section-head">
+          <span class="eyebrow">Treatment Menu</span>
+          <h1>Every service, one menu.</h1>
+          <p>All treatments, durations and prices in one place. New clients begin with a consultation — every plan is bespoke.</p>
+        </div>
+
+        <div class="tabs" id="catTabs" role="tablist"></div>
+
+        <div id="serviceList"></div>
+
+        <div class="center" style="margin-top: 40px;">
+          <a class="btn" href="book.html">Book a Consultation</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+  </div>
+
+  <script type="module">
+    import { init } from "./js/app.js";
+    import { loadServices, CATEGORIES } from "./data/data.js";
+    init();
+
+    const services = await loadServices();
+    const tabsEl = document.getElementById("catTabs");
+    const listEl = document.getElementById("serviceList");
+
+    const cats = [{ id: "all", label: "All" }, ...CATEGORIES];
+    let active = "all";
+
+    function renderTabs() {
+      tabsEl.innerHTML = cats.map(c => `
+        <button class="tab ${c.id === active ? "is-active" : ""}" data-cat="${c.id}" role="tab" aria-selected="${c.id === active}">${c.label}</button>
+      `).join("");
+      tabsEl.querySelectorAll(".tab").forEach(b => {
+        b.addEventListener("click", () => { active = b.dataset.cat; renderTabs(); renderList(); window.scrollTo({ top: tabsEl.offsetTop - 100, behavior: "smooth" }); });
+      });
+    }
+
+    function renderList() {
+      const visible = CATEGORIES.filter(c => active === "all" || c.id === active);
+      listEl.innerHTML = visible.map(cat => {
+        const items = services.filter(s => s.category === cat.id);
+        if (!items.length) return "";
+        return `
+          <section class="pricing-group" id="cat-${cat.id}">
+            <h3>${cat.label}</h3>
+            <p class="blurb">${cat.blurb}</p>
+            <div>
+              ${items.map(s => `
+                <article class="service-row" id="${s.slug}">
+                  <div>
+                    <div class="name">${s.name} ${s.isPackage ? '<span class="badge badge--pkg" style="margin-left:10px;vertical-align:middle;">Package</span>' : ''}</div>
+                    <div class="meta"><span>${s.durationLabel || ""}</span>${s.deposit && Number(s.deposit) > 0 ? `<span>Deposit £${Number(s.deposit).toFixed(0)}</span>` : ""}</div>
+                    <div class="desc">${(s.description || "").trim()}</div>
+                  </div>
+                  <div class="side">
+                    <div class="price">${s.priceLabel}</div>
+                    <a class="btn btn--sm" href="book.html?svc=${encodeURIComponent(s.slug)}">Book</a>
+                  </div>
+                </article>
+              `).join("")}
+            </div>
+          </section>
+        `;
+      }).join("");
+    }
+
+    renderTabs();
+    renderList();
+
+    // Scroll to hash on initial load
+    if (location.hash) {
+      const el = document.getElementById(location.hash.slice(1));
+      if (el) el.scrollIntoView({ block: "center" });
+    }
+  </script>
+</body>
+</html>

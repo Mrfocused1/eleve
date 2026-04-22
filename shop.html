@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Élevé Store — Aftercare &amp; Home Ritual</title>
+  <meta name="description" content="Shop Élevé aftercare, lymphatic tools, post-op compression and gift vouchers. Curated by Malika to extend the results of your session between visits." />
+  <link rel="icon" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="site">
+    <header class="site-header" id="site-header"></header>
+
+    <main>
+      <section class="section wrap">
+        <div class="section-head">
+          <span class="eyebrow">Élevé Store</span>
+          <h1>Aftercare &amp; home ritual.</h1>
+          <p>Curated by Malika. Designed to extend the results of your session between visits.</p>
+        </div>
+
+        <div class="tabs" id="catTabs"></div>
+        <div class="grid grid--4" id="productGrid"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+  </div>
+
+  <script type="module">
+    import { init, toast, updateCartBadge } from "./js/app.js";
+    import { PRODUCTS } from "./data/data.js";
+    import { addToCart, currency } from "./js/cart.js";
+    init();
+
+    const cats = ["All", ...new Set(PRODUCTS.map(p => p.category))];
+    let active = "All";
+    const tabsEl = document.getElementById("catTabs");
+    const gridEl = document.getElementById("productGrid");
+
+    function renderTabs() {
+      tabsEl.innerHTML = cats.map(c => `<button class="tab ${c===active?"is-active":""}" data-cat="${c}">${c}</button>`).join("");
+      tabsEl.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => { active = b.dataset.cat; renderTabs(); renderGrid(); }));
+    }
+
+    function renderGrid() {
+      const list = active === "All" ? PRODUCTS : PRODUCTS.filter(p => p.category === active);
+      gridEl.innerHTML = list.map(p => `
+        <article class="product-card" id="${p.id}">
+          <div class="img-wrap"><img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'"/></div>
+          <div class="body">
+            <span class="cat">${p.category}</span>
+            <span class="name">${p.name}</span>
+            <span class="tag">${p.tagline}</span>
+            ${p.description ? `<p class="muted" style="font-size:13px;">${p.description}</p>` : ""}
+            ${p.variants ? `
+              <label style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-soft); margin-top: 8px;">Size</label>
+              <select data-variant="${p.id}" style="padding: 8px 10px; border: 1px solid var(--rule); background: transparent; font: inherit; color: var(--ink);">
+                ${p.variants.map(v => `<option value="${v.id}">${v.label}</option>`).join("")}
+              </select>
+            ` : ""}
+            <div class="foot">
+              <span class="price">${currency(p.price)}</span>
+              <button class="btn btn--sm" data-add="${p.id}">Add to Bag</button>
+            </div>
+          </div>
+        </article>
+      `).join("");
+      gridEl.querySelectorAll("[data-add]").forEach(b => b.addEventListener("click", () => {
+        const id = b.dataset.add;
+        const p = PRODUCTS.find(x => x.id === id);
+        const variantEl = gridEl.querySelector(`[data-variant="${id}"]`);
+        const variant = variantEl ? variantEl.value : null;
+        addToCart({ kind: "product", id: p.id, name: p.name, price: p.price, variant, image: p.image });
+        updateCartBadge();
+        toast(`${p.name} added`);
+      }));
+    }
+
+    renderTabs(); renderGrid();
+    if (location.hash) {
+      const t = document.getElementById(location.hash.slice(1));
+      if (t) t.scrollIntoView({ block: "center" });
+    }
+  </script>
+</body>
+</html>

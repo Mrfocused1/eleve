@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
+  <rect x="20" y="80" width="180" height="60" fill="#efe8dc" rx="6"/>
+  <rect x="20" y="80" width="180" height="60" fill="none" stroke="#c9bfae" stroke-width="1.5" rx="6"/>
+  <g stroke="#c9bfae" stroke-width="1" opacity=".7">
+    <line x1="40" y1="80" x2="40" y2="140"/>
+    <line x1="60" y1="80" x2="60" y2="140"/>
+    <line x1="80" y1="80" x2="80" y2="140"/>
+    <line x1="100" y1="80" x2="100" y2="140"/>
+    <line x1="120" y1="80" x2="120" y2="140"/>
+    <line x1="140" y1="80" x2="140" y2="140"/>
+    <line x1="160" y1="80" x2="160" y2="140"/>
+    <line x1="180" y1="80" x2="180" y2="140"/>
+  </g>
+  <text x="110" y="114" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="14" fill="#6b6155" font-style="italic">ÉLEVÉ</text>
+</svg>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pricing — Élevé London by Malika</title>
+  <meta name="description" content="Transparent pricing per practitioner. Every service, every session pack — priced exactly as you'll be charged." />
+  <link rel="icon" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="site">
+    <header class="site-header" id="site-header"></header>
+
+    <main>
+      <section class="section wrap">
+        <div class="section-head">
+          <span class="eyebrow">Pricing</span>
+          <h1>Transparent, by practitioner.</h1>
+          <p>Each practitioner has their own price list — reflecting scope of practice and seniority. Choose a therapist to view what they offer and what it costs.</p>
+        </div>
+
+        <div class="pricing-head" id="therapistPicker"></div>
+        <div id="activeBio" style="margin-bottom: 28px; text-align: center; max-width: 62ch; margin-left: auto; margin-right: auto;"></div>
+
+        <div id="priceList"></div>
+
+        <div class="center" style="margin-top: 40px;">
+          <a class="btn" href="book.html">Book a Session</a>
+          <a class="btn btn--ghost" href="services.html">Full Treatment Menu</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+  </div>
+
+  <script type="module">
+    import { init } from "./js/app.js";
+    import { THERAPISTS, CATEGORIES, loadServices } from "./data/data.js";
+    import { therapistEligible } from "./js/booking.js";
+    init();
+
+    const services = await loadServices();
+    let active = THERAPISTS[0].id;
+
+    const picker = document.getElementById("therapistPicker");
+    const bio = document.getElementById("activeBio");
+    const list = document.getElementById("priceList");
+
+    function renderPicker() {
+      picker.innerHTML = THERAPISTS.map(t => `<button class="tab ${t.id === active ? "is-active" : ""}" data-id="${t.id}">${t.name} — ${t.title}</button>`).join("");
+      picker.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => { active = b.dataset.id; renderAll(); }));
+    }
+    function renderBio() {
+      const t = THERAPISTS.find(x => x.id === active);
+      bio.innerHTML = `<p class="muted" style="font-family: var(--serif); font-size: 17px;">${t.bio}</p>`;
+    }
+    function renderList() {
+      const t = THERAPISTS.find(x => x.id === active);
+      const eligible = services.filter(s => therapistEligible(t, s));
+      list.innerHTML = CATEGORIES.map(cat => {
+        const items = eligible.filter(s => s.category === cat.id);
+        if (!items.length) return "";
+        return `
+          <section class="pricing-group">
+            <h3>${cat.label}</h3>
+            <p class="blurb">${cat.blurb}</p>
+            ${items.map(s => `
+              <div class="service-row">
+                <div>
+                  <div class="name">${s.name} ${s.isPackage ? '<span class="badge badge--pkg">Package</span>' : ''}</div>
+                  <div class="meta"><span>${s.durationLabel}</span>${s.deposit && Number(s.deposit) > 0 ? `<span>Deposit £${Number(s.deposit).toFixed(0)}</span>` : ""}</div>
+                </div>
+                <div class="side">
+                  <div class="price">£${Number(s.cost).toFixed(0)}</div>
+                  <a class="btn btn--sm" href="book.html?svc=${encodeURIComponent(s.slug)}">Book</a>
+                </div>
+              </div>
+            `).join("")}
+          </section>
+        `;
+      }).join("");
+    }
+    function renderAll() { renderPicker(); renderBio(); renderList(); }
+    renderAll();
+  </script>
+</body>
+</html>

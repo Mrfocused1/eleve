@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact — Élevé London</title>
+  <meta name="description" content="Contact Élevé London by Malika — Wembley Park clinic. By appointment only. WhatsApp, email, phone and enquiry form." />
+  <link rel="icon" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="site">
+    <header class="site-header" id="site-header"></header>
+
+    <main>
+      <section class="section wrap">
+        <div class="section-head">
+          <span class="eyebrow">Contact</span>
+          <h1>Say hello.</h1>
+          <p>By appointment only. We aim to reply to all enquiries within one working day.</p>
+        </div>
+
+        <div class="grid grid--2" style="max-width: 1040px; margin: 0 auto;">
+          <div class="card">
+            <h3>Visit</h3>
+            <p id="loc"></p>
+            <p id="hrs"></p>
+            <hr class="rule" style="margin: 10px 0;"/>
+            <h3>Reach us</h3>
+            <p><a id="phone" href=""></a></p>
+            <p><a id="email" href=""></a></p>
+            <div class="hstack" style="margin-top: 12px;">
+              <a class="btn btn--sm" id="waBtn" href="" target="_blank" rel="noopener">WhatsApp</a>
+              <a class="btn btn--sm btn--ghost" id="igBtn" href="" target="_blank" rel="noopener">Instagram</a>
+            </div>
+          </div>
+
+          <form id="contactForm" class="card" novalidate>
+            <h3>Send a message</h3>
+            <div class="fields-row">
+              <div class="field"><label for="cfname">Name</label><input id="cfname" name="name" required/></div>
+              <div class="field"><label for="cemail">Email</label><input id="cemail" name="email" type="email" required/></div>
+            </div>
+            <div class="field"><label for="cphone">Phone (optional)</label><input id="cphone" name="phone" type="tel"/></div>
+            <div class="field"><label for="ctopic">Enquiry</label>
+              <select id="ctopic" name="topic">
+                <option>General</option>
+                <option>Treatment consultation</option>
+                <option>Élevé Academy / Training</option>
+                <option>Post-op recovery</option>
+                <option>Membership</option>
+                <option>Press / Partnerships</option>
+              </select>
+            </div>
+            <div class="field"><label for="cmsg">Message</label><textarea id="cmsg" name="message" rows="5" required></textarea></div>
+            <button class="btn" type="submit">Send Message</button>
+            <p class="form-msg" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+  </div>
+
+  <script type="module">
+    import { init } from "./js/app.js";
+    import { BUSINESS, NEWSLETTER } from "./data/data.js";
+    init();
+    document.getElementById("loc").textContent = BUSINESS.location;
+    document.getElementById("hrs").textContent = BUSINESS.hours;
+    const phone = document.getElementById("phone"); phone.textContent = BUSINESS.phone; phone.href = BUSINESS.phoneHref;
+    const email = document.getElementById("email"); email.textContent = BUSINESS.email; email.href = BUSINESS.emailHref;
+    document.getElementById("waBtn").href = BUSINESS.whatsapp;
+    document.getElementById("igBtn").href = BUSINESS.instagram;
+
+    // Prefill from URL params
+    const params = new URLSearchParams(location.search);
+    if (params.get("enquiry") === "academy") {
+      document.getElementById("ctopic").value = "Élevé Academy / Training";
+      if (params.get("course")) document.getElementById("cmsg").value = `I'd like to enquire about the course: ${params.get("course")}.`;
+    }
+
+    const form = document.getElementById("contactForm");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const msg = form.querySelector(".form-msg");
+      const data = Object.fromEntries(new FormData(form).entries());
+      if (!data.name || !data.email || !data.message) { msg.textContent = "Please complete name, email and message."; msg.className = "form-msg err"; return; }
+      msg.textContent = "Sending…"; msg.className = "form-msg";
+      try {
+        if (NEWSLETTER.endpoint) {
+          await fetch(NEWSLETTER.endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...data, source: "contact-form" }) });
+        } else {
+          const list = JSON.parse(localStorage.getItem("eleve.enquiries") || "[]");
+          list.push({ ...data, at: new Date().toISOString() });
+          localStorage.setItem("eleve.enquiries", JSON.stringify(list));
+          await new Promise(r => setTimeout(r, 300));
+        }
+        msg.textContent = "Thank you — we'll be in touch shortly."; msg.className = "form-msg ok";
+        form.reset();
+      } catch {
+        msg.textContent = "Something went wrong. Please email us directly."; msg.className = "form-msg err";
+      }
+    });
+  </script>
+</body>
+</html>

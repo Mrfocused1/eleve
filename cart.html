@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bag — Élevé London</title>
+  <link rel="icon" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="site">
+    <header class="site-header" id="site-header"></header>
+
+    <main>
+      <section class="section wrap">
+        <div class="section-head" style="text-align:left; margin-bottom: 30px;">
+          <span class="eyebrow">Your Bag</span>
+          <h1 style="margin-top: 6px;">Review &amp; checkout</h1>
+        </div>
+
+        <div id="cartEmpty" hidden>
+          <p class="muted">Your bag is empty.</p>
+          <div class="hstack" style="margin-top: 14px;">
+            <a class="btn" href="shop.html">Shop the store</a>
+            <a class="btn btn--ghost" href="services.html">View treatments</a>
+          </div>
+        </div>
+
+        <div id="cartArea">
+          <div class="cart-list" id="cartList"></div>
+          <div class="cart-totals" id="cartTotals"></div>
+          <div class="hstack" style="justify-content: flex-end; margin-top: 24px;">
+            <a class="btn btn--ghost" href="shop.html">Continue shopping</a>
+            <a class="btn" href="checkout.html">Checkout</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+  </div>
+
+  <script type="module">
+    import { init, updateCartBadge } from "./js/app.js";
+    import { getCart, setQty, removeFromCart, keyFor, cartSubtotal, currency } from "./js/cart.js";
+    init();
+
+    function render() {
+      const items = getCart();
+      const empty = items.length === 0;
+      document.getElementById("cartEmpty").hidden = !empty;
+      document.getElementById("cartArea").hidden = empty;
+      if (empty) return;
+
+      document.getElementById("cartList").innerHTML = items.map(it => {
+        const k = keyFor(it);
+        return `
+          <div class="cart-row" data-k="${k}">
+            <img src="${it.image || 'assets/product-placeholder.svg'}" alt="${it.name}" onerror="this.style.opacity='0.2'"/>
+            <div>
+              <div class="name">${it.name}</div>
+              ${it.variant ? `<div class="variant">Size ${String(it.variant).toUpperCase()}</div>` : ""}
+            </div>
+            <div class="qty">
+              <button data-act="dec">−</button>
+              <input type="number" min="1" value="${it.qty}" data-act="input" />
+              <button data-act="inc">+</button>
+            </div>
+            <div class="price">${currency(it.price * it.qty)}</div>
+            <button class="rm" data-act="rm">Remove</button>
+          </div>
+        `;
+      }).join("");
+
+      document.getElementById("cartList").querySelectorAll(".cart-row").forEach(row => {
+        const k = row.dataset.k;
+        const it = items.find(x => keyFor(x) === k);
+        row.querySelector('[data-act="dec"]').onclick = () => { setQty(k, Math.max(1, it.qty - 1)); render(); updateCartBadge(); };
+        row.querySelector('[data-act="inc"]').onclick = () => { setQty(k, it.qty + 1); render(); updateCartBadge(); };
+        row.querySelector('[data-act="input"]').onchange = (e) => { setQty(k, parseInt(e.target.value) || 1); render(); updateCartBadge(); };
+        row.querySelector('[data-act="rm"]').onclick = () => { removeFromCart(k); render(); updateCartBadge(); };
+      });
+
+      const sub = cartSubtotal();
+      const shipping = items.some(x => x.kind === "product" && !/^gift-/.test(x.id)) ? 5.95 : 0;
+      const total = sub + shipping;
+      document.getElementById("cartTotals").innerHTML = `
+        <div class="row"><span>Subtotal</span><span>${currency(sub)}</span></div>
+        <div class="row"><span>Shipping</span><span>${shipping === 0 ? "Free" : currency(shipping)}</span></div>
+        <div class="row total"><span>Total</span><span>${currency(total)}</span></div>
+      `;
+    }
+    render();
+    document.addEventListener("cart:change", render);
+  </script>
+</body>
+</html>
