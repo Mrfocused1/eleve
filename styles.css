@@ -317,31 +317,67 @@ main { flex: 1; }
 }
 
 @media (max-width: 860px) {
+  /* Editorial layered: eyebrow → headline (overlaps image top) → image → copy → link */
   .hero-shop {
-    grid-template-columns: 1fr;
-    min-height: 0;
-  }
-  .hero-shop__text {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    max-width: none;
-    padding:
-      clamp(48px, 10vw, 80px)
-      var(--gutter)
-      clamp(32px, 6vw, 48px);
-  }
-  .hero-shop__text p { max-width: 34ch; margin-left: auto; margin-right: auto; }
-  .hero-shop__link { align-self: center; }
-  .hero-shop__image {
-    aspect-ratio: auto;
     min-height: 0;
+    padding: clamp(40px, 9vw, 64px) 0 clamp(32px, 7vw, 48px);
+    grid-template-columns: none;
+    background: #e7d6c5;
+  }
+  .hero-shop__text { display: contents; }
+
+  .hero-shop__text .eyebrow {
+    order: 1;
+    margin: 0 var(--gutter) 14px;
+  }
+  .hero-shop__text h1 {
+    order: 2;
+    font-size: clamp(54px, 14vw, 84px);
+    line-height: 0.9;
+    letter-spacing: -0.005em;
+    text-align: center;
+    margin: 0 var(--gutter) -0.42em;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-shop__image {
+    order: 3;
+    width: 100%;
+    aspect-ratio: 5 / 4;
+    min-height: 0;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    background: #e7d6c5;
   }
   .hero-shop__image img {
-    position: static;
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: auto;
-    object-fit: initial;
-    object-position: initial;
+    height: 100%;
+    object-fit: contain;
+    object-position: center 62%;
+    display: block;
+  }
+  .hero-shop__text p {
+    order: 4;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(16px, 4.3vw, 19px);
+    line-height: 1.45;
+    color: var(--ink-soft);
+    text-align: center;
+    max-width: 30ch;
+    margin: clamp(24px, 6vw, 36px) auto 0;
+    padding: 0 var(--gutter);
+  }
+  .hero-shop__link {
+    order: 5;
+    align-self: center;
+    margin-top: clamp(18px, 4vw, 24px);
   }
 }
 
