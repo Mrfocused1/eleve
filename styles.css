@@ -333,10 +333,10 @@ main { flex: 1; }
   .hero-shop__text p { max-width: 34ch; margin-left: auto; margin-right: auto; }
   .hero-shop__link { align-self: center; }
   .hero-shop__image {
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 4 / 3;
     min-height: 0;
   }
-  .hero-shop__image img { object-position: center 25%; }
+  .hero-shop__image img { object-position: center center; }
 }
 
 /* ====== Cards / grids ====== */

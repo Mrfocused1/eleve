@@ -70,7 +70,7 @@
           <div class="img-wrap">
             ${p.colombian ? COLOMBIAN_FLAG : ""}
             ${p.comingSoon ? `<span class="coming-soon-badge">Coming Soon</span>` : ""}
-            <img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'"/>
+            <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='assets/product-placeholder.svg';"/>
           </div>
           <div class="body">
             <span class="cat">${p.category}${p.brand ? ` · ${p.brand}` : ""}</span>
