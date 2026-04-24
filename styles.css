@@ -306,7 +306,7 @@ main { flex: 1; }
 .hero-shop__image {
   position: relative;
   overflow: hidden;
-  background: #e8dfd1;
+  background: #e7d6c5;
   min-height: 440px;
 }
 .hero-shop__image img {
@@ -333,10 +333,16 @@ main { flex: 1; }
   .hero-shop__text p { max-width: 34ch; margin-left: auto; margin-right: auto; }
   .hero-shop__link { align-self: center; }
   .hero-shop__image {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: auto;
     min-height: 0;
   }
-  .hero-shop__image img { object-position: center center; }
+  .hero-shop__image img {
+    position: static;
+    width: 100%;
+    height: auto;
+    object-fit: initial;
+    object-position: initial;
+  }
 }
 
 /* ====== Cards / grids ====== */
