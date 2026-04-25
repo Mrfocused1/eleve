@@ -72,6 +72,7 @@
           <div class="img-wrap ${galleryImages ? "img-wrap--gallery" : ""}">
             ${p.colombian ? COLOMBIAN_FLAG : ""}
             ${p.comingSoon ? `<span class="coming-soon-badge">Coming Soon</span>` : ""}
+            ${p.finalRelease ? `<span class="final-release-badge">Final Release</span>` : ""}
             <img class="product-gallery__main" src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='assets/product-placeholder.svg';"/>
             ${galleryImages ? `
               <button class="product-gallery__nav product-gallery__nav--prev" aria-label="Previous image" type="button">
@@ -83,21 +84,11 @@
               <span class="product-gallery__counter"><span class="product-gallery__current">1</span> / ${galleryImages.length}</span>
             ` : ""}
           </div>
-          ${galleryImages ? `
-            <div class="product-gallery__thumbs" role="list">
-              ${galleryImages.map((src, i) => `
-                <button class="product-gallery__thumb ${i === 0 ? "is-active" : ""}" data-idx="${i}" aria-label="View image ${i+1}" type="button">
-                  <img src="${src}" alt="" loading="lazy" />
-                </button>
-              `).join("")}
-            </div>
-          ` : ""}
           <div class="body">
             <span class="cat">${p.category}${p.brand ? ` · ${p.brand}` : ""}</span>
             <span class="name">${p.name}</span>
             <span class="tag">${p.tagline}</span>
-            ${p.finalRelease ? `<span class="release-flag release-flag--final">Final release stock</span>` : ""}
-            ${hasDetails ? `
+            ${hasDetails || galleryImages || variants ? `
               <details class="product-details">
                 <summary><span>View details</span><span class="product-details__icon" aria-hidden="true">+</span></summary>
                 <div class="product-details__body">
@@ -113,14 +104,23 @@
                       ${stockVariants.map(s => `<li><span class="stock-list__qty">x${s.qty}</span><span class="stock-list__size">${s.size}</span></li>`).join("")}
                     </ul>
                   ` : ""}
+                  ${variants ? `
+                    <label class="product-size-label">Size</label>
+                    <select class="product-size-select" data-variant="${p.id}" ${p.comingSoon ? "disabled" : ""}>
+                      ${variants.map(v => `<option value="${v.id}">${v.label}</option>`).join("")}
+                    </select>
+                  ` : ""}
+                  ${galleryImages ? `
+                    <div class="product-gallery__thumbs" role="list">
+                      ${galleryImages.map((src, i) => `
+                        <button class="product-gallery__thumb ${i === 0 ? "is-active" : ""}" data-idx="${i}" aria-label="View image ${i+1}" type="button">
+                          <img src="${src}" alt="" loading="lazy" />
+                        </button>
+                      `).join("")}
+                    </div>
+                  ` : ""}
                 </div>
               </details>
-            ` : ""}
-            ${variants ? `
-              <label style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-soft); margin-top: 8px;">Size</label>
-              <select data-variant="${p.id}" ${p.comingSoon ? "disabled" : ""} style="padding: 8px 10px; border: 1px solid var(--rule); background: transparent; font: inherit; color: var(--ink);">
-                ${variants.map(v => `<option value="${v.id}">${v.label}</option>`).join("")}
-              </select>
             ` : ""}
             <div class="foot">
               <span class="price">${p.price != null ? currency(p.price) : "—"}</span>
