@@ -1060,8 +1060,10 @@ main { flex: 1; }
   padding-top: 10px;
 }
 .product-card .price { font-family: var(--serif); font-size: 22px; }
+.product-card.is-coming-soon { align-self: start; }
 .product-card.is-coming-soon .img-wrap img { filter: grayscale(0.35) brightness(0.96); opacity: 0.86; }
 .product-card.is-coming-soon .price { color: var(--ink-faint); }
+.product-card.is-coming-soon .foot { padding-top: 4px; }
 
 /* Product gallery — multi-image carousel inside small card */
 .product-card .img-wrap--gallery img { transition: opacity .25s ease; }

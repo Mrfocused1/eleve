@@ -124,9 +124,7 @@
             ` : ""}
             <div class="foot">
               <span class="price">${p.price != null ? currency(p.price) : "—"}</span>
-              ${p.comingSoon
-                ? `<button class="btn btn--sm" disabled aria-disabled="true">Coming Soon</button>`
-                : `<button class="btn btn--sm" data-add="${p.id}">Add to Bag</button>`}
+              ${p.comingSoon ? "" : `<button class="btn btn--sm" data-add="${p.id}">Add to Bag</button>`}
             </div>
           </div>
         </article>
