@@ -94,6 +94,7 @@ export function renderFooter(mountId = "site-footer") {
           <h5>Explore</h5>
           <ul>
             <li><a href="services.html">Treatment Menu</a></li>
+            <li><a href="usa-services.html">USA Introductory Menu</a></li>
             <li><a href="training.html">Élevé Academy</a></li>
             <li><a href="shop.html">Élevé Store</a></li>
             <li><a href="book.html">Book a Session</a></li>

@@ -21,9 +21,19 @@
           <span class="eyebrow">Treatment Menu</span>
           <h1>Every service, one menu.</h1>
           <p>All treatments, durations and prices in one place. New clients begin with a consultation — every plan is bespoke.</p>
+          <p class="menu-region-link"><a href="usa-services.html">USA introductory pricing →</a></p>
         </div>
 
         <div class="tabs" id="catTabs" role="tablist"></div>
+
+        <section class="pricing-group" id="model-rates">
+          <div class="model-rates__head">
+            <span class="eyebrow eyebrow--accent">Model Rates · Isabel</span>
+            <h2>Limited model slots with Isabel.</h2>
+            <p class="blurb">Isabel — our London mobile therapist — is taking on a small intake of model clients to build her case studies under The Élevé Method®. Each rate below is reserved for three models only.</p>
+          </div>
+          <div id="modelRateRows"></div>
+        </section>
 
         <div id="serviceList"></div>
 
@@ -62,6 +72,59 @@
       { slug: "eleve-sculpt-detox-12-sessions", label: "12 Refine" },
       { slug: "eleve-sculpt-detox-24-sessions", label: "24 Transform" },
     ];
+
+    const MODEL_RATES = [
+      {
+        name: "Sculpt Detox®",
+        bookingSlug: "eleve-sculpt-detox",
+        rows: [
+          { sessions: "1 session",  price: 95 },
+          { sessions: "6 sessions", price: 450 },
+        ],
+      },
+      {
+        name: "Élevé Body Contour®",
+        bookingSlug: "eleve-body-sculpt",
+        rows: [
+          { sessions: "Single session", price: 95 },
+          { sessions: "6 sessions",     price: 450 },
+        ],
+      },
+      {
+        name: "SculptWood®",
+        bookingSlug: "eleve-sculptwood-massage",
+        rows: [
+          { sessions: "Single session", price: 65 },
+          { sessions: "6 sessions",     price: 250 },
+        ],
+      },
+      {
+        name: "Post-Operative Recovery",
+        bookingSlug: "eleve-recovery-standard-360",
+        rows: [
+          { sessions: "10 sessions", price: 590 },
+          { sessions: "12 sessions", price: 690 },
+        ],
+      },
+    ];
+
+    document.getElementById("modelRateRows").innerHTML = MODEL_RATES.map(group => `
+      <article class="model-rate-row">
+        <div class="model-rate-row__head">
+          <h3>${group.name}</h3>
+          <span class="model-rate-row__badge">Limited to 3 models</span>
+        </div>
+        <ul class="model-rate-row__list">
+          ${group.rows.map(r => `
+            <li>
+              <span class="model-rate-row__sessions">${r.sessions}</span>
+              <span class="model-rate-row__price">£${r.price}</span>
+              <a class="model-rate-row__cta" href="book.html?svc=${encodeURIComponent(group.bookingSlug)}&therapist=isabel&rate=model">Enquire</a>
+            </li>
+          `).join("")}
+        </ul>
+      </article>
+    `).join("");
 
     function renderList() {
       const visible = CATEGORIES.filter(c => active === "all" || c.id === active);
