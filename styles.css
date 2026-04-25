@@ -1063,6 +1063,75 @@ main { flex: 1; }
 .product-card.is-coming-soon .img-wrap img { filter: grayscale(0.35) brightness(0.96); opacity: 0.86; }
 .product-card.is-coming-soon .price { color: var(--ink-faint); }
 
+/* Product gallery — multi-image carousel inside small card */
+.product-card .img-wrap--gallery img { transition: opacity .25s ease; }
+.product-card .img-wrap--gallery:hover .product-gallery__main { transform: none; }
+.product-gallery__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(248, 244, 237, 0.9);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .2s ease, background .2s ease;
+  box-shadow: 0 1px 6px rgba(58, 51, 43, 0.12);
+}
+.product-gallery__nav--prev { left: 10px; }
+.product-gallery__nav--next { right: 10px; }
+.product-card:hover .product-gallery__nav,
+.product-gallery__nav:focus-visible { opacity: 1; }
+.product-gallery__nav:hover { background: var(--bg-cream); }
+.product-gallery__counter {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 3;
+  background: rgba(58, 51, 43, 0.78);
+  color: var(--bg-cream);
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  padding: 4px 9px;
+  border-radius: 999px;
+  pointer-events: none;
+}
+.product-gallery__thumbs {
+  display: flex;
+  gap: 6px;
+  padding: 8px 12px 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.product-gallery__thumbs::-webkit-scrollbar { display: none; }
+.product-gallery__thumb {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--rule);
+  background: var(--bg-cream);
+  cursor: pointer;
+  overflow: hidden;
+  opacity: 0.7;
+  transition: opacity .2s ease, border-color .2s ease;
+}
+.product-gallery__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.product-gallery__thumb:hover { opacity: 0.95; }
+.product-gallery__thumb.is-active { opacity: 1; border-color: var(--ink); }
+@media (max-width: 720px) {
+  .product-gallery__nav { opacity: 1; width: 28px; height: 28px; }
+  .product-gallery__thumb { flex: 0 0 38px; width: 38px; height: 38px; }
+}
+
 .coming-soon-badge {
   position: absolute;
   top: 12px; left: 12px;
