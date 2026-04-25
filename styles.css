@@ -1022,6 +1022,12 @@ main { flex: 1; }
   color: var(--ink-soft);
   margin: 0;
 }
+.product-card .product-description {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin: 0;
+}
 .product-card .product-subhead {
   font-family: var(--sans);
   font-size: 11px;
@@ -1188,20 +1194,6 @@ main { flex: 1; }
 .co-flag__y { flex: 2; background: #fcd116; }
 .co-flag__b { flex: 1; background: #003893; }
 .co-flag__r { flex: 1; background: #ce1126; }
-
-.release-flag {
-  display: inline-block;
-  font-size: 10px;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  padding: 4px 8px;
-  margin-top: 4px;
-  align-self: flex-start;
-}
-.release-flag--final {
-  background: var(--ink);
-  color: var(--bg-cream);
-}
 
 .stock-list {
   list-style: none;

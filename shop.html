@@ -65,7 +65,9 @@
       gridEl.innerHTML = list.map(p => {
         const stockVariants = Array.isArray(p.stock) ? p.stock.filter(s => s.qty > 0) : null;
         const variants = p.variants || (stockVariants ? stockVariants.map(s => ({ id: s.size.toLowerCase(), label: s.size })) : null);
-        const hasDetails = p.intro || p.subhead || (Array.isArray(p.features) && p.features.length);
+        const hasRichDetails = p.intro || p.subhead || (Array.isArray(p.features) && p.features.length);
+        const hasDescription = !!p.description;
+        const showDisclosure = hasRichDetails || hasDescription;
         const galleryImages = Array.isArray(p.images) && p.images.length > 1 ? p.images : null;
         return `
         <article class="product-card ${p.comingSoon ? "is-coming-soon" : ""}" id="${p.id}" ${galleryImages ? `data-gallery="${p.id}"` : ""}>
@@ -88,12 +90,13 @@
             <span class="cat">${p.category}${p.brand ? ` · ${p.brand}` : ""}</span>
             <span class="name">${p.name}</span>
             <span class="tag">${p.tagline}</span>
-            ${hasDetails || galleryImages || variants ? `
+            ${showDisclosure || galleryImages || variants ? `
               <details class="product-details">
                 <summary><span>View details</span><span class="product-details__icon" aria-hidden="true">+</span></summary>
                 <div class="product-details__body">
                   ${p.intro ? `<p class="product-intro">${p.intro}</p>` : ""}
                   ${p.subhead ? `<p class="product-subhead">${p.subhead}</p>` : ""}
+                  ${!hasRichDetails && hasDescription ? `<p class="product-description">${p.description}</p>` : ""}
                   ${Array.isArray(p.features) && p.features.length ? `
                     <ul class="product-features">
                       ${p.features.map(f => `<li>${f}</li>`).join("")}

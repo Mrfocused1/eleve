@@ -72,7 +72,6 @@ export const THERAPISTS = [
     bio: "Kiah holds our international diary from South Florida, trained under Malika in The Élevé Method®. Her practice centres on body wellness and post-operative recovery — lymphatic drainage, sculpting, fibrosis management and structured post-surgical care delivered mobile across the Miami, Broward and Palm Beach areas.",
     specialties: ["Body Wellness", "Post-Op Care", "Lymphatic Drainage", "Sculpting"],
     eligibleFor: ["body", "lymph", "postop", "sculptwood", "rf", "cellulite", "consultation"],
-    avatar: "assets/therapist-kiah.png",
     location: "Davie, FL, USA",
     serviceArea: "Mobile appointments across Miami + Broward + Palm Beach",
   },

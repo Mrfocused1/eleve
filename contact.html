@@ -50,6 +50,7 @@
                 <option>General</option>
                 <option>Treatment consultation</option>
                 <option>Élevé Academy / Training</option>
+                <option>USA / Mobile Appointments</option>
                 <option>Post-op recovery</option>
                 <option>Membership</option>
                 <option>Press / Partnerships</option>
@@ -79,9 +80,13 @@
 
     // Prefill from URL params
     const params = new URLSearchParams(location.search);
-    if (params.get("enquiry") === "academy") {
+    const enquiry = params.get("enquiry");
+    if (enquiry === "academy") {
       document.getElementById("ctopic").value = "Élevé Academy / Training";
       if (params.get("course")) document.getElementById("cmsg").value = `I'd like to enquire about the course: ${params.get("course")}.`;
+    } else if (enquiry === "usa") {
+      document.getElementById("ctopic").value = "USA / Mobile Appointments";
+      document.getElementById("cmsg").value = "I'd like to enquire about USA mobile appointments with Kiah.";
     }
 
     const form = document.getElementById("contactForm");

@@ -56,14 +56,25 @@
     const qs = new URLSearchParams(location.search);
     const prefill = qs.get("svc");
     const therapistPrefill = qs.get("therapist");
-    if (prefill && services.find(s => s.slug === prefill)) {
-      state.serviceSlug = prefill;
+    const ratePrefill = qs.get("rate");
+    const prefilledService = prefill ? services.find(s => s.slug === prefill) : null;
+    const prefilledTherapist = therapistPrefill ? THERAPISTS.find(t => t.id === therapistPrefill && !t.hidden) : null;
+    if (prefilledService) {
+      state.serviceSlug = prefilledService.slug;
       state.step = 1;
     }
-    if (therapistPrefill && THERAPISTS.find(t => t.id === therapistPrefill && !t.hidden)) {
-      state.therapistId = therapistPrefill;
-      state.step = state.serviceSlug ? 3 : 2;
+    if (prefilledTherapist) {
+      state.therapistId = prefilledTherapist.id;
+      // If both are prefilled but therapist can't actually offer the service, drop the service
+      // and send the user to step 2 to pick something eligible.
+      if (state.serviceSlug && !therapistEligible(prefilledTherapist, prefilledService)) {
+        state.serviceSlug = null;
+        state.step = 2;
+      } else {
+        state.step = state.serviceSlug ? 3 : 2;
+      }
     }
+    if (ratePrefill) state.rate = ratePrefill;
 
     const stepper = document.getElementById("stepper");
     const host = document.getElementById("stepHost");
@@ -298,6 +309,7 @@
           durationMin: svc.duration_min,
           price: Number(svc.cost), deposit: Number(svc.deposit || 0),
           customer: data,
+          ...(state.rate ? { rate: state.rate } : {}),
         };
         DiaryStore.add(booking);
         localStorage.setItem("eleve.lastBooking", JSON.stringify(booking));
