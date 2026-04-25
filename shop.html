@@ -77,6 +77,13 @@
             <span class="name">${p.name}</span>
             <span class="tag">${p.tagline}</span>
             ${p.description ? `<p class="muted" style="font-size:13px;">${p.description}</p>` : ""}
+            ${p.intro ? `<p class="product-intro">${p.intro}</p>` : ""}
+            ${p.subhead ? `<p class="product-subhead">${p.subhead}</p>` : ""}
+            ${Array.isArray(p.features) && p.features.length ? `
+              <ul class="product-features">
+                ${p.features.map(f => `<li>${f}</li>`).join("")}
+              </ul>
+            ` : ""}
             ${p.finalRelease ? `<span class="release-flag release-flag--final">Final release stock</span>` : ""}
             ${stockVariants ? `
               <ul class="stock-list" aria-label="Available stock by size">
