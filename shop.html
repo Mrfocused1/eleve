@@ -35,7 +35,7 @@
         </div>
 
         <div class="tabs" id="catTabs"></div>
-        <div id="productGrid"></div>
+        <div class="grid grid--4" id="productGrid"></div>
       </section>
     </main>
 
@@ -60,52 +60,13 @@
 
     const COLOMBIAN_FLAG = `<span class="co-flag" title="Sourced from Colombia" aria-label="Sourced from Colombia"><span class="co-flag__y"></span><span class="co-flag__b"></span><span class="co-flag__r"></span></span>`;
 
-    function featureCard(p) {
-      const stockVariants = Array.isArray(p.stock) ? p.stock.filter(s => s.qty > 0) : null;
-      const variants = p.variants || (stockVariants ? stockVariants.map(s => ({ id: s.size.toLowerCase(), label: s.size })) : null);
-      return `
-        <article class="product-feature" id="${p.id}">
-          <div class="product-feature__img">
-            ${p.colombian ? COLOMBIAN_FLAG : ""}
-            <img src="${p.image}" alt="${p.name}" loading="eager" onerror="this.onerror=null;this.src='assets/product-placeholder.svg';"/>
-          </div>
-          <div class="product-feature__body">
-            <span class="cat">${p.category}${p.brand ? ` · ${p.brand}` : ""}</span>
-            <h3 class="product-feature__name">${p.name}</h3>
-            ${p.intro ? `<p class="product-intro">${p.intro}</p>` : `<p class="tag">${p.tagline}</p>`}
-            ${p.subhead ? `<p class="product-subhead">${p.subhead}</p>` : ""}
-            ${Array.isArray(p.features) && p.features.length ? `
-              <ul class="product-features">
-                ${p.features.map(f => `<li>${f}</li>`).join("")}
-              </ul>
-            ` : ""}
-            ${p.finalRelease ? `<span class="release-flag release-flag--final">Final release stock</span>` : ""}
-            ${stockVariants ? `
-              <ul class="stock-list" aria-label="Available stock by size">
-                ${stockVariants.map(s => `<li><span class="stock-list__qty">x${s.qty}</span><span class="stock-list__size">${s.size}</span></li>`).join("")}
-              </ul>
-            ` : ""}
-            <div class="product-feature__buy">
-              ${variants ? `
-                <div class="product-feature__size">
-                  <label for="size-${p.id}">Size</label>
-                  <select id="size-${p.id}" data-variant="${p.id}">
-                    ${variants.map(v => `<option value="${v.id}">${v.label}</option>`).join("")}
-                  </select>
-                </div>
-              ` : ""}
-              <div class="product-feature__cta">
-                <span class="price">${p.price != null ? currency(p.price) : "—"}</span>
-                <button class="btn" data-add="${p.id}">Add to Bag</button>
-              </div>
-            </div>
-          </div>
-        </article>
-      `;
-    }
-
-    function smallCard(p) {
-      return `
+    function renderGrid() {
+      const list = active === "All" ? PRODUCTS : PRODUCTS.filter(p => p.category === active);
+      gridEl.innerHTML = list.map(p => {
+        const stockVariants = Array.isArray(p.stock) ? p.stock.filter(s => s.qty > 0) : null;
+        const variants = p.variants || (stockVariants ? stockVariants.map(s => ({ id: s.size.toLowerCase(), label: s.size })) : null);
+        const hasDetails = p.intro || p.subhead || (Array.isArray(p.features) && p.features.length);
+        return `
         <article class="product-card ${p.comingSoon ? "is-coming-soon" : ""}" id="${p.id}">
           <div class="img-wrap">
             ${p.colombian ? COLOMBIAN_FLAG : ""}
@@ -116,37 +77,42 @@
             <span class="cat">${p.category}${p.brand ? ` · ${p.brand}` : ""}</span>
             <span class="name">${p.name}</span>
             <span class="tag">${p.tagline}</span>
+            ${p.finalRelease ? `<span class="release-flag release-flag--final">Final release stock</span>` : ""}
+            ${hasDetails ? `
+              <details class="product-details">
+                <summary><span>View details</span><span class="product-details__icon" aria-hidden="true">+</span></summary>
+                <div class="product-details__body">
+                  ${p.intro ? `<p class="product-intro">${p.intro}</p>` : ""}
+                  ${p.subhead ? `<p class="product-subhead">${p.subhead}</p>` : ""}
+                  ${Array.isArray(p.features) && p.features.length ? `
+                    <ul class="product-features">
+                      ${p.features.map(f => `<li>${f}</li>`).join("")}
+                    </ul>
+                  ` : ""}
+                  ${stockVariants ? `
+                    <ul class="stock-list" aria-label="Available stock by size">
+                      ${stockVariants.map(s => `<li><span class="stock-list__qty">x${s.qty}</span><span class="stock-list__size">${s.size}</span></li>`).join("")}
+                    </ul>
+                  ` : ""}
+                </div>
+              </details>
+            ` : ""}
+            ${variants ? `
+              <label style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-soft); margin-top: 8px;">Size</label>
+              <select data-variant="${p.id}" ${p.comingSoon ? "disabled" : ""} style="padding: 8px 10px; border: 1px solid var(--rule); background: transparent; font: inherit; color: var(--ink);">
+                ${variants.map(v => `<option value="${v.id}">${v.label}</option>`).join("")}
+              </select>
+            ` : ""}
             <div class="foot">
               <span class="price">${p.price != null ? currency(p.price) : "—"}</span>
               ${p.comingSoon
-                ? `<button class="btn btn--sm" disabled aria-disabled="true">Notify</button>`
+                ? `<button class="btn btn--sm" disabled aria-disabled="true">Coming Soon</button>`
                 : `<button class="btn btn--sm" data-add="${p.id}">Add to Bag</button>`}
             </div>
           </div>
         </article>
       `;
-    }
-
-    function renderGrid() {
-      const list = active === "All" ? PRODUCTS : PRODUCTS.filter(p => p.category === active);
-      const live = list.filter(p => !p.comingSoon);
-      const soon = list.filter(p => p.comingSoon);
-      gridEl.innerHTML = `
-        ${live.length ? `
-          <div class="shop-feature-row">
-            ${live.map(featureCard).join("")}
-          </div>
-        ` : ""}
-        ${soon.length ? `
-          <div class="shop-soon-head">
-            <span class="eyebrow">Coming Soon</span>
-            <span class="shop-soon-head__rule" aria-hidden="true"></span>
-          </div>
-          <div class="grid grid--4 shop-soon-grid">
-            ${soon.map(smallCard).join("")}
-          </div>
-        ` : ""}
-      `;
+      }).join("");
       gridEl.querySelectorAll("[data-add]").forEach(b => b.addEventListener("click", () => {
         const id = b.dataset.add;
         const p = PRODUCTS.find(x => x.id === id);
