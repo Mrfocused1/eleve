@@ -8,9 +8,8 @@ const NAV = [
   { href: "index.html",     label: "Home" },
   { href: "services.html",  label: "Services" },
   { href: "training.html",  label: "Academy" },
-  { href: "shop.html",      label: "Shop" },
   { href: "book.html",      label: "Book" },
-  { href: "pricing.html",   label: "Pricing" },
+  { href: "shop.html",      label: "Shop" },
   { href: "therapists.html", label: "Therapists" },
   { href: "about.html",     label: "About" },
   { href: "faqs.html",      label: "FAQs" },
@@ -99,11 +98,10 @@ export function renderFooter(mountId = "site-footer") {
           <h5>Explore</h5>
           <ul>
             <li><a href="services.html">Treatment Menu</a></li>
-            <li><a href="usa-services.html">USA Introductory Menu</a></li>
+            <li><a href="services.html#usa">USA Introductory Menu</a></li>
             <li><a href="training.html">Élevé Academy</a></li>
             <li><a href="shop.html">Élevé Store</a></li>
             <li><a href="book.html">Book a Session</a></li>
-            <li><a href="pricing.html">Pricing</a></li>
             <li><a href="therapists.html">Therapists</a></li>
           </ul>
         </div>

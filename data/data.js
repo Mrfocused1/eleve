@@ -61,7 +61,7 @@ export const THERAPISTS = [
     specialties: ["Body Wellness", "Aesthetics", "Post-Op Care", "Lymphatic Drainage"],
     eligibleFor: ["body", "lymph", "postop", "sculptwood", "rf", "cellulite", "face", "antiwrinkle", "fat", "consultation"],
     avatar: "assets/therapist-isabel.png",
-    location: "Harrow, London, UK",
+    location: "266 High Road, Harrow, HA3 7BB",
     serviceArea: "Mobile appointments across London + Watford",
   },
   {
@@ -72,7 +72,7 @@ export const THERAPISTS = [
     bio: "Kiah holds our international diary from South Florida, trained under Malika in The Élevé Method®. Her practice centres on body wellness and post-operative recovery — lymphatic drainage, sculpting, fibrosis management and structured post-surgical care delivered mobile across the Miami, Broward and Palm Beach areas.",
     specialties: ["Body Wellness", "Post-Op Care", "Lymphatic Drainage", "Sculpting"],
     eligibleFor: ["body", "lymph", "postop", "sculptwood", "rf", "cellulite", "consultation"],
-    location: "Davie, FL, USA",
+    location: "5400 S University Dr #403, Davie, FL 33328",
     serviceArea: "Mobile appointments across Miami + Broward + Palm Beach",
   },
   {
@@ -147,6 +147,101 @@ export function formatDuration(min) {
   if (h) return `${h}h`;
   return `${m}min`;
 }
+
+/* Group singles + their session-pack siblings under one parent slug so the
+   menu can render a single card with a session selector instead of 4 rows.
+   Slugs are inconsistent in services.json — listing them explicitly. */
+export const PACKAGE_GROUPS = {
+  "eleve-sculpt-detox": {
+    singleLabel: "Single session",
+    packs: [
+      { slug: "eleve-sculpt-detox-6-sessions",  label: "Define · 6 Sessions" },
+      { slug: "eleve-sculpt-detox-12-sessions", label: "Refine · 12 Sessions" },
+      { slug: "eleve-sculpt-detox-24-sessions", label: "Transform · 24 Sessions" },
+    ],
+  },
+  "eleve-body-sculpt": {
+    singleLabel: "Single session",
+    packs: [
+      { slug: "eleve-body-sculpt-body-sculpt-6-sessions",  label: "Rest · 6 Sessions" },
+      { slug: "eleve-body-sculpt-body-sculpt-12-sessions", label: "Define · 12 Sessions" },
+      { slug: "eleve-body-sculpt-24-sessions",             label: "Transform · 24 Sessions" },
+    ],
+  },
+  "eleve-360-body-sculpt": {
+    singleLabel: "Single session",
+    packs: [
+      { slug: "eleve-360-body-sculpt-360-body-sculpt-6-sessions",  label: "Rest · 6 Sessions" },
+      { slug: "eleve-360-body-sculpt-360-body-sculpt-12-sessions", label: "Define · 12 Sessions" },
+      { slug: "eleve-360-body-sculpt-24-sessions",                 label: "Transform · 24 Sessions" },
+    ],
+  },
+  "eleve-contour-session-dual": {
+    singleLabel: "Single session",
+    packs: [
+      { slug: "eleve-contour-dual-2-areas-6-sessions",  label: "Rest · 6 Sessions" },
+      { slug: "eleve-contour-dual-2-areas-12-sessions", label: "Define · 12 Sessions" },
+      { slug: "eleve-contour-24-sessions",              label: "Transform · 24 Sessions" },
+    ],
+  },
+  "eleve-cellulite-therapy": {
+    singleLabel: "Single session",
+    packs: [
+      { slug: "eleve-cellulite-therapy-8-sessions", label: "Rest · 8 Sessions" },
+    ],
+  },
+  "eleve-firm-tighten": {
+    singleLabel: "Single session",
+    packs: [
+      { slug: "eleve-firm-tighten-firm-tighten-8-sessions", label: "Rest · 8 Sessions" },
+    ],
+  },
+  "eleve-lymp-reset-massage": {
+    singleLabel: "Single session",
+    packs: [
+      { slug: "eleve-lymph-reset-6-sessions",  label: "Rest · 6 Sessions" },
+      { slug: "eleve-lymph-reset-12-sessions", label: "Define · 12 Sessions" },
+    ],
+  },
+  "eleve-rf-skin-lift": {
+    singleLabel: "Single session",
+    packs: [
+      { slug: "eleve-rf-skin-lift-rf-skin-lift-8-sessions", label: "Rest · 8 Sessions" },
+    ],
+  },
+  "eleve-sculptwood-massage": {
+    singleLabel: "Single session",
+    packs: [
+      { slug: "eleve-sculptwood-massage-6-sessions",     label: "Rest · 6 Sessions" },
+      { slug: "eleve-sculptwood-sculptwood-12-sessions", label: "Define · 12 Sessions" },
+    ],
+  },
+  "eleve-recovery-standard-360": {
+    singleLabel: "10 Sessions",
+    packs: [
+      { slug: "eleve-recovery-standard-360-15-sessions", label: "15 Sessions" },
+      { slug: "eleve-recovery-standard-360-24-sessions", label: "24 Sessions" },
+    ],
+  },
+  "eleve-recovery-advanced-360": {
+    singleLabel: "10 Sessions",
+    packs: [
+      { slug: "eleve-recovery-advanced-360-15-sessions", label: "15 Sessions" },
+      { slug: "eleve-recovery-advanced-360-24-sessions", label: "24 Sessions" },
+    ],
+  },
+  "eleve-recovery-advanced-full-body": {
+    singleLabel: "10 Sessions",
+    packs: [
+      { slug: "eleve-recovery-advanced-full-body-15-sessions", label: "15 Sessions" },
+      { slug: "eleve-recovery-advanced-full-body-20-sessions", label: "24 Sessions" },
+    ],
+  },
+};
+
+export const PACKAGE_CHILD_SLUGS = new Set(
+  Object.values(PACKAGE_GROUPS).flatMap(g => g.packs.map(p => p.slug))
+);
 
 /* Training / Academy — scraped from /éleve-academy */
 export const COURSES = [

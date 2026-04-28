@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Treatment Menu — Élevé London by Malika</title>
-  <meta name="description" content="The full Élevé London treatment menu: signature body sculpting, Élevé Recovery® post-op, lymphatic drainage, RF skin lift, fat dissolving, facial aesthetics and anti-wrinkle." />
+  <meta name="description" content="The full Élevé treatment menu — UK with Malika and Isabel, USA introductory pricing with Kiah. Signature body sculpting, Élevé Recovery®, lymphatic drainage, RF skin lift, fat dissolving, facial aesthetics and anti-wrinkle." />
   <link rel="icon" href="assets/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,26 +20,75 @@
         <div class="section-head">
           <span class="eyebrow">Treatment Menu</span>
           <h1>Every service, one menu.</h1>
-          <p>All treatments, durations and prices in one place. New clients begin with a consultation — every plan is bespoke.</p>
-          <p class="menu-region-link"><a href="usa-services.html">USA introductory pricing →</a></p>
+          <p>Choose your region — UK menus with Malika or Isabel, USA introductory pricing with Kiah. New clients begin with a consultation.</p>
         </div>
 
-        <div class="tabs" id="catTabs" role="tablist"></div>
+        <div class="region-toggle tabs" id="regionToggle" role="tablist"></div>
 
-        <section class="pricing-group" id="model-rates">
-          <div class="model-rates__head">
-            <span class="eyebrow eyebrow--accent">Model Rates · Isabel</span>
-            <h2>Limited model slots with Isabel.</h2>
-            <p class="blurb">Isabel — our London mobile therapist — is taking on a small intake of model clients to build her case studies under The Élevé Method®. Each rate below is reserved for three models only.</p>
+        <!-- UK pane -->
+        <section class="region-pane" data-pane="uk">
+          <div class="menu-switcher">
+            <span class="menu-switcher__label">Showing menu for</span>
+            <div class="tabs tabs--therapist" id="therapistTabs" role="tablist"></div>
           </div>
-          <div id="modelRateRows"></div>
+
+          <div class="tabs" id="catTabs" role="tablist"></div>
+
+          <div id="serviceList"></div>
+
+          <div class="card" style="margin-top: 40px; text-align: center; background: var(--bg-cream);">
+            <h3>Plan your session</h3>
+            <p>New clients begin with a brief consultation so we can map your protocol. Single sessions are reserved for trial assessments — sculpting and recovery results require a programmed plan.</p>
+            <div class="hstack" style="justify-content: center;">
+              <a class="btn" href="book.html">Book a Consultation</a>
+              <a class="btn btn--ghost" href="contact.html">Enquire</a>
+            </div>
+          </div>
         </section>
 
-        <div id="serviceList"></div>
+        <!-- USA pane -->
+        <section class="region-pane" data-pane="usa" hidden>
+          <div class="section-head" style="margin-bottom: 32px;">
+            <span class="eyebrow">USA · Introductory Menu</span>
+            <h2 style="font-family: var(--serif); font-size: clamp(28px, 4vw, 38px); font-weight: 300; margin: 6px 0 14px;">The Élevé Method®, in&nbsp;the&nbsp;States.</h2>
+            <p>Mobile appointments across Miami, Broward and Palm Beach with Kiah, our International ÉLBM Therapist. Introductory pricing reflects launch rates — savings shown against full retail.</p>
+            <div class="hero-ctas" style="margin-top: 22px;">
+              <a class="btn" href="book.html?therapist=kiah">Book with Kiah</a>
+            </div>
+          </div>
 
-        <div class="center" style="margin-top: 40px;">
-          <a class="btn" href="book.html">Book a Consultation</a>
-        </div>
+          <div class="usa-note">
+            <span class="usa-note__pill">USD pricing</span>
+            <span>All prices in US Dollars. RRP shown alongside introductory rate.</span>
+          </div>
+
+          <div class="pricing-group" id="sculpt-detox">
+            <h2>Élevé Sculpt Detox®</h2>
+            <p class="blurb">A transformative lymphatic sculpting treatment — relieves congestion, stimulates drainage and supports a full body reset.</p>
+            <div id="usaSculptDetoxRows"></div>
+          </div>
+
+          <div class="pricing-group" id="post-op-standard">
+            <h2>Élevé Post-Op Recovery — Standard</h2>
+            <p class="blurb">Massage only. Gentle MLD and Red Light Therapy to reduce swelling and support circulation through early-stage recovery.</p>
+            <div id="usaPostOpStandardRows"></div>
+          </div>
+
+          <div class="pricing-group" id="post-op-advanced">
+            <h2>Élevé Post-Op Recovery — Advanced</h2>
+            <p class="blurb">Advanced massage + complication care. MLD with curated elements of The Élevé Method® to soften fibrosis, release trapped fluid and refine the healing contour.</p>
+            <div id="usaPostOpAdvancedRows"></div>
+          </div>
+
+          <div class="card" style="margin-top: 40px; text-align: center; background: var(--bg-cream);">
+            <h3>Plan your USA session</h3>
+            <p>New clients begin with a brief consultation so Kiah can map your protocol. Single sessions are reserved for trial assessments — sculpting and recovery results require a programmed plan.</p>
+            <div class="hstack" style="justify-content: center;">
+              <a class="btn" href="book.html?therapist=kiah">Book a Session</a>
+              <a class="btn btn--ghost" href="contact.html?enquiry=usa">Enquire</a>
+            </div>
+          </div>
+        </section>
       </section>
     </main>
 
@@ -48,127 +97,241 @@
 
   <script type="module">
     import { init } from "./js/app.js";
-    import { loadServices, CATEGORIES } from "./data/data.js";
+    import { loadServices, CATEGORIES, THERAPISTS, PACKAGE_GROUPS, PACKAGE_CHILD_SLUGS } from "./data/data.js";
+    import { therapistEligible } from "./js/booking.js";
     init();
 
-    const services = await loadServices();
-    const tabsEl = document.getElementById("catTabs");
-    const listEl = document.getElementById("serviceList");
+    /* ============================================================
+       REGION TOGGLE (UK ↔ USA)
+       ============================================================ */
+    const REGIONS = [
+      { id: "uk",  label: "UK Treatment Menu" },
+      { id: "usa", label: "USA Treatment Menu" },
+    ];
+    const regionToggleEl = document.getElementById("regionToggle");
+    const panes = {
+      uk:  document.querySelector('[data-pane="uk"]'),
+      usa: document.querySelector('[data-pane="usa"]'),
+    };
 
-    const cats = [{ id: "all", label: "All" }, ...CATEGORIES];
-    let active = "all";
+    let activeRegion = (location.hash === "#usa") ? "usa" : "uk";
 
-    function renderTabs() {
-      tabsEl.innerHTML = cats.map(c => `
-        <button class="tab ${c.id === active ? "is-active" : ""}" data-cat="${c.id}" role="tab" aria-selected="${c.id === active}">${c.label}</button>
-      `).join("");
-      tabsEl.querySelectorAll(".tab").forEach(b => {
-        b.addEventListener("click", () => { active = b.dataset.cat; renderTabs(); renderList(); window.scrollTo({ top: tabsEl.offsetTop - 100, behavior: "smooth" }); });
-      });
+    function renderRegionToggle() {
+      regionToggleEl.innerHTML = REGIONS.map(r =>
+        `<button class="tab ${r.id === activeRegion ? "is-active" : ""}" data-region="${r.id}" role="tab" aria-selected="${r.id === activeRegion}">${r.label}</button>`
+      ).join("");
+      regionToggleEl.querySelectorAll(".tab").forEach(b =>
+        b.addEventListener("click", () => {
+          activeRegion = b.dataset.region;
+          renderRegionToggle();
+          applyRegion();
+          history.replaceState(null, "", activeRegion === "usa" ? "#usa" : location.pathname);
+          window.scrollTo({ top: regionToggleEl.offsetTop - 80, behavior: "smooth" });
+        })
+      );
+    }
+    function applyRegion() {
+      panes.uk.hidden  = activeRegion !== "uk";
+      panes.usa.hidden = activeRegion !== "usa";
     }
 
-    const SCULPT_DETOX_PKGS = [
-      { slug: "eleve-sculpt-detox-6-sessions",  label: "6 Define" },
-      { slug: "eleve-sculpt-detox-12-sessions", label: "12 Refine" },
-      { slug: "eleve-sculpt-detox-24-sessions", label: "24 Transform" },
-    ];
+    /* ============================================================
+       UK MENU
+       ============================================================ */
+    const services = await loadServices();
+    const servicesBySlug = new Map(services.map(s => [s.slug, s]));
+    const therapistTabsEl = document.getElementById("therapistTabs");
+    const catTabsEl = document.getElementById("catTabs");
+    const listEl = document.getElementById("serviceList");
 
-    const MODEL_RATES = [
-      {
-        name: "Sculpt Detox®",
-        bookingSlug: "eleve-sculpt-detox",
-        rows: [
-          { sessions: "1 session",  price: 95 },
-          { sessions: "6 sessions", price: 450 },
-        ],
-      },
-      {
-        name: "Élevé Body Contour®",
-        bookingSlug: "eleve-body-sculpt",
-        rows: [
-          { sessions: "Single session", price: 95 },
-          { sessions: "6 sessions",     price: 450 },
-        ],
-      },
-      {
-        name: "SculptWood®",
-        bookingSlug: "eleve-sculptwood-massage",
-        rows: [
-          { sessions: "Single session", price: 65 },
-          { sessions: "6 sessions",     price: 250 },
-        ],
-      },
-      {
-        name: "Post-Operative Recovery",
-        bookingSlug: "eleve-recovery-standard-360",
-        rows: [
-          { sessions: "10 sessions", price: 590 },
-          { sessions: "12 sessions", price: 690 },
-        ],
-      },
-    ];
+    // UK menus only show UK-based therapists
+    const ukTherapists = THERAPISTS.filter(t => !t.hidden && (t.id === "malika" || t.id === "isabel"));
+    const cats = [{ id: "all", label: "All" }, ...CATEGORIES];
+    let activeCat = "all";
+    let activeTherapist = ukTherapists.find(t => t.id === "malika")?.id || ukTherapists[0].id;
 
-    document.getElementById("modelRateRows").innerHTML = MODEL_RATES.map(group => `
-      <article class="model-rate-row">
-        <div class="model-rate-row__head">
-          <h3>${group.name}</h3>
-          <span class="model-rate-row__badge">Limited to 3 models</span>
-        </div>
-        <ul class="model-rate-row__list">
-          ${group.rows.map(r => `
-            <li>
-              <span class="model-rate-row__sessions">${r.sessions}</span>
-              <span class="model-rate-row__price">£${r.price}</span>
-              <a class="model-rate-row__cta" href="book.html?svc=${encodeURIComponent(group.bookingSlug)}&therapist=isabel&rate=model">Enquire</a>
-            </li>
-          `).join("")}
-        </ul>
-      </article>
-    `).join("");
+    function renderTherapistTabs() {
+      therapistTabsEl.innerHTML = ukTherapists.map(t =>
+        `<button class="tab ${t.id === activeTherapist ? "is-active" : ""}" data-id="${t.id}" role="tab" aria-selected="${t.id === activeTherapist}">${t.name}</button>`
+      ).join("");
+      therapistTabsEl.querySelectorAll(".tab").forEach(b =>
+        b.addEventListener("click", () => { activeTherapist = b.dataset.id; renderTherapistTabs(); renderUkList(); })
+      );
+    }
 
-    function renderList() {
-      const visible = CATEGORIES.filter(c => active === "all" || c.id === active);
-      listEl.innerHTML = visible.map(cat => {
-        const items = services.filter(s => s.category === cat.id);
+    function renderCatTabs() {
+      catTabsEl.innerHTML = cats.map(c =>
+        `<button class="tab ${c.id === activeCat ? "is-active" : ""}" data-cat="${c.id}" role="tab" aria-selected="${c.id === activeCat}">${c.label}</button>`
+      ).join("");
+      catTabsEl.querySelectorAll(".tab").forEach(b =>
+        b.addEventListener("click", () => { activeCat = b.dataset.cat; renderCatTabs(); renderUkList(); window.scrollTo({ top: catTabsEl.offsetTop - 100, behavior: "smooth" }); })
+      );
+    }
+
+    function renderUkList() {
+      const therapist = THERAPISTS.find(t => t.id === activeTherapist);
+      const eligibleSlugs = new Set(services.filter(s => therapistEligible(therapist, s)).map(s => s.slug));
+
+      const visibleCats = CATEGORIES.filter(c => activeCat === "all" || c.id === activeCat);
+      listEl.innerHTML = visibleCats.map(cat => {
+        const items = services.filter(s =>
+          s.category === cat.id &&
+          eligibleSlugs.has(s.slug) &&
+          !PACKAGE_CHILD_SLUGS.has(s.slug)
+        );
         if (!items.length) return "";
         return `
           <section class="pricing-group" id="cat-${cat.id}">
             <h3>${cat.label}</h3>
             <p class="blurb">${cat.blurb}</p>
             <div>
-              ${items.map(s => {
-                const isSculptDetoxSingle = s.slug === "eleve-sculpt-detox";
-                return `
-                <article class="service-row" id="${s.slug}">
-                  <div>
-                    <div class="name">${s.name} ${s.isPackage ? '<span class="badge badge--pkg" style="margin-left:10px;vertical-align:middle;">Package</span>' : ''}</div>
-                    <div class="meta"><span>${s.durationLabel || ""}</span>${s.deposit && Number(s.deposit) > 0 ? `<span>Deposit £${Number(s.deposit).toFixed(0)}</span>` : ""}</div>
-                    <div class="desc">${(s.description || "").trim()}</div>
-                    ${isSculptDetoxSingle ? `
-                      <div class="pkg-picker">
-                        <span class="pkg-picker__label">Package options:</span>
-                        ${SCULPT_DETOX_PKGS.map(p => `<a class="pkg-picker__link" href="book.html?svc=${encodeURIComponent(p.slug)}&therapist=malika">${p.label}</a>`).join("")}
-                      </div>
-                    ` : ""}
-                  </div>
-                  <div class="side">
-                    <div class="price">${s.priceLabel}</div>
-                    <a class="btn btn--sm" href="book.html?svc=${encodeURIComponent(s.slug)}&therapist=malika">Book</a>
-                  </div>
-                </article>
-              `;
-              }).join("")}
+              ${items.map(s => renderServiceRow(s, therapist)).join("")}
             </div>
           </section>
         `;
       }).join("");
+
+      wirePackPickers();
     }
 
-    renderTabs();
-    renderList();
+    function renderServiceRow(parent, therapist) {
+      const group = PACKAGE_GROUPS[parent.slug];
+      const options = group ? [
+        { slug: parent.slug, label: group.singleLabel },
+        ...group.packs.map(p => ({ slug: p.slug, label: p.label })),
+      ] : null;
 
-    // Scroll to hash on initial load
-    if (location.hash) {
+      const therapistParam = `&therapist=${encodeURIComponent(therapist.id)}`;
+
+      return `
+        <article class="service-row" id="${parent.slug}" data-parent="${parent.slug}">
+          <div>
+            <div class="name">${parent.name}</div>
+            <div class="meta" data-meta>
+              <span data-duration>${parent.durationLabel || ""}</span>
+              ${parent.deposit && Number(parent.deposit) > 0 ? `<span data-deposit>Deposit £${Number(parent.deposit).toFixed(0)}</span>` : `<span data-deposit hidden></span>`}
+            </div>
+            <div class="desc">${(parent.description || "").trim()}</div>
+            ${options ? `
+              <label class="pack-picker">
+                <span class="pack-picker__label">Choose option</span>
+                <select class="pack-picker__select" data-pack-select>
+                  ${options.map(o => `<option value="${o.slug}">${o.label}</option>`).join("")}
+                </select>
+              </label>
+              <div class="pack-picker__tagline" data-pack-tagline></div>
+            ` : ""}
+          </div>
+          <div class="side">
+            <div class="price" data-price>${parent.priceLabel}</div>
+            <a class="btn btn--sm" data-book href="book.html?svc=${encodeURIComponent(parent.slug)}${therapistParam}">Book</a>
+          </div>
+        </article>
+      `;
+    }
+
+    function wirePackPickers() {
+      const therapistParam = `&therapist=${encodeURIComponent(activeTherapist)}`;
+      listEl.querySelectorAll(".service-row[data-parent]").forEach(row => {
+        const select = row.querySelector("[data-pack-select]");
+        if (!select) return;
+        const priceEl = row.querySelector("[data-price]");
+        const bookEl = row.querySelector("[data-book]");
+        const durationEl = row.querySelector("[data-duration]");
+        const depositEl = row.querySelector("[data-deposit]");
+        const taglineEl = row.querySelector("[data-pack-tagline]");
+
+        const apply = () => {
+          const svc = servicesBySlug.get(select.value);
+          if (!svc) return;
+          priceEl.textContent = svc.priceLabel;
+          bookEl.href = `book.html?svc=${encodeURIComponent(svc.slug)}${therapistParam}`;
+          if (durationEl) durationEl.textContent = svc.durationLabel || "";
+          if (depositEl) {
+            const dep = Number(svc.deposit);
+            if (dep > 0) {
+              depositEl.textContent = `Deposit £${dep.toFixed(0)}`;
+              depositEl.hidden = false;
+            } else {
+              depositEl.textContent = "";
+              depositEl.hidden = true;
+            }
+          }
+          if (taglineEl) {
+            taglineEl.textContent = svc.slug === row.dataset.parent
+              ? ""
+              : firstLine(svc.description || "");
+          }
+        };
+        select.addEventListener("change", apply);
+        apply();
+      });
+    }
+
+    function firstLine(s) {
+      const line = s.split("\n").map(x => x.trim()).find(Boolean) || "";
+      return line.length > 200 ? line.slice(0, 197) + "…" : line;
+    }
+
+    /* ============================================================
+       USA MENU
+       ============================================================ */
+    const SCULPT_DETOX_USA = [
+      { label: "Single session", tier: "",          price: 120,  rrp: 190 },
+      { label: "Course of 6",    tier: "Rest",      price: 650,  rrp: 1050 },
+      { label: "Course of 12",   tier: "Define",    price: 1350, rrp: 2099 },
+      { label: "Course of 24",   tier: "Transform", price: 2599, rrp: 4199 },
+    ];
+    const POST_OP_STANDARD_USA = [
+      { label: "Single session", tier: "", price: 100,  rrp: 140 },
+      { label: "Course of 10",   tier: "", price: 899,  rrp: 1299 },
+      { label: "Course of 15",   tier: "", price: 1399, rrp: 1900 },
+      { label: "Course of 24",   tier: "", price: 2299, rrp: 3199 },
+    ];
+    const POST_OP_ADVANCED_USA = [
+      { label: "Single session", tier: "", price: 150,  rrp: 200 },
+      { label: "Course of 10",   tier: "", price: 1399, rrp: 1899 },
+      { label: "Course of 15",   tier: "", price: 2199, rrp: 2799 },
+      { label: "Course of 24",   tier: "", price: 3399, rrp: 4399 },
+    ];
+
+    const fmtUsd = n => `$${n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+    function usaRow(item, name, slug) {
+      return `
+        <article class="service-row service-row--usa">
+          <div>
+            <div class="name">${name}${item.tier ? ` <span class="tier-tag">${item.tier}</span>` : ""}</div>
+            <div class="meta"><span>${item.label}</span></div>
+          </div>
+          <div class="side">
+            <div class="price-stack">
+              <span class="price">${fmtUsd(item.price)}</span>
+              <span class="rrp">${fmtUsd(item.rrp)} <em>rrp</em></span>
+            </div>
+            <a class="btn btn--sm" href="book.html?svc=${encodeURIComponent(slug)}&therapist=kiah">Book</a>
+          </div>
+        </article>
+      `;
+    }
+
+    document.getElementById("usaSculptDetoxRows").innerHTML =
+      SCULPT_DETOX_USA.map(i => usaRow(i, "Élevé Sculpt Detox®", "eleve-sculpt-detox")).join("");
+    document.getElementById("usaPostOpStandardRows").innerHTML =
+      POST_OP_STANDARD_USA.map(i => usaRow(i, "Élevé Recovery® Standard", "eleve-recovery-standard-360")).join("");
+    document.getElementById("usaPostOpAdvancedRows").innerHTML =
+      POST_OP_ADVANCED_USA.map(i => usaRow(i, "Élevé Recovery® Advanced", "eleve-recovery-advanced-full-body")).join("");
+
+    /* ============================================================
+       BOOT
+       ============================================================ */
+    renderRegionToggle();
+    applyRegion();
+    renderTherapistTabs();
+    renderCatTabs();
+    renderUkList();
+
+    if (location.hash && location.hash !== "#usa" && location.hash !== "#uk") {
       const el = document.getElementById(location.hash.slice(1));
       if (el) el.scrollIntoView({ block: "center" });
     }

@@ -32,23 +32,89 @@
 
   <script type="module">
     import { init } from "./js/app.js";
-    import { THERAPISTS, CATEGORIES, loadServices } from "./data/data.js";
+    import { THERAPISTS, CATEGORIES, loadServices, PACKAGE_GROUPS, PACKAGE_CHILD_SLUGS } from "./data/data.js";
     import { therapistEligible } from "./js/booking.js";
     init();
 
     const services = await loadServices();
+    const servicesBySlug = new Map(services.map(s => [s.slug, s]));
     const hasPhoto = (src) => typeof src === "string" && /\.(png|jpe?g|webp)$/i.test(src);
 
     // Everyone except Malika — she lives on the Services page
     const picks = THERAPISTS.filter(t => !t.hidden && t.id !== "malika");
 
+    const ISABEL_MODEL_RATES = [
+      {
+        name: "Sculpt Detox®",
+        bookingSlug: "eleve-sculpt-detox",
+        rows: [
+          { sessions: "1 session",  price: 95 },
+          { sessions: "6 sessions", price: 450 },
+        ],
+      },
+      {
+        name: "Élevé Body Contour®",
+        bookingSlug: "eleve-body-sculpt",
+        rows: [
+          { sessions: "Single session", price: 95 },
+          { sessions: "6 sessions",     price: 450 },
+        ],
+      },
+      {
+        name: "SculptWood®",
+        bookingSlug: "eleve-sculptwood-massage",
+        rows: [
+          { sessions: "Single session", price: 65 },
+          { sessions: "6 sessions",     price: 250 },
+        ],
+      },
+      {
+        name: "Post-Operative Recovery",
+        bookingSlug: "eleve-recovery-standard-360",
+        rows: [
+          { sessions: "10 sessions", price: 590 },
+          { sessions: "12 sessions", price: 690 },
+        ],
+      },
+    ];
+
+    function modelRatesFor(t) {
+      if (t.id !== "isabel") return "";
+      return `
+        <details class="therapist-prices therapist-prices--model">
+          <summary>View Isabel's model rates · case-study programme</summary>
+          <div class="therapist-prices__body">
+            <p class="blurb" style="margin-bottom: 14px;">Isabel is taking on a small intake of model clients to build her case studies under The Élevé Method®. Each rate below is reserved for three models only.</p>
+            ${ISABEL_MODEL_RATES.map(group => `
+              <article class="model-rate-row">
+                <div class="model-rate-row__head">
+                  <h3>${group.name}</h3>
+                  <span class="model-rate-row__badge">Limited to 3 models</span>
+                </div>
+                <ul class="model-rate-row__list">
+                  ${group.rows.map(r => `
+                    <li>
+                      <span class="model-rate-row__sessions">${r.sessions}</span>
+                      <span class="model-rate-row__price">£${r.price}</span>
+                      <a class="model-rate-row__cta" href="book.html?svc=${encodeURIComponent(group.bookingSlug)}&therapist=isabel&rate=model">Enquire</a>
+                    </li>
+                  `).join("")}
+                </ul>
+              </article>
+            `).join("")}
+          </div>
+        </details>
+      `;
+    }
+
     function priceListFor(t) {
       const eligible = services.filter(s => therapistEligible(t, s));
       const groups = CATEGORIES.map(cat => ({
         cat,
-        items: eligible.filter(s => s.category === cat.id),
+        items: eligible.filter(s => s.category === cat.id && !PACKAGE_CHILD_SLUGS.has(s.slug)),
       })).filter(g => g.items.length);
       if (!groups.length) return "";
+      const therapistParam = `&therapist=${encodeURIComponent(t.id)}`;
       return `
         <details class="therapist-prices">
           <summary>View ${t.name}'s pricing</summary>
@@ -57,18 +123,33 @@
               <section class="pricing-group">
                 <h3>${g.cat.label}</h3>
                 <p class="blurb">${g.cat.blurb}</p>
-                ${g.items.map(s => `
-                  <div class="service-row">
-                    <div>
-                      <div class="name">${s.name} ${s.isPackage ? '<span class="badge badge--pkg">Package</span>' : ''}</div>
-                      <div class="meta"><span>${s.durationLabel}</span>${s.deposit && Number(s.deposit) > 0 ? `<span>Deposit £${Number(s.deposit).toFixed(0)}</span>` : ""}</div>
+                ${g.items.map(s => {
+                  const group = PACKAGE_GROUPS[s.slug];
+                  const options = group ? [
+                    { slug: s.slug, label: group.singleLabel },
+                    ...group.packs.map(p => ({ slug: p.slug, label: p.label })),
+                  ] : null;
+                  return `
+                    <div class="service-row" data-parent="${s.slug}">
+                      <div>
+                        <div class="name">${s.name}</div>
+                        <div class="meta"><span data-duration>${s.durationLabel}</span>${s.deposit && Number(s.deposit) > 0 ? `<span data-deposit>Deposit £${Number(s.deposit).toFixed(0)}</span>` : `<span data-deposit hidden></span>`}</div>
+                        ${options ? `
+                          <label class="pack-picker">
+                            <span class="pack-picker__label">Choose option</span>
+                            <select class="pack-picker__select" data-pack-select data-therapist="${t.id}">
+                              ${options.map(o => `<option value="${o.slug}">${o.label}</option>`).join("")}
+                            </select>
+                          </label>
+                        ` : ""}
+                      </div>
+                      <div class="side">
+                        <div class="price" data-price>£${Number(s.cost).toFixed(0)}</div>
+                        <a class="btn btn--sm" data-book href="book.html?svc=${encodeURIComponent(s.slug)}${therapistParam}">Book</a>
+                      </div>
                     </div>
-                    <div class="side">
-                      <div class="price">£${Number(s.cost).toFixed(0)}</div>
-                      <a class="btn btn--sm" href="book.html?svc=${encodeURIComponent(s.slug)}&therapist=${encodeURIComponent(t.id)}">Book</a>
-                    </div>
-                  </div>
-                `).join("")}
+                  `;
+                }).join("")}
               </section>
             `).join("")}
           </div>
@@ -76,7 +157,37 @@
       `;
     }
 
-    document.getElementById("therapistList").innerHTML = picks.map((t, i) => `
+    function wirePackPickers(root) {
+      root.querySelectorAll(".service-row[data-parent]").forEach(row => {
+        const select = row.querySelector("[data-pack-select]");
+        if (!select) return;
+        const tId = select.dataset.therapist;
+        const priceEl = row.querySelector("[data-price]");
+        const bookEl = row.querySelector("[data-book]");
+        const durationEl = row.querySelector("[data-duration]");
+        const depositEl = row.querySelector("[data-deposit]");
+        select.addEventListener("change", () => {
+          const svc = servicesBySlug.get(select.value);
+          if (!svc) return;
+          priceEl.textContent = `£${Number(svc.cost).toFixed(0)}`;
+          bookEl.href = `book.html?svc=${encodeURIComponent(svc.slug)}&therapist=${encodeURIComponent(tId)}`;
+          if (durationEl) durationEl.textContent = svc.durationLabel || "";
+          if (depositEl) {
+            const dep = Number(svc.deposit);
+            if (dep > 0) {
+              depositEl.textContent = `Deposit £${dep.toFixed(0)}`;
+              depositEl.hidden = false;
+            } else {
+              depositEl.textContent = "";
+              depositEl.hidden = true;
+            }
+          }
+        });
+      });
+    }
+
+    const listEl = document.getElementById("therapistList");
+    listEl.innerHTML = picks.map((t, i) => `
       <article class="about-practitioner ${i % 2 === 1 ? "about-practitioner--flip" : ""}">
         <div class="about-practitioner__visual">
           ${hasPhoto(t.avatar)
@@ -94,10 +205,13 @@
           <div style="margin-top: 18px;" class="hstack">
             <a class="btn btn--sm" href="book.html?therapist=${encodeURIComponent(t.id)}">Book with ${t.name}</a>
           </div>
+          ${modelRatesFor(t)}
           ${priceListFor(t)}
         </div>
       </article>
     `).join("");
+
+    wirePackPickers(listEl);
   </script>
 </body>
 </html>

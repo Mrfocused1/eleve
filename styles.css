@@ -770,52 +770,97 @@ main { flex: 1; }
 .service-row .side { text-align: right; display: flex; flex-direction: column; gap: 10px; align-items: flex-end; min-width: 130px; }
 .service-row .price { font-family: var(--serif); font-size: clamp(22px, 2.2vw, 28px); color: var(--ink); }
 
-.pkg-picker {
-  margin-top: 14px;
-  display: flex; flex-wrap: wrap; align-items: center;
-  gap: 10px 14px;
-  font-size: 12px;
-  letter-spacing: 0.08em;
+/* ====== Region toggle (UK ↔ USA) ====== */
+.region-toggle {
+  margin: 0 auto clamp(28px, 4vw, 40px);
+  border: 1px solid var(--rule);
+  padding: 6px;
+  width: max-content;
+  max-width: 100%;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
 }
-.pkg-picker__label {
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
+.region-toggle .tab {
+  border: 1px solid transparent;
+  padding: 12px 22px;
+  font-size: 12px;
+  letter-spacing: 0.24em;
+}
+.region-toggle .tab.is-active {
+  background: var(--ink);
+  color: var(--bg-cream);
+  border-color: var(--ink);
+}
+@media (max-width: 480px) {
+  .region-toggle { width: 100%; }
+  .region-toggle .tab { flex: 1 1 0; padding: 10px 12px; letter-spacing: 0.16em; }
+}
+
+/* ====== Therapist switcher (Services menu) ====== */
+.menu-switcher {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 24px;
+}
+.menu-switcher__label {
+  font-family: var(--sans);
   font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
   color: var(--ink-faint);
 }
-.pkg-picker__link {
-  font-family: var(--serif);
-  font-size: 14px;
-  letter-spacing: 0;
-  color: var(--ink);
-  text-decoration: none;
-  border-bottom: 1px solid var(--ink);
-  padding-bottom: 1px;
-  transition: opacity 0.2s ease;
+.tabs.tabs--therapist { margin-bottom: 0; }
+
+/* ====== Session-pack picker ====== */
+.pack-picker {
+  margin-top: 16px;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 320px;
 }
-.pkg-picker__link:hover { opacity: 0.65; }
+.pack-picker__label {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.pack-picker__select {
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--rule);
+  padding: 10px 36px 10px 12px;
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--ink);
+  outline: none;
+  cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 12px) 50%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  border-radius: 0;
+  transition: border-color .2s ease;
+}
+.pack-picker__select:focus { border-color: var(--ink); }
+.pack-picker__tagline {
+  margin-top: 8px;
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  min-height: 1em;
+}
+.pack-picker__tagline:empty { margin-top: 0; }
 
 @media (max-width: 560px) {
   .service-row { grid-template-columns: 1fr; }
   .service-row .side { align-items: flex-start; text-align: left; }
 }
-
-/* ====== Menu region link (UK ↔ USA) ====== */
-.menu-region-link {
-  margin-top: 18px !important;
-  font-family: var(--sans);
-  font-size: 12px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-}
-.menu-region-link a {
-  color: var(--ink);
-  text-decoration: none;
-  border-bottom: 1px solid var(--ink-faint);
-  padding-bottom: 2px;
-  transition: opacity .2s ease;
-}
-.menu-region-link a:hover { opacity: 0.65; }
 
 /* ====== Model rates (Isabel) ====== */
 .eyebrow--accent { color: var(--ink); }
