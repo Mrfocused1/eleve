@@ -501,7 +501,6 @@ export const TESTIMONIALS = [
     name: "Joudia",
     stars: 5,
     quote: "Hands down the best clinic I've been to, the team was so lovely and the fillers did not hurt at all, honestly first time I've felt minimal pain. The result are exactly as expected as she follows exactly your vision to create the perfect filler shapes! Cannot recommend enough! Girls book your appointments!!",
-    image: "assets/testimonials/joudia.jpg",
   },
 ];
 

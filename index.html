@@ -91,7 +91,7 @@
             <h2>Aftercare &amp; home ritual</h2>
             <p>Curated tools, oils and garments to extend the results of your session between visits.</p>
           </div>
-          <div class="grid grid--4" id="featuredProducts"></div>
+          <div class="featured-products" id="featuredProducts"></div>
           <div class="center" style="margin-top: 28px;">
             <a class="btn btn--ghost" href="shop.html">Shop the store</a>
           </div>
@@ -182,8 +182,6 @@
 
       track.innerHTML = TESTIMONIALS.map((t, i) => `
         <article class="testimonial-slide ${i === 0 ? "is-active" : ""}" data-slide="${i}">
-          <img class="testimonial-slide__image" src="${t.image}" alt="" loading="lazy" />
-          <div class="testimonial-slide__overlay" aria-hidden="true"></div>
           <div class="testimonial-slide__content">
             <div class="testimonial-slide__stars" aria-label="${t.stars} out of 5 stars">
               ${"★".repeat(t.stars || 5)}
@@ -213,12 +211,15 @@
       }
     })();
 
-    /* ---------- Subscribe pop-up (homepage only, once per visitor) ---------- */
+    /* ---------- Subscribe pop-up (homepage only, once per browser session) ---------- */
     (function subscribePopup() {
       const modal = document.getElementById("subscribeModal");
       if (!modal) return;
-      const KEY = "eleve.subscribePopup.dismissed";
-      if (localStorage.getItem(KEY)) return;
+      // Clear the legacy persistent flag so previously-dismissed visitors see it again.
+      localStorage.removeItem("eleve.subscribePopup.dismissed");
+
+      const KEY = "eleve.subscribePopup.shown";
+      if (sessionStorage.getItem(KEY)) return;
 
       wireNewsletter("popupSignup");
 
@@ -226,11 +227,11 @@
         modal.hidden = false;
         requestAnimationFrame(() => modal.classList.add("is-open"));
         document.body.classList.add("no-scroll");
+        sessionStorage.setItem(KEY, "1");
       };
       const close = () => {
         modal.classList.remove("is-open");
         document.body.classList.remove("no-scroll");
-        localStorage.setItem(KEY, "1");
         setTimeout(() => { modal.hidden = true; }, 300);
       };
 
@@ -247,7 +248,10 @@
         }, 1600);
       });
 
-      setTimeout(open, 6000);
+      // Manual trigger for QA: window.elevePopup() forces it open.
+      window.elevePopup = () => { sessionStorage.removeItem(KEY); open(); };
+
+      setTimeout(open, 3500);
     })();
 
     const ARROW_SVG = `<svg class="arrow" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M0 5h12M9 1l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
@@ -315,24 +319,24 @@
       }
 
       const COLOMBIAN_FLAG = `<span class="co-flag" title="Sourced from Colombia" aria-label="Sourced from Colombia"><span class="co-flag__y"></span><span class="co-flag__b"></span><span class="co-flag__r"></span></span>`;
-      const pFeat = PRODUCTS.slice(0, 4);
+      const pFeat = PRODUCTS.filter(p => !p.hidden).slice(0, 4);
       document.getElementById("featuredProducts").innerHTML = pFeat.map(p => `
-        <article class="product-card ${p.comingSoon ? "is-coming-soon" : ""}">
-          <a class="img-wrap" href="shop.html#${p.id}">
+        <a class="product-card product-card--linked ${p.comingSoon ? "is-coming-soon" : ""}" href="shop.html#${p.id}">
+          <div class="img-wrap">
             ${p.colombian ? COLOMBIAN_FLAG : ""}
             ${p.comingSoon ? `<span class="coming-soon-badge">Coming Soon</span>` : ""}
             <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='assets/product-placeholder.svg';"/>
-          </a>
+          </div>
           <div class="body">
             <span class="cat">${p.category}${p.brand ? ` · ${p.brand}` : ""}</span>
             <span class="name">${p.name}</span>
             <span class="tag">${p.tagline}</span>
             <div class="foot">
               <span class="price">${p.price != null ? `£${p.price}` : "—"}</span>
-              <a class="btn btn--sm" href="shop.html#${p.id}">${p.comingSoon ? "Notify" : "View"}</a>
+              <span class="btn btn--sm">${p.comingSoon ? "Notify" : "View"}</span>
             </div>
           </div>
-        </article>
+        </a>
       `).join("");
     })();
   </script>
