@@ -191,14 +191,15 @@
       track.innerHTML = TESTIMONIALS.map(card).join("") + TESTIMONIALS.map(card).join("");
     })();
 
-    /* ---------- Subscribe pop-up (homepage only, once per browser session) ---------- */
+    /* ---------- Subscribe pop-up (homepage only) ---------- */
     (function subscribePopup() {
       const modal = document.getElementById("subscribeModal");
       if (!modal) return;
-      // Clear the legacy persistent flag so previously-dismissed visitors see it again.
+      // Clean up any legacy flag from earlier versions.
       localStorage.removeItem("eleve.subscribePopup.dismissed");
 
-      const KEY = "eleve.subscribePopup.shown";
+      const KEY = "eleve.subscribePopup.dismissed";
+      // Only suppress if visitor has actively dismissed it this session.
       if (sessionStorage.getItem(KEY)) return;
 
       wireNewsletter("popupSignup");
@@ -207,11 +208,11 @@
         modal.hidden = false;
         requestAnimationFrame(() => modal.classList.add("is-open"));
         document.body.classList.add("no-scroll");
-        sessionStorage.setItem(KEY, "1");
       };
       const close = () => {
         modal.classList.remove("is-open");
         document.body.classList.remove("no-scroll");
+        sessionStorage.setItem(KEY, "1");
         setTimeout(() => { modal.hidden = true; }, 300);
       };
 
@@ -231,7 +232,7 @@
       // Manual trigger for QA: window.elevePopup() forces it open.
       window.elevePopup = () => { sessionStorage.removeItem(KEY); open(); };
 
-      setTimeout(open, 3500);
+      setTimeout(open, 3000);
     })();
 
     const ARROW_SVG = `<svg class="arrow" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M0 5h12M9 1l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
