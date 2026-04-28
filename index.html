@@ -144,8 +144,9 @@
       </section>
 
       <section class="testimonials" aria-label="Client testimonials">
-        <div class="testimonials__track" id="testimonialsTrack"></div>
-        <div class="testimonials__dots" id="testimonialsDots" aria-hidden="true"></div>
+        <div class="testimonials__viewport">
+          <div class="testimonials__track" id="testimonialsTrack"></div>
+        </div>
       </section>
     </main>
 
@@ -174,41 +175,20 @@
 
     init();
 
-    /* ---------- Testimonials carousel ---------- */
+    /* ---------- Testimonials marquee (continuous horizontal scroll) ---------- */
     (function renderTestimonials() {
       const track = document.getElementById("testimonialsTrack");
-      const dotsEl = document.getElementById("testimonialsDots");
       if (!track || !TESTIMONIALS.length) return;
 
-      track.innerHTML = TESTIMONIALS.map((t, i) => `
-        <article class="testimonial-slide ${i === 0 ? "is-active" : ""}" data-slide="${i}">
-          <div class="testimonial-slide__content">
-            <div class="testimonial-slide__stars" aria-label="${t.stars} out of 5 stars">
-              ${"★".repeat(t.stars || 5)}
-            </div>
-            <blockquote class="testimonial-slide__quote">${t.quote}</blockquote>
-            <span class="testimonial-slide__name">${t.name}</span>
-          </div>
+      const card = (t) => `
+        <article class="testimonial-card">
+          <div class="testimonial-card__stars" aria-label="${t.stars} out of 5 stars">${"★".repeat(t.stars || 5)}</div>
+          <blockquote class="testimonial-card__quote">${t.quote}</blockquote>
+          <span class="testimonial-card__name">${t.name}</span>
         </article>
-      `).join("");
-
-      if (TESTIMONIALS.length > 1) {
-        dotsEl.innerHTML = TESTIMONIALS.map((_, i) =>
-          `<button class="testimonials__dot ${i === 0 ? "is-active" : ""}" data-dot="${i}" aria-label="Show testimonial ${i + 1}"></button>`
-        ).join("");
-        const slides = [...track.querySelectorAll(".testimonial-slide")];
-        const dots = [...dotsEl.querySelectorAll(".testimonials__dot")];
-        let idx = 0;
-        const show = (i) => {
-          idx = (i + slides.length) % slides.length;
-          slides.forEach((s, j) => s.classList.toggle("is-active", j === idx));
-          dots.forEach((d, j) => d.classList.toggle("is-active", j === idx));
-        };
-        dots.forEach(d => d.addEventListener("click", () => show(Number(d.dataset.dot))));
-        let timer = setInterval(() => show(idx + 1), 7000);
-        track.addEventListener("mouseenter", () => clearInterval(timer));
-        track.addEventListener("mouseleave", () => { timer = setInterval(() => show(idx + 1), 7000); });
-      }
+      `;
+      // Render the set twice so the CSS translateX(-50%) loops seamlessly.
+      track.innerHTML = TESTIMONIALS.map(card).join("") + TESTIMONIALS.map(card).join("");
     })();
 
     /* ---------- Subscribe pop-up (homepage only, once per browser session) ---------- */

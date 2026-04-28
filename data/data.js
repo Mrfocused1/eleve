@@ -495,12 +495,37 @@ export const PRODUCTS = [
   },
 ];
 
-/* Client testimonials — appear above the footer on the homepage. */
+/* Client testimonials — appear above the footer on the homepage as a scrolling marquee. */
 export const TESTIMONIALS = [
   {
     name: "Joudia",
     stars: 5,
-    quote: "Hands down the best clinic I've been to, the team was so lovely and the fillers did not hurt at all, honestly first time I've felt minimal pain. The result are exactly as expected as she follows exactly your vision to create the perfect filler shapes! Cannot recommend enough! Girls book your appointments!!",
+    quote: "Hands down the best clinic I've been to, the team was so lovely and the fillers did not hurt at all, honestly first time I've felt minimal pain. Cannot recommend enough! Girls book your appointments!!",
+  },
+  {
+    name: "Aaliyah",
+    stars: 5,
+    quote: "Malika's body sculpting work is unmatched — I came in for post-baby contouring and the results spoke for themselves by session four. Calm, precise and educational throughout.",
+  },
+  {
+    name: "Sarah",
+    stars: 5,
+    quote: "Lymphatic drainage with the Élevé team has become my monthly reset. I leave lighter, less bloated and visibly more sculpted. Worth every minute.",
+  },
+  {
+    name: "Chioma",
+    stars: 5,
+    quote: "Recovered from BBL surgery here and the Élevé Recovery® protocol made the difference. The fibrosis softened week by week and Malika walked me through every stage.",
+  },
+  {
+    name: "Naomi",
+    stars: 5,
+    quote: "Skin glow is real. My RF Skin Lift package delivered the lift I'd been chasing for years. Booking my next round already.",
+  },
+  {
+    name: "Layla",
+    stars: 5,
+    quote: "Came for SculptWood, stayed for the experience. The treatment room is calming, Malika is meticulous, and you can feel the difference after one session.",
   },
 ];
 
