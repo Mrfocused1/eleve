@@ -100,7 +100,7 @@
 
       <section class="section wrap">
         <div class="section-head">
-          <span class="eyebrow">@sasslondon_aesthetics</span>
+          <span class="eyebrow">@elevelondonbymalika</span>
           <h2>Results in motion</h2>
           <p>Follow along on Instagram for live transformations, education and clinic moments.</p>
         </div>
@@ -142,16 +142,113 @@
           <p class="form-msg" role="status" aria-live="polite"></p>
         </form>
       </section>
+
+      <section class="testimonials" aria-label="Client testimonials">
+        <div class="testimonials__track" id="testimonialsTrack"></div>
+        <div class="testimonials__dots" id="testimonialsDots" aria-hidden="true"></div>
+      </section>
     </main>
+
+    <div class="subscribe-modal" id="subscribeModal" role="dialog" aria-modal="true" aria-labelledby="subscribeModalTitle" hidden>
+      <div class="subscribe-modal__backdrop" data-close></div>
+      <div class="subscribe-modal__panel">
+        <button class="subscribe-modal__close" type="button" aria-label="Close" data-close>×</button>
+        <span class="eyebrow">10% off your first purchase</span>
+        <h2 id="subscribeModalTitle">Join the Élevé list</h2>
+        <p>Drop your email for new treatment announcements, academy open days and seasonal rituals — and a welcome 10% off.</p>
+        <form class="signup" id="popupSignup" novalidate>
+          <label class="sr-only" for="popupEmail">Email address</label>
+          <input id="popupEmail" name="email" type="email" autocomplete="email" placeholder="Your email address" required />
+          <button type="submit">Notify Me</button>
+          <p class="form-msg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
 
     <footer class="site-footer" id="site-footer"></footer>
   </div>
 
   <script type="module">
-    import { init } from "./js/app.js";
-    import { loadServices, PRODUCTS, THERAPISTS } from "./data/data.js";
+    import { init, wireNewsletter } from "./js/app.js";
+    import { loadServices, PRODUCTS, THERAPISTS, TESTIMONIALS } from "./data/data.js";
 
     init();
+
+    /* ---------- Testimonials carousel ---------- */
+    (function renderTestimonials() {
+      const track = document.getElementById("testimonialsTrack");
+      const dotsEl = document.getElementById("testimonialsDots");
+      if (!track || !TESTIMONIALS.length) return;
+
+      track.innerHTML = TESTIMONIALS.map((t, i) => `
+        <article class="testimonial-slide ${i === 0 ? "is-active" : ""}" data-slide="${i}">
+          <img class="testimonial-slide__image" src="${t.image}" alt="" loading="lazy" />
+          <div class="testimonial-slide__overlay" aria-hidden="true"></div>
+          <div class="testimonial-slide__content">
+            <div class="testimonial-slide__stars" aria-label="${t.stars} out of 5 stars">
+              ${"★".repeat(t.stars || 5)}
+            </div>
+            <blockquote class="testimonial-slide__quote">${t.quote}</blockquote>
+            <span class="testimonial-slide__name">${t.name}</span>
+          </div>
+        </article>
+      `).join("");
+
+      if (TESTIMONIALS.length > 1) {
+        dotsEl.innerHTML = TESTIMONIALS.map((_, i) =>
+          `<button class="testimonials__dot ${i === 0 ? "is-active" : ""}" data-dot="${i}" aria-label="Show testimonial ${i + 1}"></button>`
+        ).join("");
+        const slides = [...track.querySelectorAll(".testimonial-slide")];
+        const dots = [...dotsEl.querySelectorAll(".testimonials__dot")];
+        let idx = 0;
+        const show = (i) => {
+          idx = (i + slides.length) % slides.length;
+          slides.forEach((s, j) => s.classList.toggle("is-active", j === idx));
+          dots.forEach((d, j) => d.classList.toggle("is-active", j === idx));
+        };
+        dots.forEach(d => d.addEventListener("click", () => show(Number(d.dataset.dot))));
+        let timer = setInterval(() => show(idx + 1), 7000);
+        track.addEventListener("mouseenter", () => clearInterval(timer));
+        track.addEventListener("mouseleave", () => { timer = setInterval(() => show(idx + 1), 7000); });
+      }
+    })();
+
+    /* ---------- Subscribe pop-up (homepage only, once per visitor) ---------- */
+    (function subscribePopup() {
+      const modal = document.getElementById("subscribeModal");
+      if (!modal) return;
+      const KEY = "eleve.subscribePopup.dismissed";
+      if (localStorage.getItem(KEY)) return;
+
+      wireNewsletter("popupSignup");
+
+      const open = () => {
+        modal.hidden = false;
+        requestAnimationFrame(() => modal.classList.add("is-open"));
+        document.body.classList.add("no-scroll");
+      };
+      const close = () => {
+        modal.classList.remove("is-open");
+        document.body.classList.remove("no-scroll");
+        localStorage.setItem(KEY, "1");
+        setTimeout(() => { modal.hidden = true; }, 300);
+      };
+
+      modal.querySelectorAll("[data-close]").forEach(el => el.addEventListener("click", close));
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !modal.hidden) close();
+      });
+      const popupForm = modal.querySelector("#popupSignup");
+      const popupMsg = popupForm?.querySelector(".form-msg");
+      popupForm?.addEventListener("submit", () => {
+        // wireNewsletter handles the post; only auto-close on success (.ok).
+        setTimeout(() => {
+          if (popupMsg?.classList.contains("ok")) close();
+        }, 1600);
+      });
+
+      setTimeout(open, 6000);
+    })();
 
     const ARROW_SVG = `<svg class="arrow" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M0 5h12M9 1l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 

@@ -12,8 +12,8 @@ export const BUSINESS = {
   email: "Info@elevelondonbymalika.co.uk",
   emailHref: "mailto:Info@elevelondonbymalika.co.uk",
   hours: "By Appointment Only",
-  instagram: "https://www.instagram.com/sasslondon_aesthetics/",
-  instagramHandle: "@sasslondon_aesthetics",
+  instagram: "https://www.instagram.com/elevelondonbymalika/",
+  instagramHandle: "@elevelondonbymalika",
   tiktok: "https://www.tiktok.com/@elevelondonbymalika",
   tiktokHandle: "@elevelondonbymalika",
   newsletterIncentive: "Join the list for 10% off your first purchase.",
@@ -59,7 +59,7 @@ export const THERAPISTS = [
     short: "Body Wellness & Aesthetics, Post-Op Care",
     bio: "Isabel leads our London mobile diary, mentored under Malika at Élevé Academy. Her practice combines body wellness, aesthetics and post-operative care — lymphatic drainage, sculpting protocols, skin health and targeted recovery support. Calm chair-side manner, meticulous mapping, The Élevé Method® standard of care.",
     specialties: ["Body Wellness", "Aesthetics", "Post-Op Care", "Lymphatic Drainage"],
-    eligibleFor: ["body", "lymph", "postop", "sculptwood", "rf", "cellulite", "face", "antiwrinkle", "fat", "consultation"],
+    eligibleFor: ["body", "lymph", "postop", "sculptwood", "rf", "cellulite", "consultation"],
     avatar: "assets/therapist-isabel.png",
     location: "266 High Road, Harrow, HA3 7BB",
     serviceArea: "Mobile appointments across London + Watford",
@@ -93,7 +93,7 @@ export const CATEGORIES = [
   { id: "consultation", label: "Consultations", blurb: "Plan your journey with Malika." },
   { id: "body",         label: "Signature Body Sculpting", blurb: "The Élevé Method® — visible, natural refinement." },
   { id: "postop",       label: "Post-Operative Recovery", blurb: "Élevé Recovery® — from day three onwards." },
-  { id: "lymph",        label: "Lymphatic & Detox", blurb: "Rhythmic drainage to reset the body." },
+  { id: "lymph",        label: "Lymphatic & Sculpt", blurb: "Rhythmic drainage to reset the body." },
   { id: "sculptwood",   label: "SculptWood® Massage", blurb: "Colombian wood therapy reimagined." },
   { id: "rf",           label: "RF & Firm", blurb: "Radio frequency skin lifting and tightening." },
   { id: "cellulite",    label: "Cellulite Therapy", blurb: "Texture, tone, circulation." },
@@ -110,7 +110,7 @@ const CAT_MAP = [
   [/^eleve-contour/,                     "body"],
   [/^eleve-luxe-butt-lift/,              "body"],
   [/^eleve-recovery/,                    "postop"],
-  [/^eleve-lym(p)?h/,                    "lymph"],
+  [/^eleve-lym/,                         "lymph"],
   [/^eleve-sculpt-detox/,                "lymph"],
   [/^eleve-sculptwood/,                  "sculptwood"],
   [/^eleve-rf-skin-lift/,                "rf"],
@@ -492,6 +492,16 @@ export const PRODUCTS = [
     comingSoon: true,
     colombian: true,
     hidden: true,
+  },
+];
+
+/* Client testimonials — appear above the footer on the homepage. */
+export const TESTIMONIALS = [
+  {
+    name: "Joudia",
+    stars: 5,
+    quote: "Hands down the best clinic I've been to, the team was so lovely and the fillers did not hurt at all, honestly first time I've felt minimal pain. The result are exactly as expected as she follows exactly your vision to create the perfect filler shapes! Cannot recommend enough! Girls book your appointments!!",
+    image: "assets/testimonials/joudia.jpg",
   },
 ];
 
