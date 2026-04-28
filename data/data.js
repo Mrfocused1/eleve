@@ -28,7 +28,7 @@ export const THERAPISTS = [
     bio: "Over 7 years of hands-on practice and teaching experience. Malika integrates clinical precision with holistic body understanding — advanced face and body anatomy + physiology, lymphatic circulation, gut health, hormonal balance, inflammation, metabolic function and long-term wellbeing. Her signature The Élevé Method® combines bespoke mapping, drainage sequences and tailored sculpting protocols for natural, visible results.",
     specialties: ["Body Sculpting", "Fat Dissolving", "Post-Op Recovery", "Anti-Wrinkle", "Lip & Profile"],
     eligibleFor: "all",
-    avatar: "assets/therapist-malika.png",
+    avatar: "assets/therapist-malika.jpg",
   },
   {
     id: "amina",
