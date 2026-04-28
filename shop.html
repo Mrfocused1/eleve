@@ -31,7 +31,6 @@
       <section class="section wrap">
         <div class="store-status">
           <span class="store-status__pill store-status__pill--live">1 product available</span>
-          <span class="store-status__pill store-status__pill--soon">New release coming soon</span>
         </div>
 
         <div class="tabs" id="catTabs"></div>
@@ -44,10 +43,11 @@
 
   <script type="module">
     import { init, toast, updateCartBadge } from "./js/app.js";
-    import { PRODUCTS } from "./data/data.js";
+    import { PRODUCTS as ALL_PRODUCTS } from "./data/data.js";
     import { addToCart, currency } from "./js/cart.js";
     init();
 
+    const PRODUCTS = ALL_PRODUCTS.filter(p => !p.hidden);
     const cats = ["All", ...new Set(PRODUCTS.map(p => p.category))];
     let active = "All";
     const tabsEl = document.getElementById("catTabs");

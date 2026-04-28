@@ -429,36 +429,6 @@ export const PRODUCTS = [
     ],
   },
   {
-    id: "eleve-body-oil",
-    name: "Élevé Signature Body Oil",
-    price: 48,
-    category: "Aftercare",
-    tagline: "Sculpting oil for daily drainage.",
-    description: "Weightless dry oil blended with juniper, grapefruit and rosemary to support lymphatic movement. Daily aftercare between sessions.",
-    image: "assets/product-body-oil.png",
-    comingSoon: true,
-  },
-  {
-    id: "eleve-contour-serum",
-    name: "Contour Firming Serum",
-    price: 72,
-    category: "Aftercare",
-    tagline: "Caffeine + niacinamide concentrate.",
-    description: "A concentrated serum layered under oil to visibly firm, smooth and refine. Formulated for post-cavitation use.",
-    image: "assets/product-serum.png",
-    comingSoon: true,
-  },
-  {
-    id: "post-op-vest",
-    name: "Post-Op Compression Vest",
-    price: 98,
-    category: "Post-Op",
-    tagline: "Full torso support.",
-    description: "Stage 1 garment worn immediately after surgery for 6 weeks. Sizes XS–XL.",
-    image: "assets/product-vest.png",
-    comingSoon: true,
-  },
-  {
     id: "post-op-faja",
     name: "Post-Operative Faja",
     category: "Post-Op",
@@ -467,6 +437,7 @@ export const PRODUCTS = [
     image: "assets/product-post-op-faja.png",
     comingSoon: true,
     colombian: true,
+    hidden: true,
   },
   {
     id: "abdominal-boards",
@@ -477,6 +448,7 @@ export const PRODUCTS = [
     image: "assets/product-abdominal-boards.png",
     comingSoon: true,
     colombian: true,
+    hidden: true,
   },
   {
     id: "elbm-k-tapes",
@@ -486,6 +458,7 @@ export const PRODUCTS = [
     description: "Kinesiology tape pre-cut for post-op lymphatic pathways. Designed for Élevé Recovery® protocols.",
     image: "assets/product-k-tapes.png",
     comingSoon: true,
+    hidden: true,
   },
   {
     id: "shapewear-waist-trainer",
@@ -496,6 +469,7 @@ export const PRODUCTS = [
     image: "assets/product-shapewear.png",
     comingSoon: true,
     colombian: true,
+    hidden: true,
   },
   {
     id: "elbm-wood-kit-pro",
@@ -506,6 +480,7 @@ export const PRODUCTS = [
     image: "assets/product-wood-kit-pro.png",
     comingSoon: true,
     colombian: true,
+    hidden: true,
   },
   {
     id: "elbm-wood-kit-home",
@@ -516,6 +491,7 @@ export const PRODUCTS = [
     image: "assets/product-wood-kit-home.png",
     comingSoon: true,
     colombian: true,
+    hidden: true,
   },
 ];
 
