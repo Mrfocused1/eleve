@@ -22,9 +22,9 @@
           <h1>Two dedicated diaries.</h1>
           <p>Both trained under Malika's method, both accountable to the same standard of care.</p>
         </div>
-
-        <div class="team-list" id="therapistList"></div>
       </section>
+
+      <div class="team-list" id="therapistList" style="margin-bottom: clamp(48px, 8vw, 96px);"></div>
     </main>
 
     <footer class="site-footer" id="site-footer"></footer>
@@ -187,22 +187,21 @@
     }
 
     const listEl = document.getElementById("therapistList");
-    listEl.innerHTML = picks.map((t, i) => `
-      <article class="about-practitioner ${i % 2 === 1 ? "about-practitioner--flip" : ""}">
-        <div class="about-practitioner__visual">
-          ${hasPhoto(t.avatar)
-            ? `<img class="about-practitioner__photo" src="${t.avatar}" alt="${t.name}" loading="lazy" onerror="this.remove()"/>`
-            : `<span class="about-practitioner__initial" aria-hidden="true">${t.name[0]}</span>`}
-        </div>
-        <div class="about-practitioner__body">
-          <h4>${t.name}</h4>
-          <div class="role">${t.title}</div>
+    listEl.innerHTML = picks.map((t) => `
+      <article class="therapist-hero">
+        ${hasPhoto(t.avatar)
+          ? `<img class="therapist-hero__photo" src="${t.avatar}" alt="${t.name}" loading="lazy" onerror="this.remove()"/>`
+          : ""}
+        <div class="therapist-hero__overlay"></div>
+        <div class="therapist-hero__content">
+          <span class="eyebrow">${t.title}</span>
+          <h2 class="therapist-hero__name">${t.name}</h2>
           ${t.location ? `<div class="therapist-loc"><strong>${t.location}</strong>${t.serviceArea ? `<br/><span>${t.serviceArea}</span>` : ""}</div>` : ""}
-          <p>${t.bio}</p>
-          <div class="specialties">
+          <p style="font-family: var(--serif); font-size: clamp(15px, 1.4vw, 17px); line-height: 1.65; color: var(--ink-soft); max-width: 48ch; margin: 4px 0 0;">${t.bio}</p>
+          <div class="specialties" style="margin-top: 6px;">
             ${t.specialties.map(s => `<span class="pill">${s}</span>`).join("")}
           </div>
-          <div style="margin-top: 18px;" class="hstack">
+          <div style="margin-top: 20px;" class="hstack">
             <a class="btn btn--sm" href="book.html?therapist=${encodeURIComponent(t.id)}">Book with ${t.name}</a>
           </div>
           ${modelRatesFor(t)}
