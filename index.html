@@ -80,7 +80,7 @@
           <h2>Signature treatments</h2>
           <p>Each session is tailored to your natural curves and goals. Single sessions are reserved for trial/intro assessments — sculpting results require programmed plans.</p>
         </div>
-        <div class="grid grid--3" id="featuredServices">
+        <div class="grid grid--5" id="featuredServices">
           <!-- populated by JS -->
         </div>
         <div class="center" style="margin-top: 28px;">
@@ -253,15 +253,17 @@
     // Optional per-service photos — drop a jpg into /assets/services/{slug}.jpg
     // and add the slug here to use it on the home card instead of the gradient.
     const SERVICE_PHOTOS = {
-      "eleve-body-sculpt":      "assets/services/eleve-body-sculpt.jpg",
-      "eleve-360-body-sculpt":  "assets/services/eleve-360-body-sculpt.jpg",
-      "eleve-luxe-butt-lift":   "assets/services/eleve-luxe-butt-lift.jpg",
+      "eleve-body-sculpt":     "assets/services/eleve-body-sculpt.jpg",
+      "lip-restore":           "assets/services/lip-restore.jpg",
+      "eleve-luxe-butt-lift":  "assets/services/eleve-luxe-butt-lift.jpg",
+      "eleve-sculpt-detox":    "assets/services/eleve-sculpt-detox.jpg",
+      "eleve-360-body-sculpt": "assets/services/eleve-360-body-sculpt.jpg",
     };
 
     (async () => {
       const services = await loadServices();
-      const featured = ["eleve-body-sculpt", "eleve-360-body-sculpt", "eleve-luxe-butt-lift", "eleve-sculpt-detox", "eleve-rf-skin-lift", "eleve-lymp-reset-massage"]
-        .map(slug => services.find(s => s.slug === slug)).filter(Boolean).slice(0, 3);
+      const featured = ["eleve-body-sculpt", "lip-restore", "eleve-luxe-butt-lift", "eleve-sculpt-detox", "eleve-360-body-sculpt"]
+        .map(slug => services.find(s => s.slug === slug)).filter(Boolean).slice(0, 5);
       // IG tiles: mark missing images so the placeholder overlay shows
       document.querySelectorAll(".ig-tile img").forEach(img => {
         img.addEventListener("error", () => img.parentElement.classList.add("missing"));
