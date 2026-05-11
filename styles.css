@@ -1452,6 +1452,83 @@ main { flex: 1; }
   gap: clamp(24px, 4vw, 40px);
 }
 
+/* ÉLBM Method section */
+.elbm-method-body {
+  max-width: 620px;
+  margin: clamp(24px, 4vw, 40px) auto 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.elbm-method-body p {
+  font-family: var(--serif);
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.8;
+  color: var(--ink-soft);
+}
+
+/* Science pillars */
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(28px, 4vw, 48px) clamp(20px, 3vw, 36px);
+  margin-top: clamp(36px, 5vw, 56px);
+}
+.pillar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+.pillar__icon {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.pillar__num {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 200;
+  letter-spacing: 0.18em;
+  color: var(--ink-soft);
+}
+.pillar__title {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 200;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 4px 0 0;
+  line-height: 1.6;
+}
+.pillar__rule {
+  width: 24px;
+  height: 1px;
+  background: var(--border);
+  flex-shrink: 0;
+  margin: 2px 0;
+}
+.pillar__desc {
+  font-family: var(--serif);
+  font-size: clamp(13px, 1.2vw, 14px);
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+@media (max-width: 900px) {
+  .pillars-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .pillars-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 /* ====== Therapist hero (full-bleed photo + overlay text) ====== */
 .therapist-hero {
   position: relative;

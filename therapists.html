@@ -43,6 +43,47 @@
     // Everyone except Malika — she lives on the Services page
     const picks = THERAPISTS.filter(t => !t.hidden && t.id !== "malika");
 
+    const ISABEL_STANDARD_RATES = [
+      {
+        name: "Sculpt Detox®",
+        bookingSlug: "eleve-sculpt-detox",
+        rows: [
+          { sessions: "Single session", price: 145 },
+          { sessions: "6 sessions",     price: 660 },
+          { sessions: "12 sessions",    price: 1250 },
+          { sessions: "24 sessions",    price: 2100 },
+        ],
+      },
+      {
+        name: "Élevé Body Contour®",
+        bookingSlug: "eleve-body-sculpt",
+        rows: [
+          { sessions: "Single session", price: 220 },
+          { sessions: "6 sessions",     price: 700 },
+          { sessions: "12 sessions",    price: 1350 },
+          { sessions: "24 sessions",    price: 2100 },
+        ],
+      },
+      {
+        name: "SculptWood®",
+        bookingSlug: "eleve-sculptwood-massage",
+        rows: [
+          { sessions: "Single session", price: 115 },
+          { sessions: "6 sessions",     price: 465 },
+          { sessions: "12 sessions",    price: 950 },
+        ],
+      },
+      {
+        name: "Post-Operative Recovery",
+        bookingSlug: "eleve-recovery-standard-360",
+        rows: [
+          { sessions: "10 sessions", price: 720 },
+          { sessions: "12 sessions", price: 1100 },
+          { sessions: "24 sessions", price: 1800 },
+        ],
+      },
+    ];
+
     const ISABEL_MODEL_RATES = [
       {
         name: "Sculpt Detox®",
@@ -77,6 +118,33 @@
         ],
       },
     ];
+
+    function isabelStandardPriceListFor(t) {
+      if (t.id !== "isabel") return "";
+      return `
+        <details class="therapist-prices">
+          <summary>View Isabel's pricing</summary>
+          <div class="therapist-prices__body">
+            ${ISABEL_STANDARD_RATES.map(group => `
+              <article class="model-rate-row">
+                <div class="model-rate-row__head">
+                  <h3>${group.name}</h3>
+                </div>
+                <ul class="model-rate-row__list">
+                  ${group.rows.map(r => `
+                    <li>
+                      <span class="model-rate-row__sessions">${r.sessions}</span>
+                      <span class="model-rate-row__price">£${r.price.toLocaleString()}</span>
+                      <a class="model-rate-row__cta" href="book.html?svc=${encodeURIComponent(group.bookingSlug)}&therapist=isabel">Book</a>
+                    </li>
+                  `).join("")}
+                </ul>
+              </article>
+            `).join("")}
+          </div>
+        </details>
+      `;
+    }
 
     function modelRatesFor(t) {
       if (t.id !== "isabel") return "";
@@ -204,8 +272,9 @@
           <div style="margin-top: 20px;" class="hstack">
             <a class="btn btn--sm" href="book.html?therapist=${encodeURIComponent(t.id)}">Book with ${t.name}</a>
           </div>
+          ${isabelStandardPriceListFor(t)}
           ${modelRatesFor(t)}
-          ${priceListFor(t)}
+          ${t.id !== "isabel" ? priceListFor(t) : ""}
         </div>
       </article>
     `).join("");
